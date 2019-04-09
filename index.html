@@ -229,6 +229,207 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/CentoOS服务器环境安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/09/CentoOS服务器环境安装/" itemprop="url">CentoOS服务器环境安装</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-09T10:53:54+08:00">
+                2019-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="java安装"><a href="#java安装" class="headerlink" title="java安装"></a>java安装</h2><ol>
+<li>在/usr/目录下创建java目录</li>
+</ol>
+<p>[root@localhost ~]#mkdir /usr/java</p>
+<p>[root@localhost ~]#cd /usr/java</p>
+<ol start="2">
+<li>下载jdk,然后解压</li>
+</ol>
+<p>wget –no-check-certificate –no-cookie –header “Cookie: oraclelicense=accept-securebackup-cookie;”  <a href="http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz" target="_blank" rel="noopener">http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz</a></p>
+<p>tar xzf .tar.gz</p>
+<ol start="3">
+<li>设置环境变量</li>
+</ol>
+<p>[root@localhost java]# vi /etc/profile</p>
+<ol start="4">
+<li>在profile中添加如下内容:</li>
+</ol>
+<p>#set java environment<br>JAVA_HOME=/usr/java/jdk1.7.0_79<br>JRE_HOME=/usr/java/jdk1.7.0_79/jre<br>CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib<br>PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin<br>export JAVA_HOME JRE_HOME CLASS_PATH PATH</p>
+<ol start="5">
+<li>让修改生效:</li>
+</ol>
+<p>[root@localhost java]# source /etc/profile</p>
+<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><ol>
+<li>CentOS 7的yum源中貌似没有正常安装mysql时的mysql-sever文件，需要去官网上下载</li>
+</ol>
+<p>wget <a href="http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm" target="_blank" rel="noopener">http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm</a></p>
+<p>rpm -ivh mysql-community-release-el7-5.noarch.rpm</p>
+<p>yum install mysql-community-server</p>
+<ol start="2">
+<li>成功安装之后重启mysql服务</li>
+</ol>
+<p>service mysqld restart</p>
+<ol start="3">
+<li><p>设置开机启动</p>
+<p>chkconfig mysqld on</p>
+<p>查看是否设置成功</p>
+<p>chkconfig –list  mysqld</p>
+</li>
+</ol>
+<ol start="4">
+<li><p>创建root管理员：</p>
+<p>mysqladmin -u root password 123456</p>
+<p>登录：</p>
+<p>mysql -u root -p</p>
+<p>输入密码就可以了</p>
+</li>
+</ol>
+<ol start="5">
+<li><p>开启远程访问</p>
+<p>insert into user(Host,User) values(“%”,”root”);</p>
+</li>
+<li><p>设置权限</p>
+</li>
+</ol>
+<p>GRANT ALL PRIVILEGES ON <em>.</em> TO ‘root‘@’%’ IDENTIFIED BY ‘youpassword’ WITH GRANT OPTION;</p>
+<p>重载授权表：</p>
+<p>FLUSH PRIVILEGES;</p>
+<ol start="7">
+<li><p>ps:忘记密码重新设置密码</p>
+<p>service mysqld stop  停止服务</p>
+<p>mysqld_safe –user=root –skip-grant-tables  清空mysql密码</p>
+<p>mysql -u root  登录mysql </p>
+<p>use mysql  使用mysql库</p>
+</li>
+</ol>
+<ol start="8">
+<li>tomcat<br>mkdir /usr/tomcat8</li>
+</ol>
+<p>cd tomcat8</p>
+<p>wget <a href="http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz" target="_blank" rel="noopener">http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz</a></p>
+<ol start="9">
+<li>git </li>
+</ol>
+<p>yum install git</p>
+<ol start="10">
+<li>服务器端口占用</li>
+</ol>
+<p>netstat -apn|grep 8080<br>kill -9 port</p>
+<ol start="11">
+<li>解压命令</li>
+</ol>
+<p>tar xzf .tar.gz</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -390,7 +591,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
