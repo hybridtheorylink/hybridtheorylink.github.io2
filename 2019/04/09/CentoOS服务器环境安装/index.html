@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="java安装 在/usr/目录下创建java目录  [root@localhost ~]#mkdir /usr/java [root@localhost ~]#cd /usr/java  下载jdk,然后解压  wget –no-check-certificate –no-cookie –header “Cookie: oraclelicense=accept-securebackup-cooki">
+<meta name="description" content="java安装 在/usr/目录下创建java目录  [root@localhost ~]#mkdir /usr/java  [root@localhost ~]#cd /usr/java  下载jdk,然后解压 wget --no-check-certificate --no-cookie --header &amp;quot;Cookie: oraclelicense=accept-secureback">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentoOS服务器环境安装">
 <meta property="og:url" content="http://yoursite.com/2019/04/09/CentoOS服务器环境安装/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="java安装 在/usr/目录下创建java目录  [root@localhost ~]#mkdir /usr/java [root@localhost ~]#cd /usr/java  下载jdk,然后解压  wget –no-check-certificate –no-cookie –header “Cookie: oraclelicense=accept-securebackup-cooki">
+<meta property="og:description" content="java安装 在/usr/目录下创建java目录  [root@localhost ~]#mkdir /usr/java  [root@localhost ~]#cd /usr/java  下载jdk,然后解压 wget --no-check-certificate --no-cookie --header &amp;quot;Cookie: oraclelicense=accept-secureback">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-09T03:00:23.752Z">
+<meta property="og:updated_time" content="2019-04-09T03:05:06.454Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentoOS服务器环境安装">
-<meta name="twitter:description" content="java安装 在/usr/目录下创建java目录  [root@localhost ~]#mkdir /usr/java [root@localhost ~]#cd /usr/java  下载jdk,然后解压  wget –no-check-certificate –no-cookie –header “Cookie: oraclelicense=accept-securebackup-cooki">
+<meta name="twitter:description" content="java安装 在/usr/目录下创建java目录  [root@localhost ~]#mkdir /usr/java  [root@localhost ~]#cd /usr/java  下载jdk,然后解压 wget --no-check-certificate --no-cookie --header &amp;quot;Cookie: oraclelicense=accept-secureback">
 
 
 
@@ -300,38 +300,41 @@
 
       
         <h2 id="java安装"><a href="#java安装" class="headerlink" title="java安装"></a>java安装</h2><ol>
-<li>在/usr/目录下创建java目录</li>
+<li><p>在/usr/目录下创建java目录</p>
+<p> [root@localhost ~]#mkdir /usr/java</p>
+<p> [root@localhost ~]#cd /usr/java</p>
+</li>
+<li><p>下载jdk,然后解压</p>
+<pre><code>wget --no-check-certificate --no-cookie --header &quot;Cookie: oraclelicense=accept-securebackup-cookie;&quot;  http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
+</code></pre><p> tar xzf .tar.gz</p>
+</li>
+<li><p>设置环境变量</p>
+<p> [root@localhost java]# vi /etc/profile</p>
+</li>
+<li><p>在profile中添加如下内容:</p>
+<pre><code>#set java environment
+JAVA_HOME=/usr/java/jdk1.7.0_79
+JRE_HOME=/usr/java/jdk1.7.0_79/jre
+CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export JAVA_HOME JRE_HOME CLASS_PATH PATH
+</code></pre></li>
+<li><p>让修改生效:</p>
+<p> [root@localhost java]# source /etc/profile</p>
+</li>
 </ol>
-<p>[root@localhost ~]#mkdir /usr/java</p>
-<p>[root@localhost ~]#cd /usr/java</p>
-<ol start="2">
-<li>下载jdk,然后解压</li>
-</ol>
-<p>wget –no-check-certificate –no-cookie –header “Cookie: oraclelicense=accept-securebackup-cookie;”  <a href="http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz" target="_blank" rel="noopener">http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz</a></p>
-<p>tar xzf .tar.gz</p>
-<ol start="3">
-<li>设置环境变量</li>
-</ol>
-<p>[root@localhost java]# vi /etc/profile</p>
-<ol start="4">
-<li>在profile中添加如下内容:</li>
-</ol>
-<p>#set java environment<br>JAVA_HOME=/usr/java/jdk1.7.0_79<br>JRE_HOME=/usr/java/jdk1.7.0_79/jre<br>CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib<br>PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin<br>export JAVA_HOME JRE_HOME CLASS_PATH PATH</p>
-<ol start="5">
-<li>让修改生效:</li>
-</ol>
-<p>[root@localhost java]# source /etc/profile</p>
 <h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><ol>
 <li>CentOS 7的yum源中貌似没有正常安装mysql时的mysql-sever文件，需要去官网上下载</li>
 </ol>
-<p>wget <a href="http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm" target="_blank" rel="noopener">http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm</a></p>
-<p>rpm -ivh mysql-community-release-el7-5.noarch.rpm</p>
-<p>yum install mysql-community-server</p>
-<ol start="2">
-<li>成功安装之后重启mysql服务</li>
-</ol>
-<p>service mysqld restart</p>
-<ol start="3">
+<pre><code>wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+
+rpm -ivh mysql-community-release-el7-5.noarch.rpm
+
+yum install mysql-community-server
+</code></pre><ol start="2">
+<li><p>成功安装之后重启mysql服务</p>
+<p> service mysqld restart</p>
+</li>
 <li><p>设置开机启动</p>
 <p>chkconfig mysqld on</p>
 <p>查看是否设置成功</p>
@@ -364,23 +367,12 @@
 <p>use mysql  使用mysql库</p>
 </li>
 </ol>
-<ol start="8">
-<li>tomcat<br>mkdir /usr/tomcat8</li>
-</ol>
+<h2 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h2><p>mkdir /usr/tomcat8</p>
 <p>cd tomcat8</p>
 <p>wget <a href="http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz" target="_blank" rel="noopener">http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz</a></p>
-<ol start="9">
-<li>git </li>
-</ol>
-<p>yum install git</p>
-<ol start="10">
-<li>服务器端口占用</li>
-</ol>
-<p>netstat -apn|grep 8080<br>kill -9 port</p>
-<ol start="11">
-<li>解压命令</li>
-</ol>
-<p>tar xzf .tar.gz</p>
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><p>yum install git</p>
+<h2 id="服务器端口占用"><a href="#服务器端口占用" class="headerlink" title="服务器端口占用"></a>服务器端口占用</h2><p>netstat -apn|grep 8080<br>kill -9 port</p>
+<h2 id="解压命令"><a href="#解压命令" class="headerlink" title="解压命令"></a>解压命令</h2><p>tar xzf .tar.gz</p>
 
       
     </div>
@@ -527,7 +519,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java安装"><span class="nav-number">1.</span> <span class="nav-text">java安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql"><span class="nav-number">2.</span> <span class="nav-text">mysql</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java安装"><span class="nav-number">1.</span> <span class="nav-text">java安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql"><span class="nav-number">2.</span> <span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat"><span class="nav-number">3.</span> <span class="nav-text">Tomcat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git"><span class="nav-number">4.</span> <span class="nav-text">git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器端口占用"><span class="nav-number">5.</span> <span class="nav-text">服务器端口占用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解压命令"><span class="nav-number">6.</span> <span class="nav-text">解压命令</span></a></li></ol></div>
             
 
           </div>
