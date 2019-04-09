@@ -302,13 +302,15 @@
           
             <h2 id="java安装"><a href="#java安装" class="headerlink" title="java安装"></a>java安装</h2><ol>
 <li><p>在/usr/目录下创建java目录</p>
-<p> [root@localhost ~]#mkdir /usr/java</p>
-<p> [root@localhost ~]#cd /usr/java</p>
-</li>
+<pre><code>[root@localhost ~]#mkdir /usr/java
+
+[root@localhost ~]#cd /usr/java
+</code></pre></li>
 <li><p>下载jdk,然后解压</p>
 <pre><code>wget --no-check-certificate --no-cookie --header &quot;Cookie: oraclelicense=accept-securebackup-cookie;&quot;  http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
-</code></pre><p> tar xzf .tar.gz</p>
-</li>
+
+tar xzf .tar.gz
+</code></pre></li>
 <li><p>设置环境变量</p>
 <p> [root@localhost java]# vi /etc/profile</p>
 </li>
@@ -321,60 +323,71 @@ PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
 export JAVA_HOME JRE_HOME CLASS_PATH PATH
 </code></pre></li>
 <li><p>让修改生效:</p>
-<p> [root@localhost java]# source /etc/profile</p>
-</li>
+<pre><code>[root@localhost java]# source /etc/profile
+</code></pre></li>
 </ol>
 <h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><ol>
-<li>CentOS 7的yum源中貌似没有正常安装mysql时的mysql-sever文件，需要去官网上下载</li>
-</ol>
+<li><p>CentOS 7的yum源中貌似没有正常安装mysql时的mysql-sever文件，需要去官网上下载</p>
 <pre><code>wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
 
 rpm -ivh mysql-community-release-el7-5.noarch.rpm
 
 yum install mysql-community-server
-</code></pre><ol start="2">
+</code></pre></li>
+</ol>
+<ol start="2">
 <li><p>成功安装之后重启mysql服务</p>
-<p> service mysqld restart</p>
-</li>
+<pre><code>service mysqld restart
+</code></pre></li>
 <li><p>设置开机启动</p>
-<p>chkconfig mysqld on</p>
-<p>查看是否设置成功</p>
-<p>chkconfig –list  mysqld</p>
-</li>
+<pre><code>chkconfig mysqld on
+
+查看是否设置成功
+
+chkconfig --list  mysqld
+</code></pre></li>
 </ol>
 <ol start="4">
 <li><p>创建root管理员：</p>
-<p>mysqladmin -u root password 123456</p>
-<p>登录：</p>
-<p>mysql -u root -p</p>
-<p>输入密码就可以了</p>
-</li>
+<pre><code>mysqladmin -u root password 123456
+
+登录：
+
+mysql -u root -p
+
+输入密码就可以了
+</code></pre></li>
 </ol>
 <ol start="5">
 <li><p>开启远程访问</p>
-<p>insert into user(Host,User) values(“%”,”root”);</p>
-</li>
+<pre><code>insert into user(Host,User) values(&quot;%&quot;,&quot;root&quot;);
+</code></pre></li>
 <li><p>设置权限</p>
-</li>
+<pre><code>GRANT ALL PRIVILEGES ON *.* TO &apos;root&apos;@&apos;%&apos; IDENTIFIED BY &apos;youpassword&apos; WITH GRANT OPTION;
+</code></pre></li>
+<li><p>重载授权表：</p>
+<pre><code>FLUSH PRIVILEGES;
+</code></pre></li>
 </ol>
-<p>GRANT ALL PRIVILEGES ON <em>.</em> TO ‘root‘@’%’ IDENTIFIED BY ‘youpassword’ WITH GRANT OPTION;</p>
-<p>重载授权表：</p>
-<p>FLUSH PRIVILEGES;</p>
-<ol start="7">
+<ol start="8">
 <li><p>ps:忘记密码重新设置密码</p>
-<p>service mysqld stop  停止服务</p>
-<p>mysqld_safe –user=root –skip-grant-tables  清空mysql密码</p>
-<p>mysql -u root  登录mysql </p>
-<p>use mysql  使用mysql库</p>
-</li>
-</ol>
-<h2 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h2><p>mkdir /usr/tomcat8</p>
-<p>cd tomcat8</p>
-<p>wget <a href="http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz" target="_blank" rel="noopener">http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz</a></p>
-<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><p>yum install git</p>
-<h2 id="服务器端口占用"><a href="#服务器端口占用" class="headerlink" title="服务器端口占用"></a>服务器端口占用</h2><p>netstat -apn|grep 8080<br>kill -9 port</p>
-<h2 id="解压命令"><a href="#解压命令" class="headerlink" title="解压命令"></a>解压命令</h2><p>tar xzf .tar.gz</p>
+<pre><code>service mysqld stop  停止服务
 
+mysqld_safe --user=root --skip-grant-tables  清空mysql密码
+
+mysql -u root  登录mysql 
+
+use mysql  使用mysql库
+</code></pre></li>
+</ol>
+<h2 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h2><pre><code>mkdir /usr/tomcat8
+cd tomcat8
+wget http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz
+</code></pre><h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><pre><code>yum install git
+</code></pre><h2 id="服务器端口占用"><a href="#服务器端口占用" class="headerlink" title="服务器端口占用"></a>服务器端口占用</h2><pre><code>netstat -apn|grep 8080
+kill -9 port
+</code></pre><h2 id="解压命令"><a href="#解压命令" class="headerlink" title="解压命令"></a>解压命令</h2><pre><code>tar xzf .tar.gz
+</code></pre>
           
         
       
