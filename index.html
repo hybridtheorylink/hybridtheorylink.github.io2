@@ -289,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/Untitled/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/centos7-安装-svn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="HybridTheory">
@@ -308,7 +308,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/09/Untitled/" itemprop="url">Untitled</a></h1>
+                <a class="post-title-link" href="/2019/04/12/centos7-安装-svn/" itemprop="url">centos7 安装 svn</a></h1>
         
 
         <div class="post-meta">
@@ -320,8 +320,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-09T16:14:00+08:00">
-                2019-04-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T14:53:00+08:00">
+                2019-04-12
               </time>
             
 
@@ -360,168 +360,665 @@
       
         
           
-            <p>今天我们来看一下Java 11到底是什么、他有什么特别的、到底要不要升级到Java 11。</p>
-<p><img src="/images/pasted-2.png" alt="upload successful"></p>
-<p>Java 11有什么特别的</p>
-<p>在Oracle官网中，进入下载页面，第一个可供下载的JDK版本已经提换成了Java SE 11 (LTS)，这里的LTS表示Long-Term-Support。</p>
-<p>本次发布的Java 11和2017年9月份发布的Java 9以及 2018年3月份发布的Java 10相比，其最大的区别就是：在长期支持(Long-Term-Support)方面，Oracle表示会对Java 11提供大力支持，这一支持将会持续至2026年9月。这是据 Java 8 以后支持的首个长期版本。</p>
-<p>为什么说是长期版本，看下面的官方发布的支持路线图表。</p>
-<p>上图是一张Oracle 公布的对于各个版本的JDK的Support Roadmap。途中列举了Java 6 - Java 12的正式发布时间以及支持计划。</p>
-<p>从中可以看出，在Java 11之前，Java 9和Java 10是不提供长期支持的，而上一个提供长期支持的版本是Java 8，其将会支持到2025年3月。</p>
-<p>长期支持，表示Oracle会对其做长期的补丁、安全等扩展支持等。</p>
-<p>下一个提供长期支持的版本将会是Java 17，其将于2021年发布。</p>
-<p>现在大部分都在用 Java 8，Java 9 和 10 目前很少有人在用，至少我没有发现有公司在生产环境应用的，那就是找死。</p>
-<p>现在 Java 11 长期支持，也已经包含了 9 和 10 的全部功能，9 和 10 自然就活到头了。。</p>
-<p>那么我们来看下 从 Java 9 - 11 都有哪些重要的新特性呢？</p>
-<p>新特性</p>
-<p>1、本地变量类型推断</p>
-<p>什么是局部变量类型推断？</p>
-<p>var javastack = “javastack”;<br>System.out.println(javastack);<br>大家看出来了，局部变量类型推断就是左边的类型直接使用 var 定义，而不用写具体的类型，编译器能根据右边的表达式自动推断类型，如上面的 String 。</p>
-<p>var javastack = “javastack”;<br>就等于：</p>
-<p>String javastack = “javastack”;<br>2、字符串加强</p>
-<p>Java 11 增加了一系列的字符串处理方法，如以下所示。</p>
-<p>// 判断字符串是否为空白  </p>
-<p>“ “.isBlank();                // true  </p>
-<p>// 去除首尾空格  </p>
-<p>“ Javastack “.strip();          // “Javastack”  </p>
-<p>// 去除尾部空格   </p>
-<p>“ Javastack “.stripTrailing();  // “ Javastack”  </p>
-<p>// 去除首部空格   </p>
-<p>“ Javastack “.stripLeading();   // “Javastack “  </p>
-<p>// 复制字符串  </p>
-<p>“Java”.repeat(3);             // “JavaJavaJava”  </p>
-<p>// 行数统计  </p>
-<p>“A\nB\nC”.lines().count();    // 3<br>3、集合加强</p>
-<p>自 Java 9 开始，Jdk 里面为集合（List/ Set/ Map）都添加了 of 和 copyOf 方法，它们两个都用来创建不可变的集合，来看下它们的使用和区别。</p>
-<p>示例1：</p>
-<p>var list = List.of(“Java”, “Python”, “C”);  </p>
-<p>var copy = List.copyOf(list);  </p>
-<p>System.out.println(list == copy);   // true<br>示例2：</p>
-<p>var list = new ArrayList<string>();  </string></p>
-<p>var copy = List.copyOf(list);  </p>
-<p>System.out.println(list == copy);   // false </p>
-<p>示例1和2代码差不多，为什么一个为true,一个为false?</p>
-<p>来看下它们的源码：</p>
-<p>static <e> List<e> of(E… elements) {  </e></e></p>
-<pre><code>switch (elements.length) { // implicit null check of elements  
+            <p>CentOS通过yum安装subversion。</p>
+<ol>
+<li>安装</li>
+</ol>
+<p>#yum install subversion</p>
+<ol start="2">
+<li><p>建立版本库</p>
+<p>svnadmin create /var/svn/svntest</p>
+</li>
+</ol>
+<p>cd /var/svn/svntest</p>
+<ol start="3">
+<li>配置</li>
+</ol>
+<p>cd /var/svn/svntest</p>
+<p>a、编辑用户文件passwd，新增两个用户：admin和guest。 (不能由空格，tab)</p>
+<p>#vim conf/passwd</p>
+<p>[users]</p>
+<p>admin = admin</p>
+<p>guest = guest</p>
+<p>b、编辑权限文件authz，用户admin设置可读写权限，guest设置只读权限。</p>
+<p>#vim conf/authz</p>
+<p>[svntest:/]</p>
+<p>admin = rw</p>
+<p>guest = r</p>
+<p>c、编辑svnserve.conf：</p>
+<p>#vim conf/svnserve.conf</p>
+<p>[general]anon-access = none #控制非鉴权用户访问版本库的权限</p>
+<p>auth-access = write #控制鉴权用户访问版本库的权限</p>
+<p>password-db = passwd #指定用户名口令文件名</p>
+<p>authz-db = authz #指定权限配置文件名</p>
+<ol start="4">
+<li>SVN服务</li>
+</ol>
+<p>启动SVN服务。</p>
+<p>#systemctl start svnserve.service</p>
+<p>svnserve -d -r /var/svn</p>
+<p>检查服务是否启动成功。</p>
+<p>#ps aux | grep svnroot 16349 0.0 0.1 162180 900 ? Ss 15:01 0:00 /usr/bin/svnserve –daemon –pid-file=/run/svnserve/svnserve.pid -r /opt/svn</p>
+<p>设置成开机启动。</p>
+<p>5、启动svn版本库 svnserve -d -r /var/svn（停止SVN命令 killall svnserve）</p>
+<p>阿里云要开相应端口3690</p>
+<p>firewall-cmd –zone=public –add-port=3690/tcp –permanent   </p>
+<p>firewall-cmd –reload</p>
+<p>killall svnserve 强制关闭服务命令</p>
+<p>6、客户端连接</p>
+<p>svn://172.16.3.167:3369/svntesst</p>
+<p>通过svn连接，不能通过http或者https连接</p>
 
-    case 0:  
+          
+        
+      
+    </div>
+    
+    
+    
 
-        return ImmutableCollections.emptyList();  
+    
 
-    case 1:  
+    
 
-        return new ImmutableCollections.List12&lt;&gt;(elements[0]);  
+    
 
-    case 2:  
+    <footer class="post-footer">
+      
 
-        return new ImmutableCollections.List12&lt;&gt;(elements[0], elements[1]);  
+      
 
-    default:  
+      
 
-        return new ImmutableCollections.ListN&lt;&gt;(elements);  
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
-}  
-</code></pre><p>}  </p>
-<p>static <e> List<e> copyOf(Collection&lt;? extends E&gt; coll) {  </e></e></p>
-<pre><code>return ImmutableCollections.listCopy(coll);  
-</code></pre><p>}  </p>
-<p>static <e> List<e> listCopy(Collection&lt;? extends E&gt; coll) {  </e></e></p>
-<pre><code>if (coll instanceof AbstractImmutableList &amp;&amp; coll.getClass() != SubList.class) {  
 
-    return (List&lt;E&gt;)coll;  
+    
+      
 
-} else {  
+  
 
-    return (List&lt;E&gt;)List.of(coll.toArray());  
+  
+  
+  
 
-}  
-</code></pre><p>}<br>可以看出 copyOf 方法会先判断来源集合是不是 AbstractImmutableList 类型的，如果是，就直接返回，如果不是，则调用 of 创建一个新的集合。</p>
-<p>示例2因为用的 new 创建的集合，不属于不可变 AbstractImmutableList 类的子类，所以 copyOf 方法又创建了一个新的实例，所以为false.</p>
-<p>注意：使用 of 和 copyOf 创建的集合为不可变集合，不能进行添加、删除、替换、排序等操作，不然会报 java.lang.UnsupportedOperationException 异常。</p>
-<p>上面演示了 List 的 of 和 copyOf 方法，Set 和 Map 接口都有。</p>
-<p>4、Stream 加强</p>
-<p>Stream 是 Java 8 中的新特性，Java 9 开始对 Stream 增加了以下 4 个新方法。</p>
-<p>增加单个参数构造方法，可为null<br>Stream.ofNullable(null).count(); // 0<br>增加 takeWhile 和 dropWhile 方法<br>Stream.of(1, 2, 3, 2, 1)  </p>
-<pre><code>.takeWhile(n -&gt; n &lt; 3)  
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/linux-自动备份部署tomcat脚本/">
 
-.collect(Collectors.toList());  // [1, 2] 
-</code></pre><p>从开始计算，当 n &lt; 3 时就截止。</p>
-<p>Stream.of(1, 2, 3, 2, 1)  </p>
-<pre><code>.dropWhile(n -&gt; n &lt; 3)  
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
 
-.collect(Collectors.toList());  // [3, 2, 1] 
-</code></pre><p>这个和上面的相反，一旦 n &lt; 3 不成立就开始计算。</p>
-<p>3）iterate重载</p>
-<p>这个 iterate 方法的新重载方法，可以让你提供一个 Predicate (判断条件)来指定什么时候结束迭代。</p>
-<p>如果你对 JDK 8 中的 Stream 还不熟悉，可以看之前分享的这一系列教程。</p>
-<p>5、Optional 加强</p>
-<p>Opthonal 也增加了几个非常酷的方法，现在可以很方便的将一个 Optional 转换成一个 Stream, 或者当一个空 Optional 时给它一个替代的。</p>
-<p>Optional.of(“javastack”).orElseThrow();     // javastack  </p>
-<p>Optional.of(“javastack”).stream().count();  // 1  </p>
-<p>Optional.ofNullable(null)  </p>
-<pre><code>.or(() -&gt; Optional.of(&quot;javastack&quot;))  
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
 
-.get();   // javastack 
-</code></pre><p>6、InputStream 加强</p>
-<p>InputStream 终于有了一个非常有用的方法：transferTo，可以用来将数据直接传输到 OutputStream，这是在处理原始数据流时非常常见的一种用法，如下示例。</p>
-<p>var classLoader = ClassLoader.getSystemClassLoader();  </p>
-<p>var inputStream = classLoader.getResourceAsStream(“javastack.txt”);  </p>
-<p>var javastack = File.createTempFile(“javastack2”, “txt”);  </p>
-<p>try (var outputStream = new FileOutputStream(javastack)) {  </p>
-<pre><code>inputStream.transferTo(outputStream);  
-</code></pre><p>}<br>7、HTTP Client API</p>
-<p>这是 Java 9 开始引入的一个处理 HTTP 请求的的孵化 HTTP Client API，该 API 支持同步和异步，而在 Java 11 中已经为正式可用状态，你可以在 java.net 包中找到这个 API。</p>
-<p>来看一下 HTTP Client 的用法：</p>
-<p>var request = HttpRequest.newBuilder()  </p>
-<pre><code>.uri(URI.create(&quot;https://javastack.cn&quot;))  
+    
+      <header class="post-header">
 
-.GET()  
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/12/linux-自动备份部署tomcat脚本/" itemprop="url">linux 自动备份部署tomcat脚本</a></h1>
+        
 
-.build();  
-</code></pre><p>var client = HttpClient.newHttpClient();  </p>
-<p>// 同步  </p>
-<p>HttpResponse<string> response = client.send(request, HttpResponse.BodyHandlers.ofString());  </string></p>
-<p>System.out.println(response.body());  </p>
-<p>// 异步  </p>
-<p>client.sendAsync(request, HttpResponse.BodyHandlers.ofString())  </p>
-<pre><code>.thenApply(HttpResponse::body)  
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T14:52:00+08:00">
+                2019-04-12
+              </time>
+            
 
-.thenAccept(System.out::println); 
-</code></pre><p>上面的 .GET() 可以省略，默认请求方式为 Get！</p>
-<p>更多使用示例可以看这个 API，后续有机会再做演示。</p>
-<p>现在 Java 自带了这个 HTTP Client API，我们以后还有必要用 Apache 的 HttpClient 工具包吗？</p>
-<p>8、化繁为简，一个命令编译运行源代码</p>
-<p>看下面的代码。</p>
-<p>// 编译<br>javac Javastack.java  </p>
-<p>// 运行<br>java Javastack<br>在我们的认知里面，要运行一个 Java 源代码必须先编译，再运行，两步执行动作。而在未来的 Java 11 版本中，通过一个 java 命令就直接搞定了，如以下所示。</p>
-<p>java Javastack.java<br>更多新特性</p>
-<p>新发布的Java 11在新特性方面，提供了17个JEP(JDK Enhancement Proposal 特性增强提议)</p>
-<p>上图是Oracle公布的Java 11包含的所有新特性，其中几个重点的新特性为：</p>
-<p>ZGC：可扩展的低延迟垃圾收集器</p>
-<p>ZGC是一款号称可以保证每次GC的停顿时间不超过10MS的垃圾回收器，并且和当前的默认垃圾回收起G1相比，吞吐量下降不超过15%。</p>
-<p>Epsilon：什么事也不做的垃圾回收器</p>
-<p>Java 11还加入了一个比较特殊的垃圾回收器——Epsilon，该垃圾收集器被称为“no-op”收集器，将处理内存分配而不实施任何实际的内存回收机制。 也就是说，这是一款不做垃圾回收的垃圾回收器。这个垃圾回收器看起来并没什么用，主要可以用来进行性能测试、内存压力测试等，Epsilon GC可以作为度量其他垃圾回收器性能的对照组。大神Martijn说，Epsilon GC至少能够帮助理解GC的接口，有助于成就一个更加模块化的JVM。</p>
-<p>增强var用法</p>
-<p>Java 10中增加了本地变量类型推断的特性，可以使用var来定义局部变量。尽管这一特性被很多人诟病，但是并不影响Java继续增强他的用法，在Java 11中，var可以用来作为Lambda表达式的局部变量声明。</p>
-<p>移除Java EE和CORBA模块</p>
-<p>早在发布Java SE 9的时候，Java就表示过，会在未来版本中将Java EE和CORBA模块移除，而这样举动终于在Java 11中实施。终于去除了Java EE和CORBA模块。</p>
-<p>HTTP客户端进一步升级</p>
-<p>JDK 9 中就已对 HTTP Client API 进行标准化，然后通过JEP 110，在 JDK 10 中进行了更新。在本次的Java 11的更新列表中，由以JEP 321进行进一步升级。该API通过CompleteableFutures提供非阻塞请求和响应语义，可以联合使用以触发相应的动作。 JDK 11完全重写了该功能。现在，在用户层请求发布者和响应发布者与底层套接字之间追踪数据流更容易了，这降低了复杂性，并最大程度上提高了HTTP / 1和HTTP / 2之间的重用的可能性。</p>
-<p>到底要不要升级</p>
-<p>2017年8月，JCP执行委员会提出将Java的发布频率改为每六个月一次。</p>
-<p>2017年9月，Java 9发布。<br>2018年3月，Java 10发布。<br>2018年9月，Java 11发布。<br>大部分人使用的JDK版本还是Java 8及以下版本，甚至某些公司的生产环境使用的还是JDK 1.6。</p>
-<p><img src="/images/pasted-0.png" alt="upload successful"><br>那么，对于公司和开发者来说，到底要不要在生产及开发环境中升级和学习Java 11呢?</p>
-<p>对于企业来说</p>
-<p>对于企业来说，生产环境中的JDK版本升级到Java 11还是有必要的。主要有两个原因：</p>
-<p>1、Oracle会对Java 11提供长期支持，企业可以放心使用这一版本。并且下一个长期支持的版本会在三年后发布，时间比较久远。</p>
-<p>2、Java 11确实提供了一些比较不错的特性，尤其重要的是提供了ZGC，这是一款具有划时代意义的垃圾回收器。优点不再赘述。有了ZGC，JVM的性能瓶颈可以被突破。</p>
-<p>对于开发者来说</p>
-<p>在编码方面，Java 11并没有像Java 8那样变化巨大，毕竟Java 8提供了函数式编程的能力，这也是很多开发者学习Java 8的一个重要原因。</p>
-<p>但是，Java 11也并不是完全没有提升，至少在新版本中，Java开发者终于可以摆脱老旧的HttpURLConnection了。新的HTTP API提供了对HTTOP/2等业界前沿标准的支持，提供了精简而又友好的API接口。</p>
-<p>所以，综上所述，无论是对于企业还是开发者来说，升级Java 11都是有必要的，至少比Java 9和Java 10的必要性要大很多。至于这个必要性到底有多大呢，作者给一个简单的说明：</p>
-<p>如果你现在时候用的JDK/Java版本低于Java 8，先升级到Java 8。<br>如果你现在时候用的JDK/Java版本高于Java 7，那么可以考虑升级到Java 11了。 当然，你可以直接从Java 6跳跃到Java 11。<br>最后</p>
-<p>现在许多人还在使用 Java 8 或者 7，不过 8 在 2019 年初就会结束免费更新。现在 11 是长期支持版本，正是学习和上手 11 的好时机，写这篇文章希望能对你有所启发。</p>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#将脚本放在webapp目录下，war放入webapp的backup目录下，执行脚本shell publish.sh xx .. 参数为war包名称 tomcat路径</span><br><span class="line">function publish()&#123;</span><br><span class="line">	echo &quot;update...&quot;</span><br><span class="line">	echo $2</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">	if  [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">	echo &quot;请输入war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	if [ ! -f &quot;$1.war&quot; ];then</span><br><span class="line">	echo &quot;请输入正确的war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	cp $1.war $2/backup/$1/$1.war</span><br><span class="line">	cd $2</span><br><span class="line">	if [ ! -f &quot;./backup/$1/$1.war&quot; ];then</span><br><span class="line">	echo &quot;请上传正确的war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	last_time=`stat $1.war|grep Modify|awk &apos;&#123;print $2&#125;&apos;|sed s/-//g`;</span><br><span class="line">	if [ ! -f &quot;./backup/$1/$last_time/$1.war&quot; ];then</span><br><span class="line">	mkdir -p &quot;./backup/$1/$last_time&quot;;</span><br><span class="line">	mv $1.war ./backup/$1/$last_time;</span><br><span class="line">	else</span><br><span class="line">	file_count=`ls ./backup/$1/$last_time -l |grep &quot;^-&quot;|wc -l`;</span><br><span class="line">	echo $file_count;</span><br><span class="line">	#file_count=$[file_count+1];</span><br><span class="line">	mv $1.war ./backup/$1/$last_time/$1$file_count.war;</span><br><span class="line">	fi</span><br><span class="line">	mv backup/$1/$1.war $1.war;</span><br><span class="line">	echo &quot;完成备份并发布应用&quot;;</span><br><span class="line">	return 1;</span><br><span class="line">&#125;</span><br><span class="line">publish $1 $2</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/nginx-不停服更新服务器脚本/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/12/nginx-不停服更新服务器脚本/" itemprop="url">nginx 不停服更新服务器脚本</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T14:52:00+08:00">
+                2019-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">#修改两个tomcat路径 执行脚本 sh grace_update.sh XX 参数war包名称</span><br><span class="line">#!/bin/bash</span><br><span class="line">function grace_update()&#123;</span><br><span class="line">	if  [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">	echo &quot;请输入war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	#NGINX_SBIN=&quot;/usr/sbin&quot;</span><br><span class="line">	#NGINX_CONF=&quot;/etc/nginx&quot;</span><br><span class="line">	#TOMCAT_1=&quot;/data/tomcat/apache-tomcat-8.5.23&quot;</span><br><span class="line">	#TOMCAT_2=&quot;/data/tomcat/apache-tomcat-8.5.23&quot;</span><br><span class="line"> </span><br><span class="line">	NGINX_SBIN=&quot;/usr/local/nginx/sbin&quot;</span><br><span class="line">	NGINX_CONF=&quot;/usr/local/nginx/conf&quot;</span><br><span class="line">	TOMCAT_1=&quot;/data0/tomcat-nginx-7070/apache-tomcat-8.5.23&quot;</span><br><span class="line">	TOMCAT_2=&quot;/data0/tomcat/apache-tomcat-8.5.23&quot;	</span><br><span class="line">	echo &quot;发送停止7070服务器信号&quot;</span><br><span class="line">	rm -rf $NGINX_CONF/nginx.conf</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.7070 $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line">	echo &quot;更新7070服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	#`$NGINX_SBIN`/nginx</span><br><span class="line">	echo $TOMCAT_1</span><br><span class="line">	</span><br><span class="line">	sh publish-v2.sh $1 $TOMCAT_1/webapps</span><br><span class="line">	result=$?</span><br><span class="line"> </span><br><span class="line">	if  [ $result -eq 0 ] ;then</span><br><span class="line">		echo &quot;发布错误，退出程序&quot;</span><br><span class="line">		return 0</span><br><span class="line">	fi</span><br><span class="line"> </span><br><span class="line">	echo &quot;发送停止8080服务器信号，并开启7070服务器&quot;</span><br><span class="line">	rm -rf $NGINX_CONF/nginx.conf</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.8080 $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	echo $TOMCAT_2</span><br><span class="line">	echo &quot;更新8080服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	sh publish-v2.sh $1 $TOMCAT_2/webapps</span><br><span class="line">	result=$?</span><br><span class="line"> </span><br><span class="line">	if  [ $result -eq 0 ] ;then</span><br><span class="line">		echo &quot;发布错误，退出程序&quot;</span><br><span class="line">		return 0</span><br><span class="line">	fi</span><br><span class="line">	echo &quot;部署完成&quot;</span><br><span class="line">	echo &quot;开启全部服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.all $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">	echo &quot;it&apos;s done!&quot;</span><br><span class="line">	echo &quot;Congratulation！！！ &quot;	</span><br><span class="line">	echo &quot;--&lt;--&lt;-&lt;@ ●-● § ^_^ § &quot;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">grace_update $1</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/Untitled/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/12/Untitled/" itemprop="url"> Centos7安装rabbitmq</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T14:44:00+08:00">
+                2019-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="首先需要安装erlang"><a href="#首先需要安装erlang" class="headerlink" title="首先需要安装erlang"></a>首先需要安装erlang</h2><pre><code>rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
+yum install erlang
+</code></pre><p>安装过程中会有提示，一路输入“y”即可。<br>完成后安装RabbitMQ：<br>先下载rpm：</p>
+<pre><code>wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm
+</code></pre><p>下载完成后安装：</p>
+<pre><code>yum install rabbitmq-server-3.6.6-1.el7.noarch.rpm
+</code></pre><p>完成后启动服务：</p>
+<pre><code>service rabbitmq-server start
+</code></pre><p>可以查看服务状态：</p>
+<pre><code>service rabbitmq-server status 
+</code></pre><p><img src="/images/pasted-5.png" alt="upload successful"></p>
+<p>这里可以看到log文件的位置，转到文件位置，打开文件：</p>
+<p><img src="/images/pasted-6.png" alt="upload successful"></p>
+<p>这里显示的是没有找到配置文件，我们可以自己创建这个文件</p>
+<pre><code>cd /etc/rabbitmq/
+vi rabbitmq.config
+</code></pre><p>编辑内容如下：</p>
+<pre><code>[{rabbit, [{loopback_users, []}]}].
+</code></pre><p>这里的意思是开放使用，rabbitmq默认创建的用户guest，密码也是guest，这个用户默认只能是本机访问，localhost或者127.0.0.1，从外部访问需要添加上面的配置。</p>
+<p>保存配置后重启服务：</p>
+<pre><code>service rabbitmq-server stop
+service rabbitmq-server start
+</code></pre><p>此时就可以从外部访问了，但此时再看log文件，发现内容还是原来的，还是显示没有找到配置文件，可以手动删除这个文件再重启服务，不过这不影响使用</p>
+<pre><code>rm rabbit\@mythsky.log 
+service rabbitmq-server stop
+service rabbitmq-server start
+</code></pre><p>开放5672端口</p>
+<pre><code>firewall-cmd --zone=public --add-port=5672/tcp --permanent
+firewall-cmd --reload 
+</code></pre><p>开启管理UI：</p>
+<pre><code>rabbitmq-plugins enable rabbitmq_management
+firewall-cmd --zone=public --add-port=15672/tcp --permanent
+firewall-cmd --reload
+</code></pre><h2 id="centos出现“FirewallD-is-not-running”怎么办"><a href="#centos出现“FirewallD-is-not-running”怎么办" class="headerlink" title="centos出现“FirewallD is not running”怎么办"></a>centos出现“FirewallD is not running”怎么办</h2><p>执行firewall-cmd –permanent –zone=public –add-port=3306/tcp，提示FirewallD is not running，如下图所示。</p>
+<p>通过systemctl status firewalld查看firewalld状态，发现当前是dead状态，即防火墙未开启。</p>
+<p>通过systemctl start firewalld开启防火墙，没有任何提示即开启成功。</p>
+<h2 id="修改RabbitMQ配置"><a href="#修改RabbitMQ配置" class="headerlink" title="修改RabbitMQ配置"></a>修改RabbitMQ配置</h2><p>socket连接数过多时或mq无法启动时，可修改连接配置限制</p>
+<p>在CentOS7中，如果是以systemd方式管理rabbitmq服务，则需要修改rabbitmq的service文件。</p>
+<pre><code>vi /usr/lib/systemd/system/rabbitmq-server.service
+</code></pre><p>添加如下参数，其值请根据实际情况进行调整：</p>
+<pre><code>[Service]
+LimitNOFILE=16384
+</code></pre><p>重启rabbitmq即可</p>
+<pre><code>systemctl daemon-reload
+systemctl restart rabbitmq-server
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/cron表达式详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/12/cron表达式详解/" itemprop="url">cron表达式详解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T13:48:00+08:00">
+                2019-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>corn从左到右（用空格隔开）：秒 分 小时 月份中的日期 月份 星期中的日期 年份</p>
+<h2 id="各字段的含义"><a href="#各字段的含义" class="headerlink" title="各字段的含义"></a>各字段的含义</h2><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>允许值</th>
+<th>允许的特殊字符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>秒（Seconds）</td>
+<td>0~59的整数</td>
+<td>, - * /    四个字符</td>
+</tr>
+<tr>
+<td>分（Minutes）</td>
+<td>0~59的整数</td>
+<td>, - * /    四个字符</td>
+</tr>
+<tr>
+<td>小时（Hours）</td>
+<td>0~23的整数</td>
+<td>, - * /    四个字符</td>
+</tr>
+<tr>
+<td>日期（DayofMonth）</td>
+<td>1~31的整数（但是你需要考虑你月的天数）</td>
+<td>,- * ? / L W C     八个字符</td>
+</tr>
+<tr>
+<td>月份（Month）</td>
+<td>1~12的整数或者 JAN-DEC</td>
+<td>, - * /    四个字符</td>
+</tr>
+<tr>
+<td>星期（DayofWeek）</td>
+<td>1~7的整数或者 SUN-SAT （1=SUN）</td>
+<td>, - * ? / L C #     八个字符</td>
+</tr>
+<tr>
+<td>年(可选，留空)（Year）</td>
+<td>1970~2099</td>
+<td>, - * /    四个字符</td>
+</tr>
+</tbody>
+</table>
+<pre><code>（1）*：表示匹配该域的任意值。假如在Minutes域使用*, 即表示每分钟都会触发事件。
+</code></pre><p>　　（2）?：只能用在DayofMonth和DayofWeek两个域。它也匹配域的任意值，但实际不会。因为DayofMonth和DayofWeek会相互影响。例如想在每月的20日触发调度，不管20日到底是星期几，则只能使用如下写法： 13 13 15 20 <em> ?, 其中最后一位只能用？，而不能使用</em>，如果使用*表示不管星期几都会触发，实际上并不是这样。</p>
+<p>　　（3）-：表示范围。例如在Minutes域使用5-20，表示从5分到20分钟每分钟触发一次 </p>
+<p>　　（4）/：表示起始时间开始触发，然后每隔固定时间触发一次。例如在Minutes域使用5/20,则意味着5分钟触发一次，而25，45等分别触发一次. </p>
+<p>　　（5）,：表示列出枚举值。例如：在Minutes域使用5,20，则意味着在5和20分每分钟触发一次。 </p>
+<p>　　（6）L：表示最后，只能出现在DayofWeek和DayofMonth域。如果在DayofWeek域使用5L,意味着在最后的一个星期四触发。 </p>
+<p>　　（7）W:表示有效工作日(周一到周五),只能出现在DayofMonth域，系统将在离指定日期的最近的有效工作日触发事件。例如：在 DayofMonth使用5W，如果5日是星期六，则将在最近的工作日：星期五，即4日触发。如果5日是星期天，则在6日(周一)触发；如果5日在星期一到星期五中的一天，则就在5日触发。另外一点，W的最近寻找不会跨过月份 。</p>
+<p>　　（8）LW:这两个字符可以连用，表示在某个月最后一个工作日，即最后一个星期五。 </p>
+<p>　　（9）#:用于确定每个月第几个星期几，只能出现在DayofMonth域。例如在4#2，表示某月的第二个星期三。</p>
+<h2 id="常用表达式例子"><a href="#常用表达式例子" class="headerlink" title="常用表达式例子"></a>常用表达式例子</h2><p>（1）0 0 2 1 <em> ? </em>   表示在每月的1日的凌晨2点调整任务</p>
+<p>　　（2）0 15 10 ? * MON-FRI   表示周一到周五每天上午10:15执行作业</p>
+<p>　　（3）0 15 10 ? 6L 2002-2006   表示2002-2006年的每个月的最后一个星期五上午10:15执行作</p>
+<p>　　（4）0 0 10,14,16 <em> </em> ?   每天上午10点，下午2点，4点 </p>
+<p>　　（5）0 0/30 9-17 <em> </em> ?   朝九晚五工作时间内每半小时 </p>
+<p>　　（6）0 0 12 ? * WED    表示每个星期三中午12点 </p>
+<p>　　（7）0 0 12 <em> </em> ?   每天中午12点触发 </p>
+<p>　　（8）0 15 10 ? <em> </em>    每天上午10:15触发 </p>
+<p>　　（9）0 15 10 <em> </em> ?     每天上午10:15触发 </p>
+<p>　　（10）0 15 10 <em> </em> ? *    每天上午10:15触发 </p>
+<p>　　（11）0 15 10 <em> </em> ? 2005    2005年的每天上午10:15触发 </p>
+<p>　　（12）0 <em> 14 </em> * ?     在每天下午2点到下午2:59期间的每1分钟触发 </p>
+<p>　　（13）0 0/5 14 <em> </em> ?    在每天下午2点到下午2:55期间的每5分钟触发 </p>
+<p>　　（14）0 0/5 14,18 <em> </em> ?     在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发 </p>
+<p>　　（15）0 0-5 14 <em> </em> ?    在每天下午2点到下午2:05期间的每1分钟触发 </p>
+<p>　　（16）0 10,44 14 ? 3 WED    每年三月的星期三的下午2:10和2:44触发 </p>
+<p>　　（17）0 15 10 ? * MON-FRI    周一至周五的上午10:15触发 </p>
+<p>　　（18）0 15 10 15 * ?    每月15日上午10:15触发 </p>
+<p>　　（19）0 15 10 L * ?    每月最后一日的上午10:15触发 </p>
+<p>　　（20）0 15 10 ? * 6L    每月的最后一个星期五上午10:15触发 </p>
+<p>　　（21）0 15 10 ? * 6L 2002-2005   2002年至2005年的每月的最后一个星期五上午10:15触发 </p>
+<p>　　（22）0 15 10 ? * 6#3   每月的第三个星期五上午10:15触发</p>
+<p>　　</p>
+<p>　　注：</p>
+<p>　　（1）有些子表达式能包含一些范围或列表</p>
+<p>　　例如：子表达式（天（星期））可以为 “MON-FRI”，“MON，WED，FRI”，“MON-WED,SAT”</p>
+<p>“*”字符代表所有可能的值</p>
+<p>　　因此，“<em>”在子表达式（月）里表示每个月的含义，“</em>”在子表达式（天（星期））表示星期的每一天</p>
+<p>　　“/”字符用来指定数值的增量<br>　　例如：在子表达式（分钟）里的“0/15”表示从第0分钟开始，每15分钟<br>在子表达式（分钟）里的“3/20”表示从第3分钟开始，每20分钟（它和“3，23，43”）的含义一样</p>
+<p>　　“？”字符仅被用于天（月）和天（星期）两个子表达式，表示不指定值<br>　　当2个子表达式其中之一被指定了值以后，为了避免冲突，需要将另一个子表达式的值设为“？”</p>
+<p>　　“L” 字符仅被用于天（月）和天（星期）两个子表达式，它是单词“last”的缩写<br>　　但是它在两个子表达式里的含义是不同的。<br>　　在天（月）子表达式中，“L”表示一个月的最后一天<br>　　在天（星期）自表达式中，“L”表示一个星期的最后一天，也就是SAT</p>
+<p>　　如果在“L”前有具体的内容，它就具有其他的含义了</p>
+<p>　　例如：“6L”表示这个月的倒数第６天，“FRIL”表示这个月的最一个星期五<br>　　注意：在使用“L”参数时，不要指定列表或范围，因为这会导致问题</p>
 
           
         
@@ -728,135 +1225,114 @@ wget http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.14/bin/apac
 </code></pre><h2 id="服务器端口占用"><a href="#服务器端口占用" class="headerlink" title="服务器端口占用"></a>服务器端口占用</h2><pre><code>netstat -apn|grep 8080
 kill -9 port
 </code></pre><h2 id="解压命令"><a href="#解压命令" class="headerlink" title="解压命令"></a>解压命令</h2><pre><code>tar xzf .tar.gz
+</code></pre><h2 id="yum-切换163源"><a href="#yum-切换163源" class="headerlink" title="yum 切换163源"></a>yum 切换163源</h2><ol>
+<li>首先备份/etc/yum.repos.d/CentOS-Base.repo<pre><code>cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+</code></pre></li>
+<li>进入yum源配置文件所在文件夹<pre><code>[root@localhost yum.repos.d]# cd /etc/yum.repos.d/
+</code></pre></li>
+<li>下载163的yum源配置文件，放入/etc/yum.repos.d/(操作前请做好相应备份)<pre><code>[root@localhost yum.repos.d]# wget http://mirrors.163.com/.help/CentOS6-Base-163.repo
+</code></pre></li>
+<li>运行yum makecache生成缓存        <pre><code>[root@localhost yum.repos.d]# yum makecache
+</code></pre></li>
+<li>更新系统(时间比较久,主要看个人网速)<pre><code>[root@localhost yum.repos.d]# yum -y update
+</code></pre></li>
+</ol>
+<h2 id="阿里云挂载磁盘"><a href="#阿里云挂载磁盘" class="headerlink" title="阿里云挂载磁盘"></a>阿里云挂载磁盘</h2><ol>
+<li>查看新磁盘，找到新添加的磁盘的编号为/dev/vdc<pre><code>[root@cgsl ]# fdisk –l
+</code></pre></li>
+<li>硬盘分区 进入fdisk模式  <pre><code>[root@cgsl ]# /sbin/fdisk /dev/vdc
+</code></pre></li>
+<li>输入n进行分区  <pre><code>[root@cgsl ]# Command (m for help): n
+</code></pre></li>
+<li>选择分区类型（p主分区）<pre><code>[root@cgsl ]# Select (default p): p
+</code></pre></li>
+<li>选择分区个数（也是分区id）<pre><code>[root@cgsl ]# Partition number (1-4, default 1): 1
+</code></pre></li>
+<li>选择分区空间大小，回车默认大小<pre><code>Last sector, +sectors or +size{K,M,G} (2048-1953525167, default 1953525167): +300GB
+</code></pre></li>
+<li>一直回车，最后输入q退出 将新分区格式化为ext3文件系统<pre><code>[root@cgsl ]# mkfs -t ext3 /dev/vdc
+</code></pre></li>
+<li>挂载硬盘 创建挂载点，在根目录下创建storage目录      <pre><code>[root@cgsl ]# mkdir /storage
+</code></pre></li>
+<li>将/dev/vdc挂载到/storage下<pre><code>[root@cgsl ]# mount /dev/vdc /storage
+</code></pre></li>
+<li>设置开机启动自动挂载<br>新创建的分区不能开机自动挂载，每次重启机器都要手动挂载。<br>设置开机自动挂载需要修改/etc/fstab文件 <pre><code>#vi /etc/fstab 
+</code></pre>在文件的最后增加一行 <pre><code>/dev/vdc /storage ext3 defaults 1 2 
+</code></pre>注意要查询一下自己的硬盘格式，用df -T查询。</li>
+<li>ps 取消挂载<pre><code># unmount /dev/sdb
+# vi /etc/fstab
+</code></pre>进行格式化<pre><code># mkfs.xfs /dev/sdb
+</code></pre></li>
+</ol>
+<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><ol>
+<li>下载redis<pre><code>https://redis.io/download
+</code></pre></li>
+<li><p>配置redis密码</p>
+<p> redis.conf中，打开配置文件找到 去掉行前的注释</p>
+<pre><code>#requirepass foobared 
+</code></pre><p> 远程登录，打开配置文件把下面对应的注释掉</p>
+<pre><code># bind 127.0.0.1 
+</code></pre><p> Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程，设置为no</p>
+<pre><code>daemonize no
+</code></pre><p> 注释保护模式</p>
+<pre><code>protected-mode no 
+</code></pre><p> redis 启动</p>
+<pre><code>./redis-server ../redis.conf
+</code></pre><p> redis 停止服务</p>
+<pre><code>./redis-cli shutdown
+</code></pre></li>
+</ol>
+<h2 id="RabbitMq"><a href="#RabbitMq" class="headerlink" title="RabbitMq"></a>RabbitMq</h2><ol>
+<li><p>首先需要安装erlang，参考：<a href="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse" target="_blank" rel="noopener">http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</a></p>
+<pre><code>rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
+yum install erlang
+</code></pre></li>
+</ol>
+<p>安装过程中会有提示，一路输入“y”即可。</p>
+<ol start="2">
+<li><p>完成后安装RabbitMQ：</p>
+<p> 先下载rpm： </p>
+<pre><code>wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm
+</code></pre><p> 下载完成后安装：</p>
+<pre><code>yum install rabbitmq-server-3.6.6-1.el7.noarch.rpm 
+</code></pre><p>  完成后启动服务：</p>
+<pre><code>service rabbitmq-server start
+</code></pre><p>  可以查看服务状态：</p>
+<pre><code>service rabbitmq-server status
+</code></pre></li>
+</ol>
+<p><img src="/images/pasted-3.png" alt="upload successful"></p>
+<p>这里可以看到log文件的位置，转到文件位置，打开文件：</p>
+<p><img src="/images/pasted-4.png" alt="upload successful"></p>
+<p>这里显示的是没有找到配置文件，我们可以自己创建这个文件</p>
+<pre><code>cd /etc/rabbitmq/
+vi rabbitmq.config
+</code></pre><p>编辑内容如下：<br>        [{rabbit, [{loopback_users, []}]}].<br>这里的意思是开放使用，rabbitmq默认创建的用户guest，密码也是guest，这个用户默认只能是本机访问，localhost或者127.0.0.1，从外部访问需要添加上面的配置。</p>
+<p>保存配置后重启服务：<br>        service rabbitmq-server stop<br>        service rabbitmq-server start<br>此时就可以从外部访问了，但此时再看log文件，发现内容还是原来的，还是显示没有找到配置文件，可以手动删除这个文件再重启服务，不过这不影响使用</p>
+<pre><code>rm rabbit\@mythsky.log 
+service rabbitmq-server stop
+service rabbitmq-server start
+</code></pre><p>开启管理UI：</p>
+<pre><code>rabbitmq-plugins enable rabbitmq_management
+firewall-cmd --zone=public --add-port=15672/tcp --permanent
+firewall-cmd --reload        
+</code></pre><p>修改RabbitMQ配置<br>在CentOS7中，如果是以systemd方式管理rabbitmq服务，则需要修改rabbitmq的service文件。</p>
+<pre><code>vi /usr/lib/systemd/system/rabbitmq-server.service
+</code></pre><p>添加如下参数，其值请根据实际情况进行调整：</p>
+<pre><code>[Service]
+LimitNOFILE=16384
+</code></pre><p>重启rabbitmq即可</p>
+<pre><code>systemctl daemon-reload
+systemctl restart rabbitmq-server
+</code></pre><h2 id="防火墙开放端口"><a href="#防火墙开放端口" class="headerlink" title="防火墙开放端口"></a>防火墙开放端口</h2><p>打开防火墙</p>
+<pre><code>systemctl start firewalld
+</code></pre><p>打开端口</p>
+<pre><code>firewall-cmd --zone=public --add-port=5672/tcp --permanent
+</code></pre><p>重载防火墙</p>
+<pre><code>firewall-cmd --reload
+</code></pre><p>查看打开端口</p>
+<pre><code>firewall-cmd --list-all
 </code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/08/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-08T17:30:26+08:00">
-                2019-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
           
         
       
@@ -937,7 +1413,7 @@ kill -9 port
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -950,7 +1426,7 @@ kill -9 port
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

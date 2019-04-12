@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="shell,java,">
+  <meta name="keywords" content="shell,运维,">
 
 
 
@@ -80,17 +80,20 @@
 
 
 <meta name="description" content="java安装 在/usr/目录下创建java目录 [root@localhost ~]#mkdir /usr/java  [root@localhost ~]#cd /usr/java  下载jdk,然后解压 wget --no-check-certificate --no-cookie --header &amp;quot;Cookie: oraclelicense=accept-securebacku">
-<meta name="keywords" content="shell,java">
+<meta name="keywords" content="shell,运维">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentoOS服务器环境安装">
 <meta property="og:url" content="http://yoursite.com/2019/04/09/CentoOS服务器环境安装/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="java安装 在/usr/目录下创建java目录 [root@localhost ~]#mkdir /usr/java  [root@localhost ~]#cd /usr/java  下载jdk,然后解压 wget --no-check-certificate --no-cookie --header &amp;quot;Cookie: oraclelicense=accept-securebacku">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-09T08:11:55.949Z">
+<meta property="og:image" content="http://yoursite.com/images/pasted-3.png">
+<meta property="og:image" content="http://yoursite.com/images/pasted-4.png">
+<meta property="og:updated_time" content="2019-04-12T06:56:59.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentoOS服务器环境安装">
 <meta name="twitter:description" content="java安装 在/usr/目录下创建java目录 [root@localhost ~]#mkdir /usr/java  [root@localhost ~]#cd /usr/java  下载jdk,然后解压 wget --no-check-certificate --no-cookie --header &amp;quot;Cookie: oraclelicense=accept-securebacku">
+<meta name="twitter:image" content="http://yoursite.com/images/pasted-3.png">
 
 
 
@@ -447,6 +450,113 @@ wget http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.14/bin/apac
 </code></pre><h2 id="服务器端口占用"><a href="#服务器端口占用" class="headerlink" title="服务器端口占用"></a>服务器端口占用</h2><pre><code>netstat -apn|grep 8080
 kill -9 port
 </code></pre><h2 id="解压命令"><a href="#解压命令" class="headerlink" title="解压命令"></a>解压命令</h2><pre><code>tar xzf .tar.gz
+</code></pre><h2 id="yum-切换163源"><a href="#yum-切换163源" class="headerlink" title="yum 切换163源"></a>yum 切换163源</h2><ol>
+<li>首先备份/etc/yum.repos.d/CentOS-Base.repo<pre><code>cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+</code></pre></li>
+<li>进入yum源配置文件所在文件夹<pre><code>[root@localhost yum.repos.d]# cd /etc/yum.repos.d/
+</code></pre></li>
+<li>下载163的yum源配置文件，放入/etc/yum.repos.d/(操作前请做好相应备份)<pre><code>[root@localhost yum.repos.d]# wget http://mirrors.163.com/.help/CentOS6-Base-163.repo
+</code></pre></li>
+<li>运行yum makecache生成缓存        <pre><code>[root@localhost yum.repos.d]# yum makecache
+</code></pre></li>
+<li>更新系统(时间比较久,主要看个人网速)<pre><code>[root@localhost yum.repos.d]# yum -y update
+</code></pre></li>
+</ol>
+<h2 id="阿里云挂载磁盘"><a href="#阿里云挂载磁盘" class="headerlink" title="阿里云挂载磁盘"></a>阿里云挂载磁盘</h2><ol>
+<li>查看新磁盘，找到新添加的磁盘的编号为/dev/vdc<pre><code>[root@cgsl ]# fdisk –l
+</code></pre></li>
+<li>硬盘分区 进入fdisk模式  <pre><code>[root@cgsl ]# /sbin/fdisk /dev/vdc
+</code></pre></li>
+<li>输入n进行分区  <pre><code>[root@cgsl ]# Command (m for help): n
+</code></pre></li>
+<li>选择分区类型（p主分区）<pre><code>[root@cgsl ]# Select (default p): p
+</code></pre></li>
+<li>选择分区个数（也是分区id）<pre><code>[root@cgsl ]# Partition number (1-4, default 1): 1
+</code></pre></li>
+<li>选择分区空间大小，回车默认大小<pre><code>Last sector, +sectors or +size{K,M,G} (2048-1953525167, default 1953525167): +300GB
+</code></pre></li>
+<li>一直回车，最后输入q退出 将新分区格式化为ext3文件系统<pre><code>[root@cgsl ]# mkfs -t ext3 /dev/vdc
+</code></pre></li>
+<li>挂载硬盘 创建挂载点，在根目录下创建storage目录      <pre><code>[root@cgsl ]# mkdir /storage
+</code></pre></li>
+<li>将/dev/vdc挂载到/storage下<pre><code>[root@cgsl ]# mount /dev/vdc /storage
+</code></pre></li>
+<li>设置开机启动自动挂载<br>新创建的分区不能开机自动挂载，每次重启机器都要手动挂载。<br>设置开机自动挂载需要修改/etc/fstab文件 <pre><code>#vi /etc/fstab 
+</code></pre>在文件的最后增加一行 <pre><code>/dev/vdc /storage ext3 defaults 1 2 
+</code></pre>注意要查询一下自己的硬盘格式，用df -T查询。</li>
+<li>ps 取消挂载<pre><code># unmount /dev/sdb
+# vi /etc/fstab
+</code></pre>进行格式化<pre><code># mkfs.xfs /dev/sdb
+</code></pre></li>
+</ol>
+<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><ol>
+<li>下载redis<pre><code>https://redis.io/download
+</code></pre></li>
+<li><p>配置redis密码</p>
+<p> redis.conf中，打开配置文件找到 去掉行前的注释</p>
+<pre><code>#requirepass foobared 
+</code></pre><p> 远程登录，打开配置文件把下面对应的注释掉</p>
+<pre><code># bind 127.0.0.1 
+</code></pre><p> Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程，设置为no</p>
+<pre><code>daemonize no
+</code></pre><p> 注释保护模式</p>
+<pre><code>protected-mode no 
+</code></pre><p> redis 启动</p>
+<pre><code>./redis-server ../redis.conf
+</code></pre><p> redis 停止服务</p>
+<pre><code>./redis-cli shutdown
+</code></pre></li>
+</ol>
+<h2 id="RabbitMq"><a href="#RabbitMq" class="headerlink" title="RabbitMq"></a>RabbitMq</h2><ol>
+<li><p>首先需要安装erlang，参考：<a href="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse" target="_blank" rel="noopener">http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</a></p>
+<pre><code>rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
+yum install erlang
+</code></pre></li>
+</ol>
+<p>安装过程中会有提示，一路输入“y”即可。</p>
+<ol start="2">
+<li><p>完成后安装RabbitMQ：</p>
+<p> 先下载rpm： </p>
+<pre><code>wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm
+</code></pre><p> 下载完成后安装：</p>
+<pre><code>yum install rabbitmq-server-3.6.6-1.el7.noarch.rpm 
+</code></pre><p>  完成后启动服务：</p>
+<pre><code>service rabbitmq-server start
+</code></pre><p>  可以查看服务状态：</p>
+<pre><code>service rabbitmq-server status
+</code></pre></li>
+</ol>
+<p><img src="/images/pasted-3.png" alt="upload successful"></p>
+<p>这里可以看到log文件的位置，转到文件位置，打开文件：</p>
+<p><img src="/images/pasted-4.png" alt="upload successful"></p>
+<p>这里显示的是没有找到配置文件，我们可以自己创建这个文件</p>
+<pre><code>cd /etc/rabbitmq/
+vi rabbitmq.config
+</code></pre><p>编辑内容如下：<br>        [{rabbit, [{loopback_users, []}]}].<br>这里的意思是开放使用，rabbitmq默认创建的用户guest，密码也是guest，这个用户默认只能是本机访问，localhost或者127.0.0.1，从外部访问需要添加上面的配置。</p>
+<p>保存配置后重启服务：<br>        service rabbitmq-server stop<br>        service rabbitmq-server start<br>此时就可以从外部访问了，但此时再看log文件，发现内容还是原来的，还是显示没有找到配置文件，可以手动删除这个文件再重启服务，不过这不影响使用</p>
+<pre><code>rm rabbit\@mythsky.log 
+service rabbitmq-server stop
+service rabbitmq-server start
+</code></pre><p>开启管理UI：</p>
+<pre><code>rabbitmq-plugins enable rabbitmq_management
+firewall-cmd --zone=public --add-port=15672/tcp --permanent
+firewall-cmd --reload        
+</code></pre><p>修改RabbitMQ配置<br>在CentOS7中，如果是以systemd方式管理rabbitmq服务，则需要修改rabbitmq的service文件。</p>
+<pre><code>vi /usr/lib/systemd/system/rabbitmq-server.service
+</code></pre><p>添加如下参数，其值请根据实际情况进行调整：</p>
+<pre><code>[Service]
+LimitNOFILE=16384
+</code></pre><p>重启rabbitmq即可</p>
+<pre><code>systemctl daemon-reload
+systemctl restart rabbitmq-server
+</code></pre><h2 id="防火墙开放端口"><a href="#防火墙开放端口" class="headerlink" title="防火墙开放端口"></a>防火墙开放端口</h2><p>打开防火墙</p>
+<pre><code>systemctl start firewalld
+</code></pre><p>打开端口</p>
+<pre><code>firewall-cmd --zone=public --add-port=5672/tcp --permanent
+</code></pre><p>重载防火墙</p>
+<pre><code>firewall-cmd --reload
+</code></pre><p>查看打开端口</p>
+<pre><code>firewall-cmd --list-all
 </code></pre>
       
     </div>
@@ -466,7 +576,7 @@ kill -9 port
           
             <a href="/tags/shell/" rel="tag"># shell</a>
           
-            <a href="/tags/java/" rel="tag"># java</a>
+            <a href="/tags/运维/" rel="tag"># 运维</a>
           
         </div>
       
@@ -479,18 +589,14 @@ kill -9 port
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/08/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/09/Untitled/" rel="prev" title="Untitled">
-                Untitled <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/12/cron表达式详解/" rel="prev" title="cron表达式详解">
+                cron表达式详解 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -568,7 +674,7 @@ kill -9 port
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -581,7 +687,7 @@ kill -9 port
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -614,7 +720,7 @@ kill -9 port
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java安装"><span class="nav-number">1.</span> <span class="nav-text">java安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql"><span class="nav-number">2.</span> <span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat"><span class="nav-number">3.</span> <span class="nav-text">Tomcat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git"><span class="nav-number">4.</span> <span class="nav-text">git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器端口占用"><span class="nav-number">5.</span> <span class="nav-text">服务器端口占用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解压命令"><span class="nav-number">6.</span> <span class="nav-text">解压命令</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java安装"><span class="nav-number">1.</span> <span class="nav-text">java安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql"><span class="nav-number">2.</span> <span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat"><span class="nav-number">3.</span> <span class="nav-text">Tomcat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git"><span class="nav-number">4.</span> <span class="nav-text">git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器端口占用"><span class="nav-number">5.</span> <span class="nav-text">服务器端口占用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解压命令"><span class="nav-number">6.</span> <span class="nav-text">解压命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yum-切换163源"><span class="nav-number">7.</span> <span class="nav-text">yum 切换163源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阿里云挂载磁盘"><span class="nav-number">8.</span> <span class="nav-text">阿里云挂载磁盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis"><span class="nav-number">9.</span> <span class="nav-text">redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMq"><span class="nav-number">10.</span> <span class="nav-text">RabbitMq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#防火墙开放端口"><span class="nav-number">11.</span> <span class="nav-text">防火墙开放端口</span></a></li></ol></div>
             
 
           </div>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="shell,运维,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="test #test ##test ###test testtesttesttesttest">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Untitled">
-<meta property="og:url" content="http://yoursite.com/Untitled/index.html">
+<meta name="description" content="CentOS通过yum安装subversion。  安装  #yum install subversion  建立版本库 svnadmin create /var/svn/svntest   cd /var/svn/svntest  配置  cd /var/svn/svntest a、编辑用户文件passwd，新增两个用户：admin和guest。 (不能由空格，tab) #vim conf/pa">
+<meta name="keywords" content="shell,运维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7 安装 svn">
+<meta property="og:url" content="http://yoursite.com/2019/04/12/centos7-安装-svn/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="test #test ##test ###test testtesttesttesttest">
+<meta property="og:description" content="CentOS通过yum安装subversion。  安装  #yum install subversion  建立版本库 svnadmin create /var/svn/svntest   cd /var/svn/svntest  配置  cd /var/svn/svntest a、编辑用户文件passwd，新增两个用户：admin和guest。 (不能由空格，tab) #vim conf/pa">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-08T10:00:17.784Z">
+<meta property="og:updated_time" content="2019-04-12T06:55:14.556Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Untitled">
-<meta name="twitter:description" content="test #test ##test ###test testtesttesttesttest">
+<meta name="twitter:title" content="centos7 安装 svn">
+<meta name="twitter:description" content="CentOS通过yum安装subversion。  安装  #yum install subversion  建立版本库 svnadmin create /var/svn/svntest   cd /var/svn/svntest  配置  cd /var/svn/svntest a、编辑用户文件passwd，新增两个用户：admin和guest。 (不能由空格，tab) #vim conf/pa">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/Untitled/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/12/centos7-安装-svn/">
 
 
 
 
 
-  <title>Untitled | Hexo</title>
+  <title>centos7 安装 svn | Hexo</title>
   
 
 
@@ -280,37 +281,193 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/centos7-安装-svn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">Untitled</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>test</p>
-<p>#test</p>
-<p>##test</p>
-<p>###test</p>
-<h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><h2 id="test-1"><a href="#test-1" class="headerlink" title="test"></a>test</h2><h1 id="test-2"><a href="#test-2" class="headerlink" title="test"></a>test</h1><h1 id="test-3"><a href="#test-3" class="headerlink" title="test"></a>test</h1><h1 id="test-4"><a href="#test-4" class="headerlink" title="test"></a>test</h1>
+          <h1 class="post-title" itemprop="name headline">centos7 安装 svn</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T14:53:00+08:00">
+                2019-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>CentOS通过yum安装subversion。</p>
+<ol>
+<li>安装</li>
+</ol>
+<p>#yum install subversion</p>
+<ol start="2">
+<li><p>建立版本库</p>
+<p>svnadmin create /var/svn/svntest</p>
+</li>
+</ol>
+<p>cd /var/svn/svntest</p>
+<ol start="3">
+<li>配置</li>
+</ol>
+<p>cd /var/svn/svntest</p>
+<p>a、编辑用户文件passwd，新增两个用户：admin和guest。 (不能由空格，tab)</p>
+<p>#vim conf/passwd</p>
+<p>[users]</p>
+<p>admin = admin</p>
+<p>guest = guest</p>
+<p>b、编辑权限文件authz，用户admin设置可读写权限，guest设置只读权限。</p>
+<p>#vim conf/authz</p>
+<p>[svntest:/]</p>
+<p>admin = rw</p>
+<p>guest = r</p>
+<p>c、编辑svnserve.conf：</p>
+<p>#vim conf/svnserve.conf</p>
+<p>[general]anon-access = none #控制非鉴权用户访问版本库的权限</p>
+<p>auth-access = write #控制鉴权用户访问版本库的权限</p>
+<p>password-db = passwd #指定用户名口令文件名</p>
+<p>authz-db = authz #指定权限配置文件名</p>
+<ol start="4">
+<li>SVN服务</li>
+</ol>
+<p>启动SVN服务。</p>
+<p>#systemctl start svnserve.service</p>
+<p>svnserve -d -r /var/svn</p>
+<p>检查服务是否启动成功。</p>
+<p>#ps aux | grep svnroot 16349 0.0 0.1 162180 900 ? Ss 15:01 0:00 /usr/bin/svnserve –daemon –pid-file=/run/svnserve/svnserve.pid -r /opt/svn</p>
+<p>设置成开机启动。</p>
+<p>5、启动svn版本库 svnserve -d -r /var/svn（停止SVN命令 killall svnserve）</p>
+<p>阿里云要开相应端口3690</p>
+<p>firewall-cmd –zone=public –add-port=3690/tcp –permanent   </p>
+<p>firewall-cmd –reload</p>
+<p>killall svnserve 强制关闭服务命令</p>
+<p>6、客户端连接</p>
+<p>svn://172.16.3.167:3369/svntesst</p>
+<p>通过svn连接，不能通过http或者https连接</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shell/" rel="tag"># shell</a>
+          
+            <a href="/tags/运维/" rel="tag"># 运维</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/12/linux-自动备份部署tomcat脚本/" rel="next" title="linux 自动备份部署tomcat脚本">
+                <i class="fa fa-chevron-left"></i> linux 自动备份部署tomcat脚本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -343,17 +500,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -404,22 +552,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#test"><span class="nav-number">1.</span> <span class="nav-text">test</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#test-1"><span class="nav-number"></span> <span class="nav-text">test</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#test-2"><span class="nav-number"></span> <span class="nav-text">test</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#test-3"><span class="nav-number"></span> <span class="nav-text">test</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#test-4"><span class="nav-number"></span> <span class="nav-text">test</span></a></li></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
