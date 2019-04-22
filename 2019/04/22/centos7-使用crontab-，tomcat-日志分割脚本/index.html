@@ -858,7 +858,7 @@ publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所�
           repo: 'hybridtheorylink.github.io',
           owner: 'hybridtheorylink',
           admin: ['hybridtheorylink'],
-          id: location.pathname,
+          id: decodeURI(window.location.pathname),
           distractionFreeMode: ''
         })
         gitalk.render('gitalk-container')           

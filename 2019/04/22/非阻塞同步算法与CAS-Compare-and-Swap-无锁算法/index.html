@@ -929,7 +929,7 @@ public final boolean compareAndSet(int expect, int update) {
           repo: 'hybridtheorylink.github.io',
           owner: 'hybridtheorylink',
           admin: ['hybridtheorylink'],
-          id: location.pathname,
+          id: decodeURI(window.location.pathname),
           distractionFreeMode: ''
         })
         gitalk.render('gitalk-container')           
