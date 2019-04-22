@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="结构corn从左到右（用空格隔开）：秒 分 小时 月份中的日期 月份 星期中的日期 年份 各字段的含义   字段 允许值 允许的特殊字符     秒（Seconds） 0~59的整数 , - * /    四个字符   分（Minutes） 0~59的整数 , - * /    四个字符   小时（Hours） 0~23的整数 , - * /    四个字符   日期（DayofMonth） 1~">
-<meta name="keywords" content="java">
+<meta name="description" content="安装yum install vixie-cron yum install vixie-cron 添加作业crontab -e //编辑某个用户的cron服务 0 * * * * /data/shell/split_catalina.sh //每小时执行 开机启动vim /etc/rc.d/rc.local /sbin/service crond start 常用命令    　　crontab -u">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cron表达式详解">
-<meta property="og:url" content="http://yoursite.com/2019/04/12/cron表达式详解/index.html">
+<meta property="og:title" content="centos7 使用crontab ，tomcat 日志分割脚本">
+<meta property="og:url" content="http://yoursite.com/2019/04/22/centos7-使用crontab-，tomcat-日志分割脚本/index.html">
 <meta property="og:site_name" content="HybridTheory">
-<meta property="og:description" content="结构corn从左到右（用空格隔开）：秒 分 小时 月份中的日期 月份 星期中的日期 年份 各字段的含义   字段 允许值 允许的特殊字符     秒（Seconds） 0~59的整数 , - * /    四个字符   分（Minutes） 0~59的整数 , - * /    四个字符   小时（Hours） 0~23的整数 , - * /    四个字符   日期（DayofMonth） 1~">
+<meta property="og:description" content="安装yum install vixie-cron yum install vixie-cron 添加作业crontab -e //编辑某个用户的cron服务 0 * * * * /data/shell/split_catalina.sh //每小时执行 开机启动vim /etc/rc.d/rc.local /sbin/service crond start 常用命令    　　crontab -u">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-12T06:56:47.838Z">
+<meta property="og:updated_time" content="2019-04-22T03:21:46.086Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cron表达式详解">
-<meta name="twitter:description" content="结构corn从左到右（用空格隔开）：秒 分 小时 月份中的日期 月份 星期中的日期 年份 各字段的含义   字段 允许值 允许的特殊字符     秒（Seconds） 0~59的整数 , - * /    四个字符   分（Minutes） 0~59的整数 , - * /    四个字符   小时（Hours） 0~23的整数 , - * /    四个字符   日期（DayofMonth） 1~">
+<meta name="twitter:title" content="centos7 使用crontab ，tomcat 日志分割脚本">
+<meta name="twitter:description" content="安装yum install vixie-cron yum install vixie-cron 添加作业crontab -e //编辑某个用户的cron服务 0 * * * * /data/shell/split_catalina.sh //每小时执行 开机启动vim /etc/rc.d/rc.local /sbin/service crond start 常用命令    　　crontab -u">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/12/cron表达式详解/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/22/centos7-使用crontab-，tomcat-日志分割脚本/">
 
 
 
 
 
-  <title>cron表达式详解 | HybridTheory</title>
+  <title>centos7 使用crontab ，tomcat 日志分割脚本 | HybridTheory</title>
   
 
 
@@ -303,7 +302,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/cron表达式详解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/centos7-使用crontab-，tomcat-日志分割脚本/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="HybridTheory">
@@ -320,7 +319,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">cron表达式详解</h1>
+          <h1 class="post-title" itemprop="name headline">centos7 使用crontab ，tomcat 日志分割脚本</h1>
         
 
         <div class="post-meta">
@@ -332,8 +331,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T13:48:00+08:00">
-                2019-04-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T11:21:42+08:00">
+                2019-04-22
               </time>
             
 
@@ -370,96 +369,57 @@
       
 
       
-        <h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>corn从左到右（用空格隔开）：秒 分 小时 月份中的日期 月份 星期中的日期 年份</p>
-<h2 id="各字段的含义"><a href="#各字段的含义" class="headerlink" title="各字段的含义"></a>各字段的含义</h2><table>
-<thead>
-<tr>
-<th>字段</th>
-<th>允许值</th>
-<th>允许的特殊字符</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>秒（Seconds）</td>
-<td>0~59的整数</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>分（Minutes）</td>
-<td>0~59的整数</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>小时（Hours）</td>
-<td>0~23的整数</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>日期（DayofMonth）</td>
-<td>1~31的整数（但是你需要考虑你月的天数）</td>
-<td>,- * ? / L W C     八个字符</td>
-</tr>
-<tr>
-<td>月份（Month）</td>
-<td>1~12的整数或者 JAN-DEC</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>星期（DayofWeek）</td>
-<td>1~7的整数或者 SUN-SAT （1=SUN）</td>
-<td>, - * ? / L C #     八个字符</td>
-</tr>
-<tr>
-<td>年(可选，留空)（Year）</td>
-<td>1970~2099</td>
-<td>, - * /    四个字符</td>
-</tr>
-</tbody>
-</table>
-<pre><code>（1）*：表示匹配该域的任意值。假如在Minutes域使用*, 即表示每分钟都会触发事件。
-</code></pre><p>　　（2）?：只能用在DayofMonth和DayofWeek两个域。它也匹配域的任意值，但实际不会。因为DayofMonth和DayofWeek会相互影响。例如想在每月的20日触发调度，不管20日到底是星期几，则只能使用如下写法： 13 13 15 20 <em> ?, 其中最后一位只能用？，而不能使用</em>，如果使用*表示不管星期几都会触发，实际上并不是这样。</p>
-<p>　　（3）-：表示范围。例如在Minutes域使用5-20，表示从5分到20分钟每分钟触发一次 </p>
-<p>　　（4）/：表示起始时间开始触发，然后每隔固定时间触发一次。例如在Minutes域使用5/20,则意味着5分钟触发一次，而25，45等分别触发一次. </p>
-<p>　　（5）,：表示列出枚举值。例如：在Minutes域使用5,20，则意味着在5和20分每分钟触发一次。 </p>
-<p>　　（6）L：表示最后，只能出现在DayofWeek和DayofMonth域。如果在DayofWeek域使用5L,意味着在最后的一个星期四触发。 </p>
-<p>　　（7）W:表示有效工作日(周一到周五),只能出现在DayofMonth域，系统将在离指定日期的最近的有效工作日触发事件。例如：在 DayofMonth使用5W，如果5日是星期六，则将在最近的工作日：星期五，即4日触发。如果5日是星期天，则在6日(周一)触发；如果5日在星期一到星期五中的一天，则就在5日触发。另外一点，W的最近寻找不会跨过月份 。</p>
-<p>　　（8）LW:这两个字符可以连用，表示在某个月最后一个工作日，即最后一个星期五。 </p>
-<p>　　（9）#:用于确定每个月第几个星期几，只能出现在DayofMonth域。例如在4#2，表示某月的第二个星期三。</p>
-<h2 id="常用表达式例子"><a href="#常用表达式例子" class="headerlink" title="常用表达式例子"></a>常用表达式例子</h2><p>（1）0 0 2 1 <em> ? </em>   表示在每月的1日的凌晨2点调整任务</p>
-<p>　　（2）0 15 10 ? * MON-FRI   表示周一到周五每天上午10:15执行作业</p>
-<p>　　（3）0 15 10 ? 6L 2002-2006   表示2002-2006年的每个月的最后一个星期五上午10:15执行作</p>
-<p>　　（4）0 0 10,14,16 <em> </em> ?   每天上午10点，下午2点，4点 </p>
-<p>　　（5）0 0/30 9-17 <em> </em> ?   朝九晚五工作时间内每半小时 </p>
-<p>　　（6）0 0 12 ? * WED    表示每个星期三中午12点 </p>
-<p>　　（7）0 0 12 <em> </em> ?   每天中午12点触发 </p>
-<p>　　（8）0 15 10 ? <em> </em>    每天上午10:15触发 </p>
-<p>　　（9）0 15 10 <em> </em> ?     每天上午10:15触发 </p>
-<p>　　（10）0 15 10 <em> </em> ? *    每天上午10:15触发 </p>
-<p>　　（11）0 15 10 <em> </em> ? 2005    2005年的每天上午10:15触发 </p>
-<p>　　（12）0 <em> 14 </em> * ?     在每天下午2点到下午2:59期间的每1分钟触发 </p>
-<p>　　（13）0 0/5 14 <em> </em> ?    在每天下午2点到下午2:55期间的每5分钟触发 </p>
-<p>　　（14）0 0/5 14,18 <em> </em> ?     在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发 </p>
-<p>　　（15）0 0-5 14 <em> </em> ?    在每天下午2点到下午2:05期间的每1分钟触发 </p>
-<p>　　（16）0 10,44 14 ? 3 WED    每年三月的星期三的下午2:10和2:44触发 </p>
-<p>　　（17）0 15 10 ? * MON-FRI    周一至周五的上午10:15触发 </p>
-<p>　　（18）0 15 10 15 * ?    每月15日上午10:15触发 </p>
-<p>　　（19）0 15 10 L * ?    每月最后一日的上午10:15触发 </p>
-<p>　　（20）0 15 10 ? * 6L    每月的最后一个星期五上午10:15触发 </p>
-<p>　　（21）0 15 10 ? * 6L 2002-2005   2002年至2005年的每月的最后一个星期五上午10:15触发 </p>
-<p>　　（22）0 15 10 ? * 6#3   每月的第三个星期五上午10:15触发</p>
-<p>　　</p>
-<p>　　注：</p>
-<p>　　（1）有些子表达式能包含一些范围或列表</p>
-<p>　　例如：子表达式（天（星期））可以为 “MON-FRI”，“MON，WED，FRI”，“MON-WED,SAT”</p>
-<p>“*”字符代表所有可能的值</p>
-<p>　　因此，“<em>”在子表达式（月）里表示每个月的含义，“</em>”在子表达式（天（星期））表示星期的每一天</p>
-<p>　　“/”字符用来指定数值的增量<br>　　例如：在子表达式（分钟）里的“0/15”表示从第0分钟开始，每15分钟<br>在子表达式（分钟）里的“3/20”表示从第3分钟开始，每20分钟（它和“3，23，43”）的含义一样</p>
-<p>　　“？”字符仅被用于天（月）和天（星期）两个子表达式，表示不指定值<br>　　当2个子表达式其中之一被指定了值以后，为了避免冲突，需要将另一个子表达式的值设为“？”</p>
-<p>　　“L” 字符仅被用于天（月）和天（星期）两个子表达式，它是单词“last”的缩写<br>　　但是它在两个子表达式里的含义是不同的。<br>　　在天（月）子表达式中，“L”表示一个月的最后一天<br>　　在天（星期）自表达式中，“L”表示一个星期的最后一天，也就是SAT</p>
-<p>　　如果在“L”前有具体的内容，它就具有其他的含义了</p>
-<p>　　例如：“6L”表示这个月的倒数第６天，“FRIL”表示这个月的最一个星期五<br>　　注意：在使用“L”参数时，不要指定列表或范围，因为这会导致问题</p>
+        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>yum install vixie-cron
+yum install vixie-cron
+</code></pre><h2 id="添加作业"><a href="#添加作业" class="headerlink" title="添加作业"></a>添加作业</h2><pre><code>crontab -e //编辑某个用户的cron服务
+0 * * * * /data/shell/split_catalina.sh //每小时执行
+</code></pre><h2 id="开机启动"><a href="#开机启动" class="headerlink" title="开机启动"></a>开机启动</h2><pre><code>vim /etc/rc.d/rc.local
+/sbin/service crond start
+</code></pre><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><pre><code>    　　crontab -u //设定某个用户的cron服务，一般root用户在执行这个命令的时候需要此参数
 
+    　　crontab -l //列出某个用户cron服务的详细内容
+
+    　　crontab -r //删除没个用户的cron服务
+
+    　　crontab -e //编辑某个用户的cron服务
+
+    　　比如说root查看自己的cron设置:crontab -u root -l
+
+    　　再例如，root想删除fred的cron设置:crontab -u fred -r
+
+    　　在编辑cron服务时，编辑的内容有一些格式和约定，输入:crontab -u root -e    
+</code></pre><h2 id="tomcat日志分割脚本"><a href="#tomcat日志分割脚本" class="headerlink" title="tomcat日志分割脚本"></a>tomcat日志分割脚本</h2><pre><code>#!/bin/sh
+function publish(){
+    cd $1
+    y=`date &quot;+%Y&quot;`
+    m=`date &quot;+%m&quot;`
+    d=`date &quot;+%d&quot;`
+    H=`date &quot;+%H&quot;`
+    dataStr=$y-$m-$d
+    echo $dataStr
+    if [ ! -d $dataStr ];then
+        echo &quot;创建文件夹&quot;$dataStr
+        mkdir $dataStr
+        else
+    echo &quot;文件夹已经存在&quot;
+    fi
+    cd $dataStr
+    if [ ! -d $H ];then
+        mkdir $H
+        cd $H
+        echo &quot;创建文件夹&quot;$H
+        cp ../../catalina.out catalina.out.$y-$m-$d-$H
+        touch &gt; ../../catalina.out
+        else
+        echo &quot;文件夹已经存在&quot;
+    fi
+    #cd .
+    #cp catalina.out catalina.out.$y$m$d
+    #echo &gt; catalina.out
+    #exit
+}
+publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所在位置
+</code></pre>
       
     </div>
     
@@ -474,12 +434,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/java/" rel="tag"># java</a>
-          
-        </div>
-      
 
       
       
@@ -489,8 +443,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/09/CentoOS服务器环境安装/" rel="next" title="CentoOS服务器环境安装">
-                <i class="fa fa-chevron-left"></i> CentoOS服务器环境安装
+              <a href="/2019/04/12/centos7-安装-svn/" rel="next" title="centos7 安装 svn">
+                <i class="fa fa-chevron-left"></i> centos7 安装 svn
               </a>
             
           </div>
@@ -499,8 +453,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/12/nginx-不停服更新服务器脚本/" rel="prev" title="nginx 不停服更新服务器脚本">
-                nginx 不停服更新服务器脚本 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/22/Centos7安装rabbitmq/" rel="prev" title="Centos7安装rabbitmq">
+                Centos7安装rabbitmq <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -699,7 +653,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#结构"><span class="nav-number">1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各字段的含义"><span class="nav-number">2.</span> <span class="nav-text">各字段的含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用表达式例子"><span class="nav-number">3.</span> <span class="nav-text">常用表达式例子</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加作业"><span class="nav-number">2.</span> <span class="nav-text">添加作业</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开机启动"><span class="nav-number">3.</span> <span class="nav-text">开机启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">4.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tomcat日志分割脚本"><span class="nav-number">5.</span> <span class="nav-text">tomcat日志分割脚本</span></a></li></ol></div>
             
 
           </div>
