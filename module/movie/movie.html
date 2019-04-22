@@ -4,7 +4,7 @@
 		<meta name="referrer" content="never">
 		<meta charset="UTF-8">
 		<title></title>
-
+		<link rel="stylesheet" href="../common/font-awesome-4.7.0/css/font-awesome.min.css">
 		<style>
 			a{
 				color: #37a;
@@ -35,24 +35,73 @@
 				font-size: 12px;
 				margin: 0;
 			}
+			#change:hover{
+				cursor: pointer;
+				font-size: 28px;
+			}
+			#change{
+				margin:12px 0;
+				width:30px;
+			}
+.poster{
+  position:relative;
+  left:1px;
+  top:1px;
+}
+.poster_box{
+	width:300px;
+	position:absolute;
+	left :120px;
+	top:-90px;
+}
 		
 .allstar50, .allstar45, .allstar40, .allstar35, .allstar30, .allstar25, .allstar20, .allstar15, .allstar10, .allstar05, .allstar00, .rating1-t, .rating15-t, .rating2-t, .rating25-t, .rating3-t, .rating35-t, .rating4-t, .rating45-t, .rating5-t, .rating-t, .starb ~ .stars5, .starb ~ .stars4, .starb ~ .stars3, .starb ~ .stars2, .starb ~ .stars1, .collectors .stars5, .collectors .stars4, .collectors .stars3, .collectors .stars2, .collectors .stars1 {
     display: inline-block;
     *display: inline;
     zoom: 1;
     background: url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) no-repeat;
-    background: -webkit-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;
-    background: -moz-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;
-    background: -o-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;
-    background: -ms-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;
+    /*background: -webkit-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;*/
+    /*background: -moz-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;*/
+    /*background: -o-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;*/
+    /*background: -ms-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;*/
     width: 55px;
     height: 11px;
     margin: 0 3px 0 0;
     overflow: hidden;
 }		
+.allstar50 {
+    background-position: 0 0;
+}	
 .allstar45 {
     background-position: 0 -11px;
 }	
+.allstar40 {
+    background-position: 0 -22px;
+}
+.allstar35 {
+    background-position: 0 -33px;
+}
+.allstar30 {
+    background-position: 0 -44px;
+}
+.allstar25 {
+    background-position: 0 -55px;
+}
+.allstar20 {
+    background-position: 0 -66px;
+}
+.allstar15 {
+    background-position: 0 -77px;
+}
+.allstar10 {
+    background-position: 0 -88px;
+}
+.allstar05 {
+    background-position: 0 -99px;
+}
+.allstar00 {
+    background-position: 0 -100px;
+}
 .rating_nums{
 	 color: #e09015;
     font-size: 12px;
@@ -62,20 +111,23 @@
 	</head>
 	<body>
 		<div  id="app">
-		<div class="m_l">
+			
+		<div class="m_l" v-if="status === 1">
 			<div class="m_item">
-				<p style="font-weight: bold;"> {{ box.title }} {{ box.date}}</p>
+				<div class="fa fa-exchange" aria-hidden="true" id="change" v-on:click="change"></div>
+				<p style="height:20px;font-weight: bold;"> {{ box.title }} {{ box.date}} &nbsp;&nbsp;&nbsp;</p>
 			</div>
 			<div class="m_item" v-for="(movie,index) in box.subjects">
-				<div class="m_l" style="text-align: center;">
-					<p style="    font-size: 33px;text-align: center; width:40px;   font-weight: 700;font-family: Open Sans,helvetica,sans-serif; */">{{ index+1 }}</p> 
-					</div>				
+				<div class="m_l" style="text-align: center;padding:16px 0">
+					<span style="    font-size: 33px;text-align: center; width:80px;   font-weight: 700;font-family: Open Sans,helvetica,sans-serif; */">{{ index+1 }}</span> 
+					<span>${{movie.box/10000}} 万</span>
+				</div>				
 				<div class="m_l">
-					<img :src=`${movie.subject.images.medium}?apikey=0df993c66c0c636e29ecbb5344252a4a` width="60px"  >
-					</div>
+					<img :src=`${movie.subject.images.large}?apikey=0df993c66c0c636e29ecbb5344252a4a` @mouseover="showPoster(movie.subject.images.medium,$event)" @mouseout="hidePoster($event)" width="60px"  >
+				</div>
 				<div class="r_l">
-					<div> <a :href="movie.subject.alt" target="_blank">(${{movie.box/10000}} 万) &nbsp;&nbsp;{{movie.subject.title}} {{movie.subject.original_title}} </a></div>
-					<span class="allstar45"></span><span class="rating_nums">{{movie.subject.rating.average}}</span>
+					<div> <a :href="movie.subject.alt" target="_blank">{{movie.subject.title}} {{movie.subject.original_title}} </a></div>
+					<span :class=" 'allstar' + movie.subject.rating.stars"></span><span class="rating_nums">{{movie.subject.rating.average}}</span>
 					<p class="m_i_b">导演: <span v-for="director in movie.subject.directors"> {{ director.name }} /</span> </p>
 					<p class="m_i_b">主演: <span v-for="cast in movie.subject.casts"> {{ cast.name }} /</span></p>
 					<p class="m_i_b">类型: <span v-for="genre in movie.subject.genres"> {{ genre }} /</span>  </p>
@@ -86,7 +138,58 @@
 			</div>
 			
 			</div>			
-
+		<div class="m_l" v-if="status === 2">
+			<div class="m_item">
+				<div class="fa fa-exchange" aria-hidden="true" id="change" v-on:click="change"></div>
+				<p style="font-weight: bold;"> {{ playing.title }} {{ playing.total}} </p>
+			</div>
+			<div class="m_item" v-for="(movie,index) in playing.entries">
+				<div class="m_l" style="text-align: center;">
+					<p style="    font-size: 33px;text-align: center; width:40px;   font-weight: 700;font-family: Open Sans,helvetica,sans-serif; */">{{ index+1 }}</p> 
+					</div>				
+				<div class="m_l">
+					<img :src=`${movie.images.medium}?apikey=0df993c66c0c636e29ecbb5344252a4a`  @mouseover="showPoster(movie.images.large,$event)" @mouseout="hidePoster($event)"  width="60px"  >
+					</div>
+				<div class="r_l">
+					<div> <a :href="'https://movie.douban.com/subject/' + movie.id " target="_blank">{{movie.title}}</a></div>
+					<span :class=" 'allstar' + movie.stars"></span><span class="rating_nums">{{movie.rating}}</span>
+					<!--<p class="m_i_b">导演: <span v-for="director in movie.subject.directors"> {{ director.name }} /</span> </p>-->
+					<!--<p class="m_i_b">主演: <span v-for="cast in movie.subject.casts"> {{ cast.name }} /</span></p>-->
+					<!--<p class="m_i_b">类型: <span v-for="genre in movie.subject.genres"> {{ genre }} /</span>  </p>-->
+					<p class="m_i_b">上映日期:  {{movie.pubdate}}  </p>
+					<p class="m_i_b">想看: {{movie.wish}} </p>
+					<!--<p class="m_i_b">评分: {{movie.collection}}人 </p>-->
+	
+				</div>
+			</div>
+			
+			</div>				
+		<div class="m_l" v-if=" status ===3">
+			<div class="m_item">
+				<div class="fa fa-exchange" aria-hidden="true" id="change" v-on:click="change"></div>
+				<p style="font-weight: bold;"> {{ coming.title }} {{ coming.total}} </p>
+			</div>
+			<div class="m_item" v-for="(movie,index) in coming.entries">
+				<div class="m_l" style="text-align: center;">
+					<p style="    font-size: 33px;text-align: center; width:40px;   font-weight: 700;font-family: Open Sans,helvetica,sans-serif; */">{{ index+1 }}</p> 
+					</div>				
+				<div class="m_l">
+					<img :src=`${movie.images.large}?apikey=0df993c66c0c636e29ecbb5344252a4a` @mouseover="showPoster(movie.images.large,$event)" @mouseout="hidePoster($event)" width="60px"  >
+					</div>
+				<div class="r_l">
+					<div> <a :href="'https://movie.douban.com/subject/' + movie.id " target="_blank">{{movie.title}}</a></div>
+					<span :class=" 'allstar' + movie.stars"></span><span class="rating_nums">{{movie.rating}}</span>
+					<!--<p class="m_i_b">导演: <span v-for="director in movie.subject.directors"> {{ director.name }} /</span> </p>-->
+					<!--<p class="m_i_b">主演: <span v-for="cast in movie.subject.casts"> {{ cast.name }} /</span></p>-->
+					<!--<p class="m_i_b">类型: <span v-for="genre in movie.subject.genres"> {{ genre }} /</span>  </p>-->
+					<p class="m_i_b">上映日期:  {{getWeek(movie.pubdate)}}  </p>
+					<p class="m_i_b">想看: {{movie.wish}} </p>
+					<!--<p class="m_i_b">评分: {{movie.collection}}人 </p>-->
+	
+				</div>
+			</div>
+			
+			</div>	
 		</div>
 </div>		
 		<script type="text/javascript" src="../common/vue/vue.js" ></script>
@@ -96,25 +199,132 @@
 		<script type="text/javascript" src="plugin/jquery/jquery-3.3.1.min.js" ></script>-->
 		<script>
 			$(function(){
+				var box = 1;
+				var playing = 1;
+				var coming = 1;
 				var app = new Vue({
 					  el: '#app',
 					  data: {
-					  	box:{}
-					  }
+					  	box:{},
+					  	playing:{},
+					    coming:{},
+					  	status:1,
+					  	poster_state:2,
+					  	poster:'',
+					  },
+					  // 在 `methods` 对象中定义方法
+					  methods: {
+					    change: function (event) {
+					    	  this.display = 2;
+//					    	  this.box = {};
+//					    	  this.playing = {};
+					      // `this` 在方法里指向当前 Vue 实例
+					    	  var status = this.status +1;
+					    	  if(status > 3) status = 1;
+//					      alert('Hello ' + this.status + '!')
+						 
+					      if(status===1) fecthData();
+					      if(status===2) fecthData2();
+					      if(status===3) fecthData3();
+					      this.status = status;
+					    },
+					     showPoster: function (url,e) {
+					     	var  selectedBedDom = $(e.srcElement)//dom元素
+					     	console.log(selectedBedDom.attr("src"));
+//					     	<div class="poster" v-if="poster_state ===1"><img :src="poster" class="poster_box"  ></div>	;
+					     	var html = "<div class='poster' ><img  class='poster_box' src='"+ selectedBedDom.attr("src") +"'  /></div>"	;
+					     	selectedBedDom.after(html);
+//					     	console.log(url)
+//					     	this.poster = url;
+//					     	this.poster_state = 1;
+					     },
+					     hidePoster:function(e){
+//					     	console.log(e);
+					     	var  selectedBedDom = $(e.srcElement)//dom元素
+//					     	selectedBedDom);
+					     	console.log(selectedBedDom.siblings(".poster").remove());
+					     },
+				 getWeek:function(date_str){
+					var d = new Date(date_str);
+					var n = new Date();
+					var b = (d.getTime() - n.getTime())/ (1000 * 60 * 60 * 24); 
+//					alert(b);
+					        var days = d.getDay();
+					        switch(days){
+					            case 1:
+					                days='星期一';
+					                break;
+					            case 2:
+					                days='星期二';
+					                break;
+					            case 3:
+					                days='星期三';
+					                break;
+					            case 4:
+					                days='星期四';
+					                break;
+					            case 5:
+					                days='星期五';
+					                break;
+					            case 6:
+					                days='星期六';
+					                break;
+					            case 0:
+					                days='星期日';
+					                break;
+					 
+					        }
+					        var b_str = "";
+					        if(b > 7 && b < 14)  b_str ="下周";
+					       return date_str + " " + b_str + " " +days;
+				}					    
+					  }					  
 				});
 				function fecthData(){
+					console.log(app.box);
+					if(box == 2) return;
+//					if(app.box != undefined) return;
 					$.ajax({
 						type:"get",
-						url:"http://api.douban.com/v2/movie/us_box?apikey=0df993c66c0c636e29ecbb5344252a4a",
+						url:"https://api.douban.com/v2/movie/us_box?apikey=0df993c66c0c636e29ecbb5344252a4a",
 						async:true,
 						 dataType: "jsonp", 
 						success:function(data){
 							console.log(data);
 							app.box = data;
-							
+							box = 2;
 						}
 					});
 				}
+				function fecthData2(){
+					if(playing == 2) return;
+					
+					$.ajax({
+						type:"get",
+						url:"https://api.douban.com/v2/movie/nowplaying?apikey=0df993c66c0c636e29ecbb5344252a4a",
+						async:true,
+						 dataType: "jsonp", 
+						success:function(data){
+							console.log(data);
+							app.playing = data;
+							playing = 2;
+						}
+					});
+				}	
+				function fecthData3(){
+					if(coming == 2) return;
+					$.ajax({
+						type:"get",
+						url:"https://api.douban.com/v2/movie/coming?apikey=0df993c66c0c636e29ecbb5344252a4a",
+						async:true,
+						 dataType: "jsonp", 
+						success:function(data){
+							console.log(data);
+							app.coming = data;
+							coming = 2;
+						}
+					});
+				}				
 				fecthData();
 			});
 
