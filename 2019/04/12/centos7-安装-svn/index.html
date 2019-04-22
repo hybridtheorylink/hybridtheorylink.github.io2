@@ -472,8 +472,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/12/linux-自动备份部署tomcat脚本/" rel="next" title="linux 自动备份部署tomcat脚本">
-                <i class="fa fa-chevron-left"></i> linux 自动备份部署tomcat脚本
+              <a href="/2019/04/12/nginx-不停服更新服务器脚本/" rel="next" title="nginx 不停服更新服务器脚本">
+                <i class="fa fa-chevron-left"></i> nginx 不停服更新服务器脚本
               </a>
             
           </div>
@@ -514,6 +514,10 @@
           
 
   
+    <div id="gitalk-container"></div>    
+  
+
+
 
 
 
@@ -845,6 +849,24 @@
 
 
 
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '44406a7966060e9be009',
+          clientSecret: 'b5460838bc521964384a5d553bdf0c852ca2c9d1',
+          repo: 'hybridtheorylink.github.io',
+          owner: 'hybridtheorylink',
+          admin: ['hybridtheorylink'],
+          id: location.pathname,
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
 
 

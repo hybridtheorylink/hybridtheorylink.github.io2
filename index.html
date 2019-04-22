@@ -1496,6 +1496,125 @@ publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所�
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/nginx-不停服更新服务器脚本/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/12/nginx-不停服更新服务器脚本/" itemprop="url">nginx 不停服更新服务器脚本</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T14:52:00+08:00">
+                2019-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">#修改两个tomcat路径 执行脚本 sh grace_update.sh XX 参数war包名称</span><br><span class="line">#!/bin/bash</span><br><span class="line">function grace_update()&#123;</span><br><span class="line">	if  [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">	echo &quot;请输入war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	#NGINX_SBIN=&quot;/usr/sbin&quot;</span><br><span class="line">	#NGINX_CONF=&quot;/etc/nginx&quot;</span><br><span class="line">	#TOMCAT_1=&quot;/data/tomcat/apache-tomcat-8.5.23&quot;</span><br><span class="line">	#TOMCAT_2=&quot;/data/tomcat/apache-tomcat-8.5.23&quot;</span><br><span class="line"> </span><br><span class="line">	NGINX_SBIN=&quot;/usr/local/nginx/sbin&quot;</span><br><span class="line">	NGINX_CONF=&quot;/usr/local/nginx/conf&quot;</span><br><span class="line">	TOMCAT_1=&quot;/data0/tomcat-nginx-7070/apache-tomcat-8.5.23&quot;</span><br><span class="line">	TOMCAT_2=&quot;/data0/tomcat/apache-tomcat-8.5.23&quot;	</span><br><span class="line">	echo &quot;发送停止7070服务器信号&quot;</span><br><span class="line">	rm -rf $NGINX_CONF/nginx.conf</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.7070 $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line">	echo &quot;更新7070服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	#`$NGINX_SBIN`/nginx</span><br><span class="line">	echo $TOMCAT_1</span><br><span class="line">	</span><br><span class="line">	sh publish-v2.sh $1 $TOMCAT_1/webapps</span><br><span class="line">	result=$?</span><br><span class="line"> </span><br><span class="line">	if  [ $result -eq 0 ] ;then</span><br><span class="line">		echo &quot;发布错误，退出程序&quot;</span><br><span class="line">		return 0</span><br><span class="line">	fi</span><br><span class="line"> </span><br><span class="line">	echo &quot;发送停止8080服务器信号，并开启7070服务器&quot;</span><br><span class="line">	rm -rf $NGINX_CONF/nginx.conf</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.8080 $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	echo $TOMCAT_2</span><br><span class="line">	echo &quot;更新8080服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	sh publish-v2.sh $1 $TOMCAT_2/webapps</span><br><span class="line">	result=$?</span><br><span class="line"> </span><br><span class="line">	if  [ $result -eq 0 ] ;then</span><br><span class="line">		echo &quot;发布错误，退出程序&quot;</span><br><span class="line">		return 0</span><br><span class="line">	fi</span><br><span class="line">	echo &quot;部署完成&quot;</span><br><span class="line">	echo &quot;开启全部服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.all $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">	echo &quot;it&apos;s done!&quot;</span><br><span class="line">	echo &quot;Congratulation！！！ &quot;	</span><br><span class="line">	echo &quot;--&lt;--&lt;-&lt;@ ●-● § ^_^ § &quot;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">grace_update $1</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/linux-自动备份部署tomcat脚本/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1569,125 +1688,6 @@ publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所�
           
             <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#将脚本放在webapp目录下，war放入webapp的backup目录下，执行脚本shell publish.sh xx .. 参数为war包名称 tomcat路径</span><br><span class="line">function publish()&#123;</span><br><span class="line">	echo &quot;update...&quot;</span><br><span class="line">	echo $2</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">	if  [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">	echo &quot;请输入war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	if [ ! -f &quot;$1.war&quot; ];then</span><br><span class="line">	echo &quot;请输入正确的war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	cp $1.war $2/backup/$1/$1.war</span><br><span class="line">	cd $2</span><br><span class="line">	if [ ! -f &quot;./backup/$1/$1.war&quot; ];then</span><br><span class="line">	echo &quot;请上传正确的war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	last_time=`stat $1.war|grep Modify|awk &apos;&#123;print $2&#125;&apos;|sed s/-//g`;</span><br><span class="line">	if [ ! -f &quot;./backup/$1/$last_time/$1.war&quot; ];then</span><br><span class="line">	mkdir -p &quot;./backup/$1/$last_time&quot;;</span><br><span class="line">	mv $1.war ./backup/$1/$last_time;</span><br><span class="line">	else</span><br><span class="line">	file_count=`ls ./backup/$1/$last_time -l |grep &quot;^-&quot;|wc -l`;</span><br><span class="line">	echo $file_count;</span><br><span class="line">	#file_count=$[file_count+1];</span><br><span class="line">	mv $1.war ./backup/$1/$last_time/$1$file_count.war;</span><br><span class="line">	fi</span><br><span class="line">	mv backup/$1/$1.war $1.war;</span><br><span class="line">	echo &quot;完成备份并发布应用&quot;;</span><br><span class="line">	return 1;</span><br><span class="line">&#125;</span><br><span class="line">publish $1 $2</span><br></pre></td></tr></table></figure>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/nginx-不停服更新服务器脚本/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/12/nginx-不停服更新服务器脚本/" itemprop="url">nginx 不停服更新服务器脚本</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T14:52:00+08:00">
-                2019-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">#修改两个tomcat路径 执行脚本 sh grace_update.sh XX 参数war包名称</span><br><span class="line">#!/bin/bash</span><br><span class="line">function grace_update()&#123;</span><br><span class="line">	if  [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">	echo &quot;请输入war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	#NGINX_SBIN=&quot;/usr/sbin&quot;</span><br><span class="line">	#NGINX_CONF=&quot;/etc/nginx&quot;</span><br><span class="line">	#TOMCAT_1=&quot;/data/tomcat/apache-tomcat-8.5.23&quot;</span><br><span class="line">	#TOMCAT_2=&quot;/data/tomcat/apache-tomcat-8.5.23&quot;</span><br><span class="line"> </span><br><span class="line">	NGINX_SBIN=&quot;/usr/local/nginx/sbin&quot;</span><br><span class="line">	NGINX_CONF=&quot;/usr/local/nginx/conf&quot;</span><br><span class="line">	TOMCAT_1=&quot;/data0/tomcat-nginx-7070/apache-tomcat-8.5.23&quot;</span><br><span class="line">	TOMCAT_2=&quot;/data0/tomcat/apache-tomcat-8.5.23&quot;	</span><br><span class="line">	echo &quot;发送停止7070服务器信号&quot;</span><br><span class="line">	rm -rf $NGINX_CONF/nginx.conf</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.7070 $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line">	echo &quot;更新7070服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	#`$NGINX_SBIN`/nginx</span><br><span class="line">	echo $TOMCAT_1</span><br><span class="line">	</span><br><span class="line">	sh publish-v2.sh $1 $TOMCAT_1/webapps</span><br><span class="line">	result=$?</span><br><span class="line"> </span><br><span class="line">	if  [ $result -eq 0 ] ;then</span><br><span class="line">		echo &quot;发布错误，退出程序&quot;</span><br><span class="line">		return 0</span><br><span class="line">	fi</span><br><span class="line"> </span><br><span class="line">	echo &quot;发送停止8080服务器信号，并开启7070服务器&quot;</span><br><span class="line">	rm -rf $NGINX_CONF/nginx.conf</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.8080 $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	echo $TOMCAT_2</span><br><span class="line">	echo &quot;更新8080服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	sh publish-v2.sh $1 $TOMCAT_2/webapps</span><br><span class="line">	result=$?</span><br><span class="line"> </span><br><span class="line">	if  [ $result -eq 0 ] ;then</span><br><span class="line">		echo &quot;发布错误，退出程序&quot;</span><br><span class="line">		return 0</span><br><span class="line">	fi</span><br><span class="line">	echo &quot;部署完成&quot;</span><br><span class="line">	echo &quot;开启全部服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.all $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">	echo &quot;it&apos;s done!&quot;</span><br><span class="line">	echo &quot;Congratulation！！！ &quot;	</span><br><span class="line">	echo &quot;--&lt;--&lt;-&lt;@ ●-● § ^_^ § &quot;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">grace_update $1</span><br></pre></td></tr></table></figure>
           
         
       
@@ -2260,6 +2260,8 @@ publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所�
 
 
   
+
+
 
 
 
