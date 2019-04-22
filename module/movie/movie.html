@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="referrer" content="never">
+		<meta charset="UTF-8">
+		<title></title>
+
+		<style>
+			a{
+				color: #37a;
+				 text-decoration: none;
+			}
+		a:hover {
+		    color: #FFFFFF;
+		    text-decoration: none;
+		    background: #37a;
+		}			
+			.m_l{
+				display:flex;
+				flex-direction:column
+			}
+			.m_item{
+				display: flex;
+				border-bottom: 1px solid #eaeaea;
+				    max-height: 100px;
+			}
+			.m_l{
+				padding: 4px;
+			}
+			.r_l{
+				padding: 4px;
+			}
+			.m_i_b{
+				color: #6b6b6b;
+				font-size: 12px;
+				margin: 0;
+			}
+		
+.allstar50, .allstar45, .allstar40, .allstar35, .allstar30, .allstar25, .allstar20, .allstar15, .allstar10, .allstar05, .allstar00, .rating1-t, .rating15-t, .rating2-t, .rating25-t, .rating3-t, .rating35-t, .rating4-t, .rating45-t, .rating5-t, .rating-t, .starb ~ .stars5, .starb ~ .stars4, .starb ~ .stars3, .starb ~ .stars2, .starb ~ .stars1, .collectors .stars5, .collectors .stars4, .collectors .stars3, .collectors .stars2, .collectors .stars1 {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    background: url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) no-repeat;
+    background: -webkit-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;
+    background: -moz-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;
+    background: -o-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;
+    background: -ms-image-set(url(https://img3.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(/f/shire/ee7f53d…/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;
+    width: 55px;
+    height: 11px;
+    margin: 0 3px 0 0;
+    overflow: hidden;
+}		
+.allstar45 {
+    background-position: 0 -11px;
+}	
+.rating_nums{
+	 color: #e09015;
+    font-size: 12px;
+    padding: 0 3 0 0;
+}	
+		</style>
+	</head>
+	<body>
+		<div  id="app">
+		<div class="m_l">
+			<div class="m_item">
+				<p style="font-weight: bold;"> {{ box.title }} {{ box.date}}</p>
+			</div>
+			<div class="m_item" v-for="(movie,index) in box.subjects">
+				<div class="m_l" style="text-align: center;">
+					<p style="    font-size: 33px;text-align: center; width:40px;   font-weight: 700;font-family: Open Sans,helvetica,sans-serif; */">{{ index+1 }}</p> 
+					</div>				
+				<div class="m_l">
+					<img :src=`${movie.subject.images.medium}?apikey=0df993c66c0c636e29ecbb5344252a4a` width="60px"  >
+					</div>
+				<div class="r_l">
+					<div> <a :href="movie.subject.alt" target="_blank">(${{movie.box/10000}} 万) &nbsp;&nbsp;{{movie.subject.title}} {{movie.subject.original_title}} </a></div>
+					<span class="allstar45"></span><span class="rating_nums">{{movie.subject.rating.average}}</span>
+					<p class="m_i_b">导演: <span v-for="director in movie.subject.directors"> {{ director.name }} /</span> </p>
+					<p class="m_i_b">主演: <span v-for="cast in movie.subject.casts"> {{ cast.name }} /</span></p>
+					<p class="m_i_b">类型: <span v-for="genre in movie.subject.genres"> {{ genre }} /</span>  </p>
+					<!--<p class="m_i_b">上映日期: <span v-for="pubdate in movie.subject.pubdates"> {{ pubdate }} /</span> </p>-->
+<!--					<p class="m_i_b">年份: 2012 </p>-->
+	
+				</div>
+			</div>
+			
+			</div>			
+
+		</div>
+</div>		
+		<script type="text/javascript" src="../common/vue/vue.js" ></script>
+		<script type="text/javascript" src="../common/jquery/jquery-3.3.1.min.js" ></script>
+		
+		<!--<script type="text/javascript" src="plugin/vue/vue.js" ></script>
+		<script type="text/javascript" src="plugin/jquery/jquery-3.3.1.min.js" ></script>-->
+		<script>
+			$(function(){
+				var app = new Vue({
+					  el: '#app',
+					  data: {
+					  	box:{}
+					  }
+				});
+				function fecthData(){
+					$.ajax({
+						type:"get",
+						url:"http://api.douban.com/v2/movie/us_box?apikey=0df993c66c0c636e29ecbb5344252a4a",
+						async:true,
+						 dataType: "jsonp", 
+						success:function(data){
+							console.log(data);
+							app.box = data;
+							
+						}
+					});
+				}
+				fecthData();
+			});
+
+			
+		</script>
+	</body>
+</html>
