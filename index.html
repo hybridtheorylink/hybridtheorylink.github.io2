@@ -302,6 +302,1286 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/线程池原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/22/线程池原理/" itemprop="url">线程池原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T19:45:27+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/22/线程池原理/" class="leancloud_visitors" data-flag-title="线程池原理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  3.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前言<br>平时接触过多线程开发的童鞋应该都或多或少了解过线程池，之前发布的《阿里巴巴 Java 手册》里也有一条：</p>
+<p><img src="/images/pasted-47.png" alt="upload successful"></p>
+<p>可见线程池的重要性。</p>
+<p>简单来说使用线程池有以下几个目的：</p>
+<p>线程是稀缺资源，不能频繁的创建。<br>解耦作用；线程的创建于执行完全分开，方便维护。<br>应当将其放入一个池子中，可以给其他任务进行复用。<br>线程池原理<br>谈到线程池就会想到池化技术，其中最核心的思想就是把宝贵的资源放到一个池子中；每次使用都从里面获取，用完之后又放回池子供其他人使用，有点吃大锅饭的意思。</p>
+<p>那在 Java 中又是如何实现的呢？</p>
+<p>在 JDK 1.5 之后推出了相关的 api，常见的创建线程池方式有以下几种：</p>
+<p>Executors.newCachedThreadPool()：无限线程池。<br>Executors.newFixedThreadPool(nThreads)：创建固定大小的线程池。<br>Executors.newSingleThreadExecutor()：创建单个线程的线程池。<br>常见的四种线程池<br>newFixedThreadPool</p>
+<p>public static ExecutorService newFixedThreadPool(int var0) {<br>        return new ThreadPoolExecutor(var0, var0, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue());<br>    }<br>public static ExecutorService newFixedThreadPool(int var0, ThreadFactory var1) {<br>    return new ThreadPoolExecutor(var0, var0, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue(), var1);<br>}</p>
+<p>固定大小的线程池，可以指定线程池的大小，该线程池corePoolSize和maximumPoolSize相等，阻塞队列使用的是LinkedBlockingQueue，大小为整数最大值。</p>
+<p>该线程池中的线程数量始终不变，当有新任务提交时，线程池中有空闲线程则会立即执行，如果没有，则会暂存到阻塞队列。对于固定大小的线程池，不存在线程数量的变化。同时使用无界的LinkedBlockingQueue来存放执行的任务。当任务提交十分频繁的时候，LinkedBlockingQueue</p>
+<p>迅速增大，存在着耗尽系统资源的问题。而且在线程池空闲时，即线程池中没有可运行任务时，它也不会释放工作线程，还会占用一定的系统资源，需要shutdown。</p>
+<p>newSingleThreadExecutor</p>
+<p>public static ExecutorService newSingleThreadExecutor() {<br>        return new Executors.FinalizableDelegatedExecutorService(new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue()));<br>    }</p>
+<pre><code>public static ExecutorService newSingleThreadExecutor(ThreadFactory var0) {
+    return new Executors.FinalizableDelegatedExecutorService(new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue(), var0));
+}
+</code></pre><p>单个线程线程池，只有一个线程的线程池，阻塞队列使用的是LinkedBlockingQueue,若有多余的任务提交到线程池中，则会被暂存到阻塞队列，待空闲时再去执行。按照先入先出的顺序执行任务。</p>
+<p>newCachedThreadPool</p>
+<p>public static ExecutorService newCachedThreadPool() {<br>        return new ThreadPoolExecutor(0, 2147483647, 60L, TimeUnit.SECONDS, new SynchronousQueue());<br>    }</p>
+<pre><code>public static ExecutorService newCachedThreadPool(ThreadFactory var0) {
+    return new ThreadPoolExecutor(0, 2147483647, 60L, TimeUnit.SECONDS, new SynchronousQueue(), var0);
+}
+</code></pre><p>缓存线程池，缓存的线程默认存活60秒。线程的核心池corePoolSize大小为0，核心池最大为Integer.MAX_VALUE,阻塞队列使用的是SynchronousQueue。是一个直接提交的阻塞队列，    他总会迫使线程池增加新的线程去执行新的任务。在没有任务执行时，当线程的空闲时间超过keepAliveTime（60秒），则工作线程将会终止被回收，当提交新任务时，如果没有空闲线程，则创建新线程执行任务，会导致一定的系统开销。如果同时又大量任务被提交，而且任务执行的时间不是特别快，那么线程池便会新增出等量的线程池处理任务，这很可能会很快耗尽系统的资源。</p>
+<p>newScheduledThreadPool</p>
+<p>public static ScheduledExecutorService newScheduledThreadPool(int var0) {<br>        return new ScheduledThreadPoolExecutor(var0);<br>    }</p>
+<pre><code>public static ScheduledExecutorService newScheduledThreadPool(int var0, ThreadFactory var1) {
+    return new ScheduledThreadPoolExecutor(var0, var1);
+}
+</code></pre><p>定时线程池，该线程池可用于周期性地去执行任务，通常用于周期性的同步数据。</p>
+<p>scheduleAtFixedRate:是以固定的频率去执行任务，周期是指每次执行任务成功执行之间的间隔。</p>
+<p>schedultWithFixedDelay:是以固定的延时去执行任务，延时是指上一次执行成功之后和下一次开始执行的之前的时间。</p>
+<p>拒绝策略<br>AbortPolicy:丢弃任务并抛出RejectedExecutionException</p>
+<p>CallerRunsPolicy：只要线程池未关闭，该策略直接在调用者线程中，运行当前被丢弃的任务。显然这样做不会真的丢弃任务，但是，任务提交线程的性能极有可能会急剧下降。</p>
+<p>DiscardOldestPolicy：丢弃队列中最老的一个请求，也就是即将被执行的一个任务，并尝试再次提交当前任务。</p>
+<p>DiscardPolicy：丢弃任务，不做任何处理。</p>
+<p>其实看这三种方式创建的源码就会发现：</p>
+<pre><code>public static ExecutorService newCachedThreadPool() {
+    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                  60L, TimeUnit.SECONDS,
+                                  new SynchronousQueue&lt;Runnable&gt;());
+}
+</code></pre><p>实际上还是利用 ThreadPoolExecutor 类实现的。</p>
+<p>所以我们重点来看下 ThreadPoolExecutor 是怎么玩的。</p>
+<p>首先是创建线程的 api：</p>
+<p>ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<runnable> workQueue, RejectedExecutionHandler handler)<br>这几个核心参数的作用：</runnable></p>
+<p>corePoolSize 为线程池的基本大小。<br>maximumPoolSize 为线程池最大线程大小。<br>keepAliveTime 和 unit 则是线程空闲后的存活时间。<br>workQueue 用于存放任务的阻塞队列。<br>handler 当队列和最大线程池都满了之后的饱和策略。<br>了解了这几个参数再来看看实际的运用。</p>
+<p>通常我们都是使用:</p>
+<p>threadPool.execute(new Job());<br>这样的方式来提交一个任务到线程池中，所以核心的逻辑就是 execute() 函数了。</p>
+<p>在具体分析之前先了解下线程池中所定义的状态，这些状态都和线程的执行密切相关：</p>
+<p><img src="/images/pasted-48.png" alt="upload successful"></p>
+<p>RUNNING 自然是运行状态，指可以接受任务执行队列里的任务<br>SHUTDOWN 指调用了 shutdown() 方法，不再接受新任务了，但是队列里的任务得执行完毕。<br>STOP 指调用了 shutdownNow() 方法，不再接受新任务，同时抛弃阻塞队列里的所有任务并中断所有正在执行任务。<br>TIDYING 所有任务都执行完毕，在调用 shutdown()/shutdownNow() 中都会尝试更新为这个状态。<br>TERMINATED 终止状态，当执行 terminated() 后会更新为这个状态。<br>用图表示为：</p>
+<p><img src="/images/pasted-49.png" alt="upload successful"></p>
+<p>然后看看 execute() 方法是如何处理的：</p>
+<p><img src="/images/pasted-50.png" alt="upload successful"></p>
+<p>获取当前线程池的状态。<br>当前线程数量小于 coreSize 时创建一个新的线程运行。<br>如果当前线程处于运行状态，并且写入阻塞队列成功。<br>双重检查，再次获取线程状态；如果线程状态变了（非运行状态）就需要从阻塞队列移除任务，并尝试判断线程是否全部执行完毕。同时执行拒绝策略。<br>如果当前线程池为空就新创建一个线程并执行。<br>如果在第三步的判断为非运行状态，尝试新建线程，如果失败则执行拒绝策略。<br>这里借助《聊聊并发》的一张图来描述这个流程：</p>
+<p><img src="/images/pasted-51.png" alt="upload successful"></p>
+<p><img src="/images/pasted-52.png" alt="upload successful"></p>
+<p>如何配置线程<br>流程聊完了再来看看上文提到了几个核心参数应该如何配置呢？</p>
+<p>有一点是肯定的，线程池肯定是不是越大越好。</p>
+<p>通常我们是需要根据这批任务执行的性质来确定的。</p>
+<p>IO 密集型任务：由于线程并不是一直在运行，所以可以尽可能的多配置线程，比如 CPU 个数 * 2<br>CPU 密集型任务（大量复杂的运算）应当分配较少的线程，比如 CPU 个数相当的大小。<br>当然这些都是经验值，最好的方式还是根据实际情况测试得出最佳配置。</p>
+<p>优雅的关闭线程池<br>有运行任务自然也有关闭任务，从上文提到的 5 个状态就能看出如何来关闭线程池。</p>
+<p>其实无非就是两个方法 shutdown()/shutdownNow()。</p>
+<p>但他们有着重要的区别：</p>
+<p>shutdown() 执行后停止接受新任务，会把队列的任务执行完毕。<br>shutdownNow() 也是停止接受新任务，但会中断所有的任务，将线程池状态变为 stop。<br>两个方法都会中断线程，用户可自行判断是否需要响应中断。</p>
+<p>shutdownNow() 要更简单粗暴，可以根据实际场景选择不同的方法。</p>
+<p>我通常是按照以下方式关闭线程池的：</p>
+<pre><code>long start = System.currentTimeMillis();
+for (int i = 0; i &lt;= 5; i++) {
+    pool.execute(new Job());
+}
+
+pool.shutdown();
+
+while (!pool.awaitTermination(1, TimeUnit.SECONDS)) {
+    LOGGER.info(&quot;线程还在执行。。。&quot;);
+}
+long end = System.currentTimeMillis();
+LOGGER.info(&quot;一共处理了【{}】&quot;, (end - start));
+</code></pre><p>pool.awaitTermination(1, TimeUnit.SECONDS) 会每隔一秒钟检查一次是否执行完毕（状态为 TERMINATED），当从 while 循环退出时就表明线程池已经完全终止了。</p>
+<p>SpringBoot 使用线程池<br>2018 年了，SpringBoot 盛行；来看看在 SpringBoot 中应当怎么配置和使用线程池。</p>
+<p>既然用了 SpringBoot ，那自然得发挥 Spring 的特性，所以需要 Spring 来帮我们管理线程池：</p>
+<p>@Configuration<br>public class TreadPoolConfig {</p>
+<pre><code>/**
+ * 消费队列线程
+ * @return
+ */
+@Bean(value = &quot;consumerQueueThreadPool&quot;)
+public ExecutorService buildConsumerQueueThreadPool(){
+    ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
+            .setNameFormat(&quot;consumer-queue-thread-%d&quot;).build();
+
+    ExecutorService pool = new ThreadPoolExecutor(5, 5, 0L, TimeUnit.MILLISECONDS,
+            new ArrayBlockingQueue&lt;Runnable&gt;(5),namedThreadFactory,new ThreadPoolExecutor.AbortPolicy());
+
+    return pool ;
+}
+</code></pre><p>}<br>使用时：</p>
+<pre><code>@Resource(name = &quot;consumerQueueThreadPool&quot;)
+private ExecutorService consumerQueueThreadPool;
+
+
+@Override
+public void execute() {
+
+    //消费队列
+    for (int i = 0; i &lt; 5; i++) {
+        consumerQueueThreadPool.execute(new ConsumerQueueThread());
+    }
+
+}
+</code></pre><p>其实也挺简单，就是创建了一个线程池的 bean，在使用时直接从 Spring 中取出即可。</p>
+<p>监控线程池<br>谈到了 SpringBoot，也可利用它 actuator 组件来做线程池的监控。</p>
+<p>线程怎么说都是稀缺资源，对线程池的监控可以知道自己任务执行的状况、效率等。</p>
+<p>关于 actuator 就不再细说了，感兴趣的可以看看这篇，有详细整理过如何暴露监控端点。</p>
+<p>其实 ThreadPool 本身已经提供了不少 api 可以获取线程状态：</p>
+<p><img src="/images/pasted-53.png" alt="upload successful"></p>
+<p>很多方法看名字就知道其含义，只需要将这些信息暴露到 SpringBoot 的监控端点中，我们就可以在可视化页面查看当前的线程池状态了。</p>
+<p>甚至我们可以继承线程池扩展其中的几个函数来自定义监控逻辑：</p>
+<p><img src="/images/pasted-54.png" alt="upload successful"></p>
+<p><img src="/images/pasted-55.png" alt="upload successful"><br>看这些名称和定义都知道，这是让子类来实现的。</p>
+<p>可以在线程执行前、后、终止状态执行自定义逻辑。</p>
+<p>线程池隔离<br>线程池看似很美好，但也会带来一些问题。</p>
+<p>如果我们很多业务都依赖于同一个线程池,当其中一个业务因为各种不可控的原因消耗了所有的线程，导致线程池全部占满。</p>
+<p>这样其他的业务也就不能正常运转了，这对系统的打击是巨大的。</p>
+<p>比如我们 Tomcat 接受请求的线程池，假设其中一些响应特别慢，线程资源得不到回收释放；线程池慢慢被占满，最坏的情况就是整个应用都不能提供服务。</p>
+<p>所以我们需要将线程池进行隔离。</p>
+<p>通常的做法是按照业务进行划分：</p>
+<p>比如下单的任务用一个线程池，获取数据的任务用另一个线程池。这样即使其中一个出现问题把线程池耗尽，那也不会影响其他的任务运行。</p>
+<p>hystrix 隔离<br>这样的需求 Hystrix 已经帮我们实现了。</p>
+<p>Hystrix 是一款开源的容错插件，具有依赖隔离、系统容错降级等功能。</p>
+<p>下面来看看 Hystrix 简单的应用：</p>
+<p>首先需要定义两个线程池，分别用于执行订单、处理用户。</p>
+<p>/**</p>
+<ul>
+<li>Function:订单服务<br>*</li>
+<li>@author crossoverJie</li>
+<li>Date: 2018/7/28 16:43</li>
+<li><p>@since JDK 1.8<br>*/<br>public class CommandOrder extends HystrixCommand<string> {</string></p>
+<p> private final static Logger LOGGER = LoggerFactory.getLogger(CommandOrder.class);</p>
+<p> private String orderName;</p>
+<p> public CommandOrder(String orderName) {</p>
+</li>
+</ul>
+<pre><code>    super(Setter.withGroupKey(
+            //服务分组
+            HystrixCommandGroupKey.Factory.asKey(&quot;OrderGroup&quot;))
+            //线程分组
+            .andThreadPoolKey(HystrixThreadPoolKey.Factory.asKey(&quot;OrderPool&quot;))
+
+            //线程池配置
+            .andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()
+                    .withCoreSize(10)
+                    .withKeepAliveTimeMinutes(5)
+                    .withMaxQueueSize(10)
+                    .withQueueSizeRejectionThreshold(10000))
+
+            .andCommandPropertiesDefaults(
+                    HystrixCommandProperties.Setter()
+                            .withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.THREAD))
+    )
+    ;
+    this.orderName = orderName;
+}
+
+
+@Override
+public String run() throws Exception {
+
+    LOGGER.info(&quot;orderName=[{}]&quot;, orderName);
+
+    TimeUnit.MILLISECONDS.sleep(100);
+    return &quot;OrderName=&quot; + orderName;
+}
+</code></pre><p>}</p>
+<p>/**</p>
+<ul>
+<li>Function:用户服务<br>*</li>
+<li>@author crossoverJie</li>
+<li>Date: 2018/7/28 16:43</li>
+<li><p>@since JDK 1.8<br>*/<br>public class CommandUser extends HystrixCommand<string> {</string></p>
+<p> private final static Logger LOGGER = LoggerFactory.getLogger(CommandUser.class);</p>
+<p> private String userName;</p>
+<p> public CommandUser(String userName) {</p>
+</li>
+</ul>
+<pre><code>    super(Setter.withGroupKey(
+            //服务分组
+            HystrixCommandGroupKey.Factory.asKey(&quot;UserGroup&quot;))
+            //线程分组
+            .andThreadPoolKey(HystrixThreadPoolKey.Factory.asKey(&quot;UserPool&quot;))
+
+            //线程池配置
+            .andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()
+                    .withCoreSize(10)
+                    .withKeepAliveTimeMinutes(5)
+                    .withMaxQueueSize(10)
+                    .withQueueSizeRejectionThreshold(10000))
+
+            //线程池隔离
+            .andCommandPropertiesDefaults(
+                    HystrixCommandProperties.Setter()
+                            .withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.THREAD))
+    )
+    ;
+    this.userName = userName;
+}
+
+
+@Override
+public String run() throws Exception {
+
+    LOGGER.info(&quot;userName=[{}]&quot;, userName);
+
+    TimeUnit.MILLISECONDS.sleep(100);
+    return &quot;userName=&quot; + userName;
+}
+</code></pre><p>}<br>api 特别简洁易懂，具体详情请查看官方文档。</p>
+<p>然后模拟运行：</p>
+<pre><code>public static void main(String[] args) throws Exception {
+    CommandOrder commandPhone = new CommandOrder(&quot;手机&quot;);
+    CommandOrder command = new CommandOrder(&quot;电视&quot;);
+
+
+    //阻塞方式执行
+    String execute = commandPhone.execute();
+    LOGGER.info(&quot;execute=[{}]&quot;, execute);
+
+    //异步非阻塞方式
+    Future&lt;String&gt; queue = command.queue();
+    String value = queue.get(200, TimeUnit.MILLISECONDS);
+    LOGGER.info(&quot;value=[{}]&quot;, value);
+
+
+    CommandUser commandUser = new CommandUser(&quot;张三&quot;);
+    String name = commandUser.execute();
+    LOGGER.info(&quot;name=[{}]&quot;, name);
+}
+</code></pre><p>运行结果：</p>
+<p><img src="/images/pasted-56.png" alt="upload successful"></p>
+<p>可以看到两个任务分成了两个线程池运行，他们之间互不干扰。</p>
+<p>获取任务任务结果支持同步阻塞和异步非阻塞方式，可自行选择。</p>
+<p>它的实现原理其实容易猜到：</p>
+<p>利用一个 Map 来存放不同业务对应的线程池。</p>
+<p>通过刚才的构造函数也能证明：</p>
+<p><img src="/images/pasted-57.png" alt="upload successful"></p>
+<p>还要注意的一点是：</p>
+<p>自定义的 Command 并不是一个单例，每次执行需要 new 一个实例，不然会报 This instance can only be executed once. Please instantiate a new instance. 异常。</p>
+<p>总结<br>池化技术确实在平时应用广泛，熟练掌握能提高不少效率。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/红黑树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/22/红黑树/" itemprop="url"> 红黑树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T19:38:52+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/22/红黑树/" class="leancloud_visitors" data-flag-title=" 红黑树">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  980
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一、在理解红黑树之前，先看一些二叉查找树</p>
+<p>二叉查找树特性：<br>左字数上所有的节点的值都小于或等于他的根节点上的值</p>
+<p>右子树上所有节点的值均大于或等于他的根节点的值</p>
+<p>左、右子树也跟别为平衡二叉树</p>
+<p>举个二叉树的例子：</p>
+<p><img src="/images/pasted-31.png" alt="upload successful"><br>可以看到如果要查询10的话，10&gt;9</p>
+<p><img src="/images/pasted-32.png" alt="upload successful"><br>因此到他的右子树，右子树根节点为13，10&lt;13</p>
+<p><img src="/images/pasted-33.png" alt="upload successful"><br>因此到其左子树，左子树根节点为11&gt;10</p>
+<p><img src="/images/pasted-34.png" alt="upload successful"><br>到其左子树，为10，找到相应的节点</p>
+<p><img src="/images/pasted-35.png" alt="upload successful"><br> 不过二叉查找树有一些问题，可能会出现不平横的情况，即如下图所示的情况</p>
+<p><img src="/images/pasted-36.png" alt="upload successful"><br> 从这种情况可以看出，明显存在左子树和右子树深度相差过多，在使用平衡情况下的二叉查找树是时间复杂度为logn，而出现这种极端情况的话，想要查9的位置就需要每一次都遍历下一个右子树，很有可能时间复杂度变为n(与数组普通查询的时间复杂度相同)</p>
+<p> 基于上述情况，引入了平衡二叉树，红黑树即为平衡二叉树的一种</p>
+<p> 二、红黑树</p>
+<p> 特性：节点是红色或黑色</p>
+<p>  根节点一定是黑色</p>
+<p>  每个叶节点都是黑色的空节点(NIL节点)</p>
+<p>  每个红节点的两个子节点都是黑色的(从每个叶子到跟的所有路径上不能有两个连续的红节点)(即对于层来说除了NIL节点，红黑节点是交替的，第一层是黑节点那么其下一层肯定都是红节点，反之一样)</p>
+<p>  从任一节点到其每个叶子节点的所有路径都包含相同数目的黑色节点</p>
+<p>  正是由于这些原因使得红黑树是一个平衡二叉树</p>
+<p>  红黑树的例子</p>
+<p><img src="/images/pasted-37.png" alt="upload successful"><br>  向红黑树中插入节点14(一般默认插入节点是红色的)</p>
+<p><img src="/images/pasted-38.png" alt="upload successful"><br>  在原树上插入20</p>
+<p><img src="/images/pasted-39.png" alt="upload successful">  </p>
+<p>  可以看到，插入以后树已经不是一个平衡的二叉树，而且并不满足红黑树的要求，因为20和21均为红色，这种情况下就需要对红黑树进行变色，21需要变为黑色，22就会变成红色，如果22变成红色，则需要17和25都变成黑色</p>
+<p><img src="/images/pasted-40.png" alt="upload successful"><br>  而17变成黑色显然是不成立的，因为如果17变为黑色，那么13就会变为红色，不满足二叉树的规则，因此此处需要进行另一个操作———左旋操作</p>
+<p>  左旋：下图就是一个左旋的例子，一般情况下，如果左子树深度过深，那么便需要进行左旋操作以保证左右子树深度差变小</p>
+<p><img src="/images/pasted-41.png" alt="upload successful"><br>  对于上图由于右子树中17变为黑色以后需要把13变成红色，因此进行一次左旋，将17放在根节点，这样既可保证13为红色，左旋后结果</p>
+<p><img src="/images/pasted-42.png" alt="upload successful"><br>  而后根据红黑树的要求进行颜色的修改</p>
+<p><img src="/images/pasted-43.png" alt="upload successful"> 进行左旋后，发现从根节点17，到1左子树的叶子节点经过了两个黑节点，而到6的左叶子节点或者右叶子节点要经历3个黑节点，很显然也不满足红黑树，因此还需要进行下一步操作，需要进行右旋操作</p>
+<p>   右旋：与左旋正好相反</p>
+<p><img src="/images/pasted-44.png" alt="upload successful"> 由于是从13节点出现的不平衡，因此对13节点进行右旋，得到结果</p>
+<p><img src="/images/pasted-45.png" alt="upload successful"><br>而后再对其节点进行变色，得到结果</p>
+<p><img src="/images/pasted-46.png" alt="upload successful"><br>   这便是红黑树的一个变换，它主要用途有很多，例如java中的TreeMap以及JDK1.8以后的HashMap在当个节点中链表长度大于8时都会用到。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/HashMap、ConcurrentHashMap-原理分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/22/HashMap、ConcurrentHashMap-原理分析/" itemprop="url">HashMap、ConcurrentHashMap 原理分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T19:31:31+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/22/HashMap、ConcurrentHashMap-原理分析/" class="leancloud_visitors" data-flag-title="HashMap、ConcurrentHashMap 原理分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  4.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Map 这样的 Key Value 在软件开发中是非常经典的结构，常用于在内存中存放数据。</p>
+<p>本篇主要想讨论 ConcurrentHashMap 这样一个并发容器，在正式开始之前我觉得有必要谈谈 HashMap，没有它就不会有后面的 ConcurrentHashMap。</p>
+<h2 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h2><p>众所周知 HashMap 底层是基于 数组 + 链表 组成的，不过在 jdk1.7 和 1.8 中具体实现稍有不同。</p>
+<h2 id="Base-1-7"><a href="#Base-1-7" class="headerlink" title="Base 1.7"></a>Base 1.7</h2><p>1.7 中的数据结构图：</p>
+<p><img src="/images/pasted-16.png" alt="upload successful"></p>
+<p>先来看看 1.7 中的实现。</p>
+<p><img src="/images/pasted-17.png" alt="upload successful"></p>
+<p>这是 HashMap 中比较核心的几个成员变量；看看分别是什么意思？</p>
+<p>初始化桶大小，因为底层是数组，所以这是数组默认的大小。<br>桶最大值。<br>默认的负载因子（0.75）<br>table 真正存放数据的数组。<br>Map 存放数量的大小。<br>桶大小，可在初始化时显式指定。<br>负载因子，可在初始化时显式指定。<br>重点解释下负载因子：</p>
+<p>由于给定的 HashMap 的容量大小是固定的，比如默认初始化：</p>
+<pre><code>public HashMap() {
+
+this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
+
+}
+
+public HashMap(int initialCapacity, float loadFactor) {
+
+if (initialCapacity &lt; 0)
+
+throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +
+
+initialCapacity);
+
+if (initialCapacity &gt; MAXIMUM_CAPACITY)
+
+initialCapacity = MAXIMUM_CAPACITY;
+
+if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))
+
+throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +
+
+loadFactor);
+
+this.loadFactor = loadFactor;
+
+threshold = initialCapacity;
+
+init();
+
+}
+</code></pre><p>因此通常建议能提前预估 HashMap 的大小最好，尽量的减少扩容带来的性能损耗。给定的默认容量为 16，负载因子为 0.75。Map 在使用过程中不断的往里面存放数据，当数量达到了 16 * 0.75 = 12 就需要将当前 16 的容量进行扩容，而扩容这个过程涉及到 rehash、复制数据等操作，所以非常消耗性能。</p>
+<p>根据代码可以看到其实真正存放数据的是</p>
+<pre><code>transient Entry&lt;K,V&gt;[] table = (Entry&lt;K,V&gt;[]) EMPTY_TABLE;
+</code></pre><p>这个数组，那么它又是如何定义的呢？</p>
+<p><img src="/images/pasted-18.png" alt="upload successful"></p>
+<p>Entry 是 HashMap 中的一个内部类，从他的成员变量很容易看出：</p>
+<ol>
+<li>key 就是写入时的键。</li>
+<li>value 自然就是值。</li>
+<li>开始的时候就提到 HashMap 是由数组和链表组成，所以这个 next 就是用于实现链表结构。</li>
+<li>hash 存放的是当前 key 的 hashcode。<br>知晓了基本结构，那来看看其中重要的写入、获取函数：</li>
+</ol>
+<p>put 方法</p>
+<pre><code>public V put(K key, V value) {
+
+if (table == EMPTY_TABLE) {
+
+inflateTable(threshold);
+
+}
+
+if (key == null)
+
+return putForNullKey(value);
+
+int hash = hash(key);
+
+int i = indexFor(hash, table.length);
+
+for (Entry&lt;K,V&gt; e = table[i]; e != null; e = e.next) {
+
+Object k;
+
+if (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) {
+
+V oldValue = e.value;
+
+e.value = value;
+
+e.recordAccess(this);
+
+return oldValue;
+
+}
+
+}
+
+modCount++;
+
+addEntry(hash, key, value, i);
+
+return null;
+
+}
+void addEntry(int hash, K key, V value, int bucketIndex) {
+
+if ((size &gt;= threshold) &amp;&amp; (null != table[bucketIndex])) {
+
+resize(2 * table.length);
+
+hash = (null != key) ? hash(key) : 0;
+
+bucketIndex = indexFor(hash, table.length);
+
+}
+
+createEntry(hash, key, value, bucketIndex);
+
+}
+
+void createEntry(int hash, K key, V value, int bucketIndex) {
+
+Entry&lt;K,V&gt; e = table[bucketIndex];
+
+table[bucketIndex] = new Entry&lt;&gt;(hash, key, value, e);
+
+size++;
+
+}
+</code></pre><p>判断当前数组是否需要初始化。<br>如果 key 为空，则 put 一个空值进去。<br>根据 key 计算出 hashcode。<br>根据计算出的 hashcode 定位出所在桶。<br>如果桶是一个链表则需要遍历判断里面的 hashcode、key 是否和传入 key 相等，如果相等则进行覆盖，并返回原来的值。<br>如果桶是空的，说明当前位置没有数据存入；新增一个 Entry 对象写入当前位置。<br>当调用 addEntry 写入 Entry 时需要判断是否需要扩容。</p>
+<p>如果需要就进行两倍扩充，并将当前的 key 重新 hash 并定位。</p>
+<p>而在 createEntry 中会将当前位置的桶传入到新建的桶中，如果当前桶有值就会在位置形成链表。</p>
+<p>get 方法</p>
+<p>再来看看 get 函数：</p>
+<pre><code>public V get(Object key) {
+
+if (key == null)
+
+return getForNullKey();
+
+Entry&lt;K,V&gt; entry = getEntry(key);
+
+return null == entry ? null : entry.getValue();
+
+}
+
+final Entry&lt;K,V&gt; getEntry(Object key) {
+
+if (size == 0) {
+
+return null;
+
+}
+
+int hash = (key == null) ? 0 : hash(key);
+
+for (Entry&lt;K,V&gt; e = table[indexFor(hash, table.length)];
+
+e != null;
+
+e = e.next) {
+
+Object k;
+
+if (e.hash == hash &amp;&amp;
+
+((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+
+return e;
+
+}
+
+return null;
+
+}
+</code></pre><p>Base 1.8首先也是根据 key 计算出 hashcode，然后定位到具体的桶中。</p>
+<p>判断该位置是否为链表。<br>不是链表就根据 key、key 的 hashcode 是否相等来返回值。<br>为链表则需要遍历直到 key 及 hashcode 相等时候就返回值。<br>啥都没取到就直接返回 null 。<br>不知道 1.7 的实现大家看出需要优化的点没有？</p>
+<p>其实一个很明显的地方就是：</p>
+<p>当 Hash 冲突严重时，在桶上形成的链表会变的越来越长，这样在查询时的效率就会越来越低；时间复杂度为 O(N)。</p>
+<p>因此 1.8 中重点优化了这个查询效率。</p>
+<p>1.8 HashMap 结构图：</p>
+<p><img src="/images/pasted-19.png" alt="upload successful"></p>
+<p>先来看看几个核心的成员变量：</p>
+<pre><code>static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16
+
+/**
+* The maximum capacity, used if a higher value is implicitly specified
+* by either of the constructors with arguments.
+* MUST be a power of two &lt;= 1&lt;&lt;30.
+*/
+
+static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;
+
+/**
+* The load factor used when none specified in constructor.
+*/
+
+static final float DEFAULT_LOAD_FACTOR = 0.75f;
+
+static final int TREEIFY_THRESHOLD = 8;
+
+transient Node&lt;K,V&gt;[] table;
+
+/**
+* Holds cached entrySet(). Note that AbstractMap fields are used
+* for keySet() and values().
+*/
+
+transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;
+
+/**
+* The number of key-value mappings contained in this map.
+*/
+
+transient int size;
+</code></pre><p>TREEIFY_THRESHOLD 用于判断是否需要将链表转换为红黑树的阈值。和 1.7 大体上都差不多，还是有几个重要的区别：</p>
+<p>HashEntry 修改为 Node。<br>Node 的核心组成其实也是和 1.7 中的 HashEntry 一样，存放的都是 key value hashcode next 等数据。</p>
+<p>再来看看核心方法。</p>
+<p>put 方法</p>
+<p><img src="/images/pasted-20.png" alt="upload successful"></p>
+<p>看似要比 1.7 的复杂，我们一步步拆解：</p>
+<p>判断当前桶是否为空，空的就需要初始化（resize 中会判断是否进行初始化）。<br>根据当前 key 的 hashcode 定位到具体的桶中并判断是否为空，为空表明没有 Hash 冲突就直接在当前位置创建一个新桶即可。<br>如果当前桶有值（ Hash 冲突），那么就要比较当前桶中的 key、key 的 hashcode 与写入的 key 是否相等，相等就赋值给 e,在第 8 步的时候会统一进行赋值及返回。<br>如果当前桶为红黑树，那就要按照红黑树的方式写入数据。<br>如果是个链表，就需要将当前的 key、value 封装成一个新节点写入到当前桶的后面（形成链表）。<br>接着判断当前链表的大小是否大于预设的阈值，大于时就要转换为红黑树。<br>如果在遍历过程中找到 key 相同时直接退出遍历。<br>如果 e != null 就相当于存在相同的 key,那就需要将值覆盖。<br>最后判断是否需要进行扩容。<br>get 方法</p>
+<pre><code>public V get(Object key) {
+
+Node&lt;K,V&gt; e;
+
+return (e = getNode(hash(key), key)) == null ? null : e.value;
+
+}
+
+final Node&lt;K,V&gt; getNode(int hash, Object key) {
+
+Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; int n; K k;
+
+if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;
+
+(first = tab[(n - 1) &amp; hash]) != null) {
+
+if (first.hash == hash &amp;&amp; // always check first node
+
+((k = first.key) == key || (key != null &amp;&amp; key.equals(k))))
+
+return first;
+
+if ((e = first.next) != null) {
+
+if (first instanceof TreeNode)
+
+return ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);
+
+do {
+
+if (e.hash == hash &amp;&amp;
+
+((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+
+return e;
+
+} while ((e = e.next) != null);
+
+}
+
+}
+
+return null;
+
+}
+</code></pre><p>首先将 key hash 之后取得所定位的桶。get 方法看起来就要简单许多了。</p>
+<p>如果桶为空则直接返回 null 。<br>否则判断桶的第一个位置(有可能是链表、红黑树)的 key 是否为查询的 key，是就直接返回 value。<br>如果第一个不匹配，则判断它的下一个是红黑树还是链表。<br>红黑树就按照树的查找方式返回值。<br>不然就按照链表的方式遍历匹配返回值。<br>从这两个核心方法（get/put）可以看出 1.8 中对大链表做了优化，修改为红黑树之后查询效率直接提高到了 O(logn)。</p>
+<p>但是 HashMap 原有的问题也都存在，比如在并发场景下使用时容易出现死循环。</p>
+<pre><code>final HashMap&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
+
+for (int i = 0; i &lt; 1000; i++) {
+
+new Thread(new Runnable() {
+
+@Override
+
+public void run() {
+
+map.put(UUID.randomUUID().toString(), &quot;&quot;);
+
+}
+
+}).start();
+
+}
+</code></pre><p>看过上文的还记得在 HashMap 扩容的时候会调用 resize() 方法，就是这里的并发操作容易在一个桶上形成环形链表；这样当获取一个不存在的 key 时，计算出的 index 正好是环形链表的下标就会出现死循环。但是为什么呢？简单分析下。</p>
+<p>如下图：</p>
+<p><img src="/images/pasted-21.png" alt="upload successful"></p>
+<p><img src="/images/pasted-22.png" alt="upload successful"></p>
+<p>遍历方式<br>还有一个值得注意的是 HashMap 的遍历方式，通常有以下几种：</p>
+<pre><code>Iterator&lt;Map.Entry&lt;String, Integer&gt;&gt; entryIterator = map.entrySet().iterator();
+
+while (entryIterator.hasNext()) {
+
+Map.Entry&lt;String, Integer&gt; next = entryIterator.next();
+
+System.out.println(&quot;key=&quot; + next.getKey() + &quot; value=&quot; + next.getValue());
+
+}
+
+Iterator&lt;String&gt; iterator = map.keySet().iterator();
+
+while (iterator.hasNext()){
+
+String key = iterator.next();
+
+System.out.println(&quot;key=&quot; + key + &quot; value=&quot; + map.get(key));
+
+}
+</code></pre><p>第一种可以把 key value 同时取出，第二种还得需要通过 key 取一次 value，效率较低。强烈建议使用第一种 EntrySet 进行遍历。</p>
+<p>简单总结下 HashMap：无论是 1.7 还是 1.8 其实都能看出 JDK 没有对它做任何的同步操作，所以并发会出问题，甚至 1.7 中出现死循环导致系统不可用（1.8 已经修复死循环问题）。</p>
+<p>因此 JDK 推出了专项专用的 ConcurrentHashMap ，该类位于 java.util.concurrent 包下，专门用于解决并发问题。</p>
+<p>坚持看到这里的朋友算是已经把 ConcurrentHashMap 的基础已经打牢了，下面正式开始分析。</p>
+<p>ConcurrentHashMap<br>ConcurrentHashMap 同样也分为 1.7 、1.8 版，两者在实现上略有不同。</p>
+<p>Base 1.7<br>先来看看 1.7 的实现，下面是他的结构图：</p>
+<p><img src="/images/pasted-23.png" alt="upload successful"></p>
+<p>如图所示，是由 Segment 数组、HashEntry 组成，和 HashMap 一样，仍然是数组加链表。</p>
+<p>它的核心成员变量：</p>
+<pre><code>/**
+* Segment 数组，存放数据时首先需要定位到具体的 Segment 中。
+*/
+
+final Segment&lt;K,V&gt;[] segments;
+
+transient Set&lt;K&gt; keySet;
+
+transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;
+static final class Segment&lt;K,V&gt; extends ReentrantLock implements Serializable {
+
+private static final long serialVersionUID = 2249069246763182397L;
+
+// 和 HashMap 中的 HashEntry 作用一样，真正存放数据的桶
+
+transient volatile HashEntry&lt;K,V&gt;[] table;
+
+transient int count;
+
+transient int modCount;
+
+transient int threshold;
+
+final float loadFactor;
+
+}
+</code></pre><p>看看其中 HashEntry 的组成：Segment 是 ConcurrentHashMap 的一个内部类，主要的组成如下：</p>
+<p><img src="/images/pasted-24.png" alt="upload successful"></p>
+<p>和 HashMap 非常类似，唯一的区别就是其中的核心数据如 value ，以及链表都是 volatile 修饰的，保证了获取时的可见性。</p>
+<p>原理上来说：ConcurrentHashMap 采用了分段锁技术，其中 Segment 继承于 ReentrantLock。不会像 HashTable 那样不管是 put 还是 get 操作都需要做同步处理，理论上 ConcurrentHashMap 支持 CurrencyLevel (Segment 数组数量)的线程并发。每当一个线程占用锁访问一个 Segment 时，不会影响到其他的 Segment。</p>
+<p>下面也来看看核心的 put get 方法。</p>
+<p>put 方法</p>
+<pre><code>public V put(K key, V value) {
+
+Segment&lt;K,V&gt; s;
+
+if (value == null)
+
+throw new NullPointerException();
+
+int hash = hash(key);
+
+int j = (hash &gt;&gt;&gt; segmentShift) &amp; segmentMask;
+
+if ((s = (Segment&lt;K,V&gt;)UNSAFE.getObject // nonvolatile; recheck
+
+(segments, (j &lt;&lt; SSHIFT) + SBASE)) == null) // in ensureSegment
+
+s = ensureSegment(j);
+
+return s.put(key, hash, value, false);
+
+}
+
+
+final V put(K key, int hash, V value, boolean onlyIfAbsent) {
+
+HashEntry&lt;K,V&gt; node = tryLock() ? null :
+
+scanAndLockForPut(key, hash, value);
+
+V oldValue;
+
+try {
+
+HashEntry&lt;K,V&gt;[] tab = table;
+
+int index = (tab.length - 1) &amp; hash;
+
+HashEntry&lt;K,V&gt; first = entryAt(tab, index);
+
+for (HashEntry&lt;K,V&gt; e = first;;) {
+
+if (e != null) {
+
+K k;
+
+if ((k = e.key) == key ||
+
+(e.hash == hash &amp;&amp; key.equals(k))) {
+
+oldValue = e.value;
+
+if (!onlyIfAbsent) {
+
+e.value = value;
+
+++modCount;
+
+}
+
+break;
+
+}
+
+e = e.next;
+
+}
+
+else {
+
+if (node != null)
+
+node.setNext(first);
+
+else
+
+node = new HashEntry&lt;K,V&gt;(hash, key, value, first);
+
+int c = count + 1;
+
+if (c &gt; threshold &amp;&amp; tab.length &lt; MAXIMUM_CAPACITY)
+
+rehash(node);
+
+else
+
+setEntryAt(tab, index, node);
+
+++modCount;
+
+count = c;
+
+oldValue = null;
+
+break;
+
+}
+
+}
+
+} finally {
+
+unlock();
+
+}
+
+return oldValue;
+
+}
+</code></pre><p>虽然 HashEntry 中的 value 是用 volatile 关键词修饰的，但是并不能保证并发的原子性，所以 put 操作时仍然需要加锁处理。首先是通过 key 定位到 Segment，之后在对应的 Segment 中进行具体的 put。</p>
+<p>首先第一步的时候会尝试获取锁，如果获取失败肯定就有其他线程存在竞争，则利用 scanAndLockForPut() 自旋获取锁。</p>
+<p><img src="/images/pasted-25.png" alt="upload successful"></p>
+<p>尝试自旋获取锁。<br>如果重试的次数达到了 MAX_SCAN_RETRIES 则改为阻塞锁获取，保证能获取成功。</p>
+<p><img src="/images/pasted-26.png" alt="upload successful"></p>
+<p>再结合图看看 put 的流程。</p>
+<p>将当前 Segment 中的 table 通过 key 的 hashcode 定位到 HashEntry。<br>遍历该 HashEntry，如果不为空则判断传入的 key 和当前遍历的 key 是否相等，相等则覆盖旧的 value。<br>不为空则需要新建一个 HashEntry 并加入到 Segment 中，同时会先判断是否需要扩容。<br>最后会解除在 1 中所获取当前 Segment 的锁。<br>get 方法</p>
+<pre><code>public V get(Object key) {
+
+Segment&lt;K,V&gt; s; // manually integrate access methods to reduce overhead
+
+HashEntry&lt;K,V&gt;[] tab;
+
+int h = hash(key);
+
+long u = (((h &gt;&gt;&gt; segmentShift) &amp; segmentMask) &lt;&lt; SSHIFT) + SBASE;
+
+if ((s = (Segment&lt;K,V&gt;)UNSAFE.getObjectVolatile(segments, u)) != null &amp;&amp;
+
+(tab = s.table) != null) {
+
+for (HashEntry&lt;K,V&gt; e = (HashEntry&lt;K,V&gt;) UNSAFE.getObjectVolatile
+
+(tab, ((long)(((tab.length - 1) &amp; h)) &lt;&lt; TSHIFT) + TBASE);
+
+e != null; e = e.next) {
+
+K k;
+
+if ((k = e.key) == key || (e.hash == h &amp;&amp; key.equals(k)))
+
+return e.value;
+
+}
+
+}
+
+return null;
+
+}
+</code></pre><p>只需要将 Key 通过 Hash 之后定位到具体的 Segment ，再通过一次 Hash 定位到具体的元素上。get 逻辑比较简单：</p>
+<p>由于 HashEntry 中的 value 属性是用 volatile 关键词修饰的，保证了内存可见性，所以每次获取时都是最新值。</p>
+<p>ConcurrentHashMap 的 get 方法是非常高效的，因为整个过程都不需要加锁。</p>
+<p>Base 1.8<br>1.7 已经解决了并发问题，并且能支持 N 个 Segment 这么多次数的并发，但依然存在 HashMap 在 1.7 版本中的问题。</p>
+<p>那就是查询遍历链表效率太低。</p>
+<p>因此 1.8 做了一些数据结构上的调整。</p>
+<p>首先来看下底层的组成结构：</p>
+<p><img src="/images/pasted-27.png" alt="upload successful"></p>
+<p>看起来是不是和 1.8 HashMap 结构类似？</p>
+<p>其中抛弃了原有的 Segment 分段锁，而采用了 CAS + synchronized 来保证并发安全性。</p>
+<p><img src="/images/pasted-28.png" alt="upload successful"></p>
+<p>也将 1.7 中存放数据的 HashEntry 改为 Node，但作用都是相同的。</p>
+<p>其中的 val next 都用了 volatile 修饰，保证了可见性。</p>
+<p>put 方法</p>
+<p>重点来看看 put 函数：</p>
+<p><img src="/images/pasted-29.png" alt="upload successful"></p>
+<p>根据 key 计算出 hashcode 。<br>判断是否需要进行初始化。<br>f 即为当前 key 定位出的 Node，如果为空表示当前位置可以写入数据，利用 CAS 尝试写入，失败则自旋保证成功。<br>如果当前位置的 hashcode == MOVED == -1,则需要进行扩容。<br>如果都不满足，则利用 synchronized 锁写入数据。<br>如果数量大于 TREEIFY_THRESHOLD 则要转换为红黑树。<br>get 方法</p>
+<p><img src="/images/pasted-30.png" alt="upload successful"></p>
+<p>根据计算出来的 hashcode 寻址，如果就在桶上那么直接返回值。<br>如果是红黑树那就按照树的方式获取值。<br>就不满足那就按照链表的方式遍历获取值。<br>1.8 在 1.7 的数据结构上做了大的改动，采用红黑树之后可以保证查询效率（O(logn)），甚至取消了 ReentrantLock 改为了 synchronized，这样可以看出在新版的 JDK 中对 synchronized 优化是很到位的。</p>
+<p>总结<br>看完了整个 HashMap 和 ConcurrentHashMap 在 1.7 和 1.8 中不同的实现方式相信大家对他们的理解应该会更加到位。</p>
+<p>其实这块也是面试的重点内容，通常的套路是：</p>
+<p>谈谈你理解的 HashMap，讲讲其中的 get put 过程。<br>1.8 做了什么优化？<br>是线程安全的嘛？<br>不安全会导致哪些问题？<br>如何解决？有没有线程安全的并发容器？<br>ConcurrentHashMap 是如何实现的？ 1.7、1.8 实现有何不同？为什么这么做？<br>这一串问题相信大家仔细看完都能怼回面试官。</p>
+<p>除了面试会问到之外平时的应用其实也蛮多，像之前谈到的 Guava 中 Cache 的实现就是利用 ConcurrentHashMap 的思想。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/synchronized-关键字原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1777,579 +3057,6 @@ publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/linux-自动备份部署tomcat脚本/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/12/linux-自动备份部署tomcat脚本/" itemprop="url">linux 自动备份部署tomcat脚本</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T14:52:00+08:00">
-                2019-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/12/linux-自动备份部署tomcat脚本/" class="leancloud_visitors" data-flag-title="linux 自动备份部署tomcat脚本">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  211
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#将脚本放在webapp目录下，war放入webapp的backup目录下，执行脚本shell publish.sh xx .. 参数为war包名称 tomcat路径</span><br><span class="line">function publish()&#123;</span><br><span class="line">	echo &quot;update...&quot;</span><br><span class="line">	echo $2</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">	if  [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">	echo &quot;请输入war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	if [ ! -f &quot;$1.war&quot; ];then</span><br><span class="line">	echo &quot;请输入正确的war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	cp $1.war $2/backup/$1/$1.war</span><br><span class="line">	cd $2</span><br><span class="line">	if [ ! -f &quot;./backup/$1/$1.war&quot; ];then</span><br><span class="line">	echo &quot;请上传正确的war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	last_time=`stat $1.war|grep Modify|awk &apos;&#123;print $2&#125;&apos;|sed s/-//g`;</span><br><span class="line">	if [ ! -f &quot;./backup/$1/$last_time/$1.war&quot; ];then</span><br><span class="line">	mkdir -p &quot;./backup/$1/$last_time&quot;;</span><br><span class="line">	mv $1.war ./backup/$1/$last_time;</span><br><span class="line">	else</span><br><span class="line">	file_count=`ls ./backup/$1/$last_time -l |grep &quot;^-&quot;|wc -l`;</span><br><span class="line">	echo $file_count;</span><br><span class="line">	#file_count=$[file_count+1];</span><br><span class="line">	mv $1.war ./backup/$1/$last_time/$1$file_count.war;</span><br><span class="line">	fi</span><br><span class="line">	mv backup/$1/$1.war $1.war;</span><br><span class="line">	echo &quot;完成备份并发布应用&quot;;</span><br><span class="line">	return 1;</span><br><span class="line">&#125;</span><br><span class="line">publish $1 $2</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/nginx-不停服更新服务器脚本/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/12/nginx-不停服更新服务器脚本/" itemprop="url">nginx 不停服更新服务器脚本</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T14:52:00+08:00">
-                2019-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/12/nginx-不停服更新服务器脚本/" class="leancloud_visitors" data-flag-title="nginx 不停服更新服务器脚本">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  420
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">#修改两个tomcat路径 执行脚本 sh grace_update.sh XX 参数war包名称</span><br><span class="line">#!/bin/bash</span><br><span class="line">function grace_update()&#123;</span><br><span class="line">	if  [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">	echo &quot;请输入war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	#NGINX_SBIN=&quot;/usr/sbin&quot;</span><br><span class="line">	#NGINX_CONF=&quot;/etc/nginx&quot;</span><br><span class="line">	#TOMCAT_1=&quot;/data/tomcat/apache-tomcat-8.5.23&quot;</span><br><span class="line">	#TOMCAT_2=&quot;/data/tomcat/apache-tomcat-8.5.23&quot;</span><br><span class="line"> </span><br><span class="line">	NGINX_SBIN=&quot;/usr/local/nginx/sbin&quot;</span><br><span class="line">	NGINX_CONF=&quot;/usr/local/nginx/conf&quot;</span><br><span class="line">	TOMCAT_1=&quot;/data0/tomcat-nginx-7070/apache-tomcat-8.5.23&quot;</span><br><span class="line">	TOMCAT_2=&quot;/data0/tomcat/apache-tomcat-8.5.23&quot;	</span><br><span class="line">	echo &quot;发送停止7070服务器信号&quot;</span><br><span class="line">	rm -rf $NGINX_CONF/nginx.conf</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.7070 $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line">	echo &quot;更新7070服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	#`$NGINX_SBIN`/nginx</span><br><span class="line">	echo $TOMCAT_1</span><br><span class="line">	</span><br><span class="line">	sh publish-v2.sh $1 $TOMCAT_1/webapps</span><br><span class="line">	result=$?</span><br><span class="line"> </span><br><span class="line">	if  [ $result -eq 0 ] ;then</span><br><span class="line">		echo &quot;发布错误，退出程序&quot;</span><br><span class="line">		return 0</span><br><span class="line">	fi</span><br><span class="line"> </span><br><span class="line">	echo &quot;发送停止8080服务器信号，并开启7070服务器&quot;</span><br><span class="line">	rm -rf $NGINX_CONF/nginx.conf</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.8080 $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	echo $TOMCAT_2</span><br><span class="line">	echo &quot;更新8080服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	sh publish-v2.sh $1 $TOMCAT_2/webapps</span><br><span class="line">	result=$?</span><br><span class="line"> </span><br><span class="line">	if  [ $result -eq 0 ] ;then</span><br><span class="line">		echo &quot;发布错误，退出程序&quot;</span><br><span class="line">		return 0</span><br><span class="line">	fi</span><br><span class="line">	echo &quot;部署完成&quot;</span><br><span class="line">	echo &quot;开启全部服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.all $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">	echo &quot;it&apos;s done!&quot;</span><br><span class="line">	echo &quot;Congratulation！！！ &quot;	</span><br><span class="line">	echo &quot;--&lt;--&lt;-&lt;@ ●-● § ^_^ § &quot;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">grace_update $1</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/cron表达式详解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/12/cron表达式详解/" itemprop="url">cron表达式详解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T13:48:00+08:00">
-                2019-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/12/cron表达式详解/" class="leancloud_visitors" data-flag-title="cron表达式详解">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  1.5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>corn从左到右（用空格隔开）：秒 分 小时 月份中的日期 月份 星期中的日期 年份</p>
-<h2 id="各字段的含义"><a href="#各字段的含义" class="headerlink" title="各字段的含义"></a>各字段的含义</h2><table>
-<thead>
-<tr>
-<th>字段</th>
-<th>允许值</th>
-<th>允许的特殊字符</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>秒（Seconds）</td>
-<td>0~59的整数</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>分（Minutes）</td>
-<td>0~59的整数</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>小时（Hours）</td>
-<td>0~23的整数</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>日期（DayofMonth）</td>
-<td>1~31的整数（但是你需要考虑你月的天数）</td>
-<td>,- * ? / L W C     八个字符</td>
-</tr>
-<tr>
-<td>月份（Month）</td>
-<td>1~12的整数或者 JAN-DEC</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>星期（DayofWeek）</td>
-<td>1~7的整数或者 SUN-SAT （1=SUN）</td>
-<td>, - * ? / L C #     八个字符</td>
-</tr>
-<tr>
-<td>年(可选，留空)（Year）</td>
-<td>1970~2099</td>
-<td>, - * /    四个字符</td>
-</tr>
-</tbody>
-</table>
-<pre><code>（1）*：表示匹配该域的任意值。假如在Minutes域使用*, 即表示每分钟都会触发事件。
-</code></pre><p>　　（2）?：只能用在DayofMonth和DayofWeek两个域。它也匹配域的任意值，但实际不会。因为DayofMonth和DayofWeek会相互影响。例如想在每月的20日触发调度，不管20日到底是星期几，则只能使用如下写法： 13 13 15 20 <em> ?, 其中最后一位只能用？，而不能使用</em>，如果使用*表示不管星期几都会触发，实际上并不是这样。</p>
-<p>　　（3）-：表示范围。例如在Minutes域使用5-20，表示从5分到20分钟每分钟触发一次 </p>
-<p>　　（4）/：表示起始时间开始触发，然后每隔固定时间触发一次。例如在Minutes域使用5/20,则意味着5分钟触发一次，而25，45等分别触发一次. </p>
-<p>　　（5）,：表示列出枚举值。例如：在Minutes域使用5,20，则意味着在5和20分每分钟触发一次。 </p>
-<p>　　（6）L：表示最后，只能出现在DayofWeek和DayofMonth域。如果在DayofWeek域使用5L,意味着在最后的一个星期四触发。 </p>
-<p>　　（7）W:表示有效工作日(周一到周五),只能出现在DayofMonth域，系统将在离指定日期的最近的有效工作日触发事件。例如：在 DayofMonth使用5W，如果5日是星期六，则将在最近的工作日：星期五，即4日触发。如果5日是星期天，则在6日(周一)触发；如果5日在星期一到星期五中的一天，则就在5日触发。另外一点，W的最近寻找不会跨过月份 。</p>
-<p>　　（8）LW:这两个字符可以连用，表示在某个月最后一个工作日，即最后一个星期五。 </p>
-<p>　　（9）#:用于确定每个月第几个星期几，只能出现在DayofMonth域。例如在4#2，表示某月的第二个星期三。</p>
-<h2 id="常用表达式例子"><a href="#常用表达式例子" class="headerlink" title="常用表达式例子"></a>常用表达式例子</h2><p>（1）0 0 2 1 <em> ? </em>   表示在每月的1日的凌晨2点调整任务</p>
-<p>　　（2）0 15 10 ? * MON-FRI   表示周一到周五每天上午10:15执行作业</p>
-<p>　　（3）0 15 10 ? 6L 2002-2006   表示2002-2006年的每个月的最后一个星期五上午10:15执行作</p>
-<p>　　（4）0 0 10,14,16 <em> </em> ?   每天上午10点，下午2点，4点 </p>
-<p>　　（5）0 0/30 9-17 <em> </em> ?   朝九晚五工作时间内每半小时 </p>
-<p>　　（6）0 0 12 ? * WED    表示每个星期三中午12点 </p>
-<p>　　（7）0 0 12 <em> </em> ?   每天中午12点触发 </p>
-<p>　　（8）0 15 10 ? <em> </em>    每天上午10:15触发 </p>
-<p>　　（9）0 15 10 <em> </em> ?     每天上午10:15触发 </p>
-<p>　　（10）0 15 10 <em> </em> ? *    每天上午10:15触发 </p>
-<p>　　（11）0 15 10 <em> </em> ? 2005    2005年的每天上午10:15触发 </p>
-<p>　　（12）0 <em> 14 </em> * ?     在每天下午2点到下午2:59期间的每1分钟触发 </p>
-<p>　　（13）0 0/5 14 <em> </em> ?    在每天下午2点到下午2:55期间的每5分钟触发 </p>
-<p>　　（14）0 0/5 14,18 <em> </em> ?     在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发 </p>
-<p>　　（15）0 0-5 14 <em> </em> ?    在每天下午2点到下午2:05期间的每1分钟触发 </p>
-<p>　　（16）0 10,44 14 ? 3 WED    每年三月的星期三的下午2:10和2:44触发 </p>
-<p>　　（17）0 15 10 ? * MON-FRI    周一至周五的上午10:15触发 </p>
-<p>　　（18）0 15 10 15 * ?    每月15日上午10:15触发 </p>
-<p>　　（19）0 15 10 L * ?    每月最后一日的上午10:15触发 </p>
-<p>　　（20）0 15 10 ? * 6L    每月的最后一个星期五上午10:15触发 </p>
-<p>　　（21）0 15 10 ? * 6L 2002-2005   2002年至2005年的每月的最后一个星期五上午10:15触发 </p>
-<p>　　（22）0 15 10 ? * 6#3   每月的第三个星期五上午10:15触发</p>
-<p>　　</p>
-<p>　　注：</p>
-<p>　　（1）有些子表达式能包含一些范围或列表</p>
-<p>　　例如：子表达式（天（星期））可以为 “MON-FRI”，“MON，WED，FRI”，“MON-WED,SAT”</p>
-<p>“*”字符代表所有可能的值</p>
-<p>　　因此，“<em>”在子表达式（月）里表示每个月的含义，“</em>”在子表达式（天（星期））表示星期的每一天</p>
-<p>　　“/”字符用来指定数值的增量<br>　　例如：在子表达式（分钟）里的“0/15”表示从第0分钟开始，每15分钟<br>在子表达式（分钟）里的“3/20”表示从第3分钟开始，每20分钟（它和“3，23，43”）的含义一样</p>
-<p>　　“？”字符仅被用于天（月）和天（星期）两个子表达式，表示不指定值<br>　　当2个子表达式其中之一被指定了值以后，为了避免冲突，需要将另一个子表达式的值设为“？”</p>
-<p>　　“L” 字符仅被用于天（月）和天（星期）两个子表达式，它是单词“last”的缩写<br>　　但是它在两个子表达式里的含义是不同的。<br>　　在天（月）子表达式中，“L”表示一个月的最后一天<br>　　在天（星期）自表达式中，“L”表示一个星期的最后一天，也就是SAT</p>
-<p>　　如果在“L”前有具体的内容，它就具有其他的含义了</p>
-<p>　　例如：“6L”表示这个月的倒数第６天，“FRIL”表示这个月的最一个星期五<br>　　注意：在使用“L”参数时，不要指定列表或范围，因为这会导致问题</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2402,7 +3109,7 @@ publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所�
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2539,7 +3246,7 @@ publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所�
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">10.8k</span>
+    <span title="Site words total count">19.3k</span>
   
 </div>
 
