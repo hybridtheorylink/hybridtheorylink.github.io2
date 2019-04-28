@@ -302,7 +302,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/nginx-不停服更新服务器脚本/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/Java垃圾回收（GC）机制详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="HybridTheory">
@@ -321,7 +321,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/12/nginx-不停服更新服务器脚本/" itemprop="url">nginx 不停服更新服务器脚本</a></h1>
+                <a class="post-title-link" href="/2019/04/28/Java垃圾回收（GC）机制详解/" itemprop="url">Java垃圾回收（GC）机制详解</a></h1>
         
 
         <div class="post-meta">
@@ -333,8 +333,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T14:52:00+08:00">
-                2019-04-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:35:48+08:00">
+                2019-04-28
               </time>
             
 
@@ -351,7 +351,7 @@
 
           
           
-             <span id="/2019/04/12/nginx-不停服更新服务器脚本/" class="leancloud_visitors" data-flag-title="nginx 不停服更新服务器脚本">
+             <span id="/2019/04/28/Java垃圾回收（GC）机制详解/" class="leancloud_visitors" data-flag-title="Java垃圾回收（GC）机制详解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,7 +376,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  420
+                  6.6k
                 </span>
               
 
@@ -392,7 +392,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  2
+                  24
                 </span>
               
             </div>
@@ -415,7 +415,179 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">#修改两个tomcat路径 执行脚本 sh grace_update.sh XX 参数war包名称</span><br><span class="line">#!/bin/bash</span><br><span class="line">function grace_update()&#123;</span><br><span class="line">	if  [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">	echo &quot;请输入war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	#NGINX_SBIN=&quot;/usr/sbin&quot;</span><br><span class="line">	#NGINX_CONF=&quot;/etc/nginx&quot;</span><br><span class="line">	#TOMCAT_1=&quot;/data/tomcat/apache-tomcat-8.5.23&quot;</span><br><span class="line">	#TOMCAT_2=&quot;/data/tomcat/apache-tomcat-8.5.23&quot;</span><br><span class="line"> </span><br><span class="line">	NGINX_SBIN=&quot;/usr/local/nginx/sbin&quot;</span><br><span class="line">	NGINX_CONF=&quot;/usr/local/nginx/conf&quot;</span><br><span class="line">	TOMCAT_1=&quot;/data0/tomcat-nginx-7070/apache-tomcat-8.5.23&quot;</span><br><span class="line">	TOMCAT_2=&quot;/data0/tomcat/apache-tomcat-8.5.23&quot;	</span><br><span class="line">	echo &quot;发送停止7070服务器信号&quot;</span><br><span class="line">	rm -rf $NGINX_CONF/nginx.conf</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.7070 $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line">	echo &quot;更新7070服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	#`$NGINX_SBIN`/nginx</span><br><span class="line">	echo $TOMCAT_1</span><br><span class="line">	</span><br><span class="line">	sh publish-v2.sh $1 $TOMCAT_1/webapps</span><br><span class="line">	result=$?</span><br><span class="line"> </span><br><span class="line">	if  [ $result -eq 0 ] ;then</span><br><span class="line">		echo &quot;发布错误，退出程序&quot;</span><br><span class="line">		return 0</span><br><span class="line">	fi</span><br><span class="line"> </span><br><span class="line">	echo &quot;发送停止8080服务器信号，并开启7070服务器&quot;</span><br><span class="line">	rm -rf $NGINX_CONF/nginx.conf</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.8080 $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line"> </span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	echo $TOMCAT_2</span><br><span class="line">	echo &quot;更新8080服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	sh publish-v2.sh $1 $TOMCAT_2/webapps</span><br><span class="line">	result=$?</span><br><span class="line"> </span><br><span class="line">	if  [ $result -eq 0 ] ;then</span><br><span class="line">		echo &quot;发布错误，退出程序&quot;</span><br><span class="line">		return 0</span><br><span class="line">	fi</span><br><span class="line">	echo &quot;部署完成&quot;</span><br><span class="line">	echo &quot;开启全部服务器&quot;</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	cp $NGINX_CONF/nginx.conf.all $NGINX_CONF/nginx.conf</span><br><span class="line">	$NGINX_SBIN/nginx -t</span><br><span class="line">	read -s -n1 -p &quot;按任意键继续 ... &quot;</span><br><span class="line">	echo &quot;...&quot;;</span><br><span class="line">	$NGINX_SBIN/nginx -s reload</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">	echo &quot;it&apos;s done!&quot;</span><br><span class="line">	echo &quot;Congratulation！！！ &quot;	</span><br><span class="line">	echo &quot;--&lt;--&lt;-&lt;@ ●-● § ^_^ § &quot;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">grace_update $1</span><br></pre></td></tr></table></figure>
+            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88805956" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88805956</a></p>
+<p>一、为什么需要垃圾回收</p>
+<p>　　如果不进行垃圾回收，内存迟早都会被消耗空，因为我们在不断的分配内存空间而不进行回收。除非内存无限大，我们可以任性的分配而不回收，但是事实并非如此。所以，垃圾回收是必须的。</p>
+<p>二、哪些内存需要回收？</p>
+<p>哪些内存需要回收是垃圾回收机制第一个要考虑的问题，所谓“要回收的垃圾”无非就是那些不可能再被任何途径使用的对象。那么如何找到这些对象？</p>
+<p>1、引用计数法</p>
+<p>这个算法的实现是，给对象中添加一个引用计数器，每当一个地方引用这个对象时，计数器值+1；当引用失效时，计数器值-1。任何时刻计数值为0的对象就是不可能再被使用的。这种算法使用场景很多，但是，Java中却没有使用这种算法，因为这种算法很难解决对象之间相互引用的情况。看一段代码：</p>
+<p>/**</p>
+<ul>
+<li><p>虚拟机参数：-verbose:gc<br><em>/<br>public class ReferenceCountingGC<br>{<br> private Object instance = null;<br> private static final int _1MB = 1024 </em> 1024;</p>
+<p> /*<em> 这个成员属性唯一的作用就是占用一点内存 </em>/<br> private byte[] bigSize = new byte[2 * _1MB];</p>
+<p> public static void main(String[] args)<br> {</p>
+<pre><code>ReferenceCountingGC objectA = new ReferenceCountingGC();
+ReferenceCountingGC objectB = new ReferenceCountingGC();
+objectA.instance = objectB;
+objectB.instance = objectA;
+objectA = null;
+objectB = null;
+
+System.gc();
+</code></pre><p> }<br>}</p>
+</li>
+</ul>
+<p>看下运行结果：</p>
+<p>[GC 4417K-&gt;288K(61440K), 0.0013498 secs]<br>[Full GC 288K-&gt;194K(61440K), 0.0094790 secs]<br>看到，两个对象相互引用着，但是虚拟机还是把这两个对象回收掉了，这也说明虚拟机并不是通过引用计数法来判定对象是否存活的。</p>
+<p>2、可达性分析法</p>
+<p>这个算法的基本思想是通过一系列称为“GC Roots”的对象作为起始点，从这些节点向下搜索，搜索所走过的路径称为引用链，当一个对象到GC Roots没有任何引用链（即GC Roots到对象不可达）时，则证明此对象是不可用的。</p>
+<p>那么问题又来了，如何选取GCRoots对象呢？在Java语言中，可以作为GCRoots的对象包括下面几种：</p>
+<p>(1). 虚拟机栈（栈帧中的局部变量区，也叫做局部变量表）中引用的对象。</p>
+<p>(2). 方法区中的类静态属性引用的对象。</p>
+<p>(3). 方法区中常量引用的对象。</p>
+<p>(4). 本地方法栈中JNI(Native方法)引用的对象。</p>
+<p>下面给出一个GCRoots的例子，如下图，为GCRoots的引用链。</p>
+<p>由图可知，obj8、obj9、obj10都没有到GCRoots对象的引用链，即便obj9和obj10之间有引用链，他们还是会被当成垃圾处理，可以进行回收。</p>
+<p>三、四种引用状态</p>
+<p>在JDK1.2之前，Java中引用的定义很传统：如果引用类型的数据中存储的数值代表的是另一块内存的起始地址，就称这块内存代表着一个引用。这种定义很纯粹，但是太过于狭隘，一个对象只有被引用或者没被引用两种状态。我们希望描述这样一类对象：当内存空间还足够时，则能保留在内存中；如果内存空间在进行垃圾收集后还是非常紧张，则可以抛弃这些对象。很多系统的缓存功能都符合这样的应用场景。在JDK1.2之后，Java对引用的概念进行了扩充，将引用分为强引用、软引用、弱引用、虚引用4种，这4种引用强度依次减弱。</p>
+<p>1、强引用</p>
+<p>代码中普遍存在的类似”Object obj = new Object()”这类的引用，只要强引用还存在，垃圾收集器永远不会回收掉被引用的对象。</p>
+<p>2、软引用</p>
+<p>描述有些还有用但并非必需的对象。在系统将要发生内存溢出异常之前，将会把这些对象列进回收范围进行二次回收。如果这次回收还没有足够的内存，才会抛出内存溢出异常。Java中的类SoftReference表示软引用。</p>
+<p>3、弱引用</p>
+<p>描述非必需对象。被弱引用关联的对象只能生存到下一次垃圾回收之前，垃圾收集器工作之后，无论当前内存是否足够，都会回收掉只被弱引用关联的对象。Java中的类WeakReference表示弱引用。</p>
+<p>4、虚引用</p>
+<p>这个引用存在的唯一目的就是在这个对象被收集器回收时收到一个系统通知，被虚引用关联的对象，和其生存时间完全没关系。Java中的类PhantomReference表示虚引用。</p>
+<p>对于可达性分析算法而言，未到达的对象并非是“非死不可”的，若要宣判一个对象死亡，至少需要经历两次标记阶段。</p>
+<ol>
+<li>如果对象在进行可达性分析后发现没有与GCRoots相连的引用链，则该对象被第一次标记并进行一次筛选，筛选条件为是否有必要执行该对象的finalize方法，若对象没有覆盖finalize方法或者该finalize方法是否已经被虚拟机执行过了，则均视作不必要执行该对象的finalize方法，即该对象将会被回收。反之，若对象覆盖了finalize方法并且该finalize方法并没有被执行过，那么，这个对象会被放置在一个叫F-Queue的队列中，之后会由虚拟机自动建立的、优先级低的Finalizer线程去执行，而虚拟机不必要等待该线程执行结束，即虚拟机只负责建立线程，其他的事情交给此线程去处理。</li>
+</ol>
+<p>2.对F-Queue中对象进行第二次标记，如果对象在finalize方法中拯救了自己，即关联上了GCRoots引用链，如把this关键字赋值给其他变量，那么在第二次标记的时候该对象将从“即将回收”的集合中移除，如果对象还是没有拯救自己，那就会被回收。如下代码演示了一个对象如何在finalize方法中拯救了自己，然而，它只能拯救自己一次，第二次就被回收了。具体代码如下：</p>
+<p>package com.demo;</p>
+<p>/*</p>
+<ul>
+<li>此代码演示了两点：</li>
+<li>1.对象可以再被GC时自我拯救</li>
+<li>2.这种自救的机会只有一次，因为一个对象的finalize()方法最多只会被系统自动调用一次</li>
+<li><p>*/<br>public class FinalizeEscapeGC {</p>
+<p> public String name;<br> public static FinalizeEscapeGC SAVE_HOOK = null;</p>
+<p> public FinalizeEscapeGC(String name) {</p>
+<pre><code>this.name = name;
+</code></pre><p> }</p>
+<p> public void isAlive() {</p>
+<pre><code>System.out.println(&quot;yes, i am still alive :)&quot;);
+</code></pre><p> }</p>
+<p> @Override<br> protected void finalize() throws Throwable {</p>
+<pre><code>super.finalize();
+System.out.println(&quot;finalize method executed!&quot;);
+System.out.println(this);
+FinalizeEscapeGC.SAVE_HOOK = this;
+</code></pre><p> }</p>
+<p> @Override<br> public String toString() {</p>
+<pre><code>return name;
+</code></pre><p> }</p>
+<p> public static void main(String[] args) throws InterruptedException {</p>
+<pre><code>SAVE_HOOK = new FinalizeEscapeGC(&quot;leesf&quot;);
+System.out.println(SAVE_HOOK);
+// 对象第一次拯救自己
+SAVE_HOOK = null;
+System.out.println(SAVE_HOOK);
+System.gc();
+// 因为finalize方法优先级很低，所以暂停0.5秒以等待它
+Thread.sleep(500);
+if (SAVE_HOOK != null) {
+    SAVE_HOOK.isAlive();
+} else {
+    System.out.println(&quot;no, i am dead : (&quot;);
+}
+
+// 下面这段代码与上面的完全相同,但是这一次自救却失败了
+// 一个对象的finalize方法只会被调用一次
+SAVE_HOOK = null;
+System.gc();
+// 因为finalize方法优先级很低，所以暂停0.5秒以等待它
+Thread.sleep(500);
+if (SAVE_HOOK != null) {
+    SAVE_HOOK.isAlive();
+} else {
+    System.out.println(&quot;no, i am dead : (&quot;);
+}
+</code></pre><p> }<br>}</p>
+</li>
+</ul>
+<p>运行结果如下：</p>
+<p>leesf<br>null<br>finalize method executed!<br>leesf<br>yes, i am still alive :)<br>no, i am dead : (<br>　 由结果可知，该对象拯救了自己一次，第二次没有拯救成功，因为对象的finalize方法最多被虚拟机调用一次。此外，从结果我们可以得知，一个堆对象的this（放在局部变量表中的第一项）引用会永远存在，在方法体内可以将this引用赋值给其他变量，这样堆中对象就可以被其他变量所引用，即不会被回收。</p>
+<p>四、方法区的垃圾回收</p>
+<p>方法区的垃圾回收主要回收两部分内容：1. 废弃常量。2. 无用的类。既然进行垃圾回收，就需要判断哪些是废弃常量，哪些是无用的类。</p>
+<p>如何判断废弃常量呢？以字面量回收为例，如果一个字符串“abc”已经进入常量池，但是当前系统没有任何一个String对象引用了叫做“abc”的字面量，那么，如果发生垃圾回收并且有必要时，“abc”就会被系统移出常量池。常量池中的其他类（接口）、方法、字段的符号引用也与此类似。</p>
+<p>如何判断无用的类呢？需要满足以下三个条件</p>
+<ol>
+<li><p>该类的所有实例都已经被回收，即Java堆中不存在该类的任何实例。</p>
+</li>
+<li><p>加载该类的ClassLoader已经被回收。</p>
+</li>
+<li><p>该类对应的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</p>
+</li>
+</ol>
+<p>满足以上三个条件的类可以进行垃圾回收，但是并不是无用就被回收，虚拟机提供了一些参数供我们配置。</p>
+<p>五、垃圾收集算法</p>
+<p>1、标记-清除（Mark-Sweep）算法</p>
+<pre><code>这是最基础的算法，标记-清除算法就如同它的名字样，分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，标记完成后统一回收所有被标记的对象。这种算法的不足主要体现在效率和空间，从效率的角度讲，标记和清除两个过程的效率都不高；从空间的角度讲，标记清除后会产生大量不连续的内存碎片， 内存碎片太多可能会导致以后程序运行过程中在需要分配较大对象时，无法找到足够的连续内存而不得不提前触发一次垃圾收集动作。标记-清除算法执行过程如图：
+</code></pre><p>2、复制（Copying）算法</p>
+<pre><code> 复制算法是为了解决效率问题而出现的，它将可用的内存分为两块，每次只用其中一块，当这一块内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已经使用过的内存空间一次性清理掉。这样每次只需要对整个半区进行内存回收，内存分配时也不需要考虑内存碎片等复杂情况，只需要移动指针，按照顺序分配即可。复制算法的执行过程如图：
+
+
+
+不过这种算法有个缺点，内存缩小为了原来的一半，这样代价太高了。现在的商用虚拟机都采用这种算法来回收新生代，不过研究表明1:1的比例非常不科学，因此新生代的内存被划分为一块较大的Eden空间和两块较小的Survivor空间，每次使用Eden和其中一块Survivor。每次回收时，将Eden和Survivor中还存活着的对象一次性复制到另外一块Survivor空间上，最后清理掉Eden和刚才用过的Survivor空间。HotSpot虚拟机默认Eden区和Survivor区的比例为8:1，意思是每次新生代中可用内存空间为整个新生代容量的90%。当然，我们没有办法保证每次回收都只有不多于10%的对象存活，当Survivor空间不够用时，需要依赖老年代进行分配担保（Handle Promotion）。
+</code></pre><p>3、标记-整理（Mark-Compact）算法</p>
+<pre><code>复制算法在对象存活率较高的场景下要进行大量的复制操作，效率很低。万一对象100%存活，那么需要有额外的空间进行分配担保。老年代都是不易被回收的对象，对象存活率高，因此一般不能直接选用复制算法。根据老年代的特点，有人提出了另外一种标记-整理算法，过程与标记-清除算法一样，不过不是直接对可回收对象进行清理，而是让所有存活对象都向一端移动，然后直接清理掉边界以外的内存。标记-整理算法的工作过程如图：
+</code></pre><p>4、分代收集算法</p>
+<p>根据上面的内容，用一张图概括一下堆内存的布局</p>
+<pre><code>现代商用虚拟机基本都采用分代收集算法来进行垃圾回收。这种算法没什么特别的，无非是上面内容的结合罢了，根据对象的生命周期的不同将内存划分为几块，然后根据各块的特点采用最适当的收集算法。大批对象死去、少量对象存活的（新生代），使用复制算法，复制成本低；对象存活率高、没有额外空间进行分配担保的（老年代），采用标记-清理算法或者标记-整理算法。
+</code></pre><p>六、垃圾收集器</p>
+<p>垃圾收集器就是上面讲的理论知识的具体实现了。不同虚拟机所提供的垃圾收集器可能会有很大差别，我们使用的是HotSpot，HotSpot这个虚拟机所包含的所有收集器如图：</p>
+<p>上图展示了7种作用于不同分代的收集器，如果两个收集器之间存在连线，那说明它们可以搭配使用。虚拟机所处的区域说明它是属于新生代收集器还是老年代收集器。多说一句，我们必须明确一个观点：没有最好的垃圾收集器，更加没有万能的收集器，只能选择对具体应用最合适的收集器。这也是HotSpot为什么要实现这么多收集器的原因。OK，下面一个一个看一下收集器。</p>
+<p>1、Serial收集器</p>
+<pre><code>最基本、发展历史最久的收集器，这个收集器是一个采用复制算法的单线程的收集器，单线程一方面意味着它只会使用一个CPU或一条线程去完成垃圾收集工作，另一方面也意味着它进行垃圾收集时必须暂停其他线程的所有工作，直到它收集结束为止。后者意味着，在用户不可见的情况下要把用户正常工作的线程全部停掉，这对很多应用是难以接受的。不过实际上到目前为止，Serial收集器依然是虚拟机运行在Client模式下的默认新生代收集器，因为它简单而高效。用户桌面应用场景中，分配给虚拟机管理的内存一般来说不会很大，收集几十兆甚至一两百兆的新生代停顿时间在几十毫秒最多一百毫秒，只要不是频繁发生，这点停顿是完全可以接受的。Serial收集器运行过程如下图所示：
+</code></pre><p>说明：1. 需要STW（Stop The World），停顿时间长。2. 简单高效，对于单个CPU环境而言，Serial收集器由于没有线程交互开销，可以获取最高的单线程收集效率。</p>
+<p>2、ParNew收集器</p>
+<pre><code>ParNew收集器其实就是Serial收集器的多线程版本，除了使用多条线程进行垃圾收集外，其余行为和Serial收集器完全一样，包括使用的也是复制算法。ParNew收集器除了多线程以外和Serial收集器并没有太多创新的地方，但是它却是Server模式下的虚拟机首选的新生代收集器，其中有一个很重要的和性能无关的原因是，除了Serial收集器外，目前只有它能与CMS收集器配合工作（看图）。CMS收集器是一款几乎可以认为有划时代意义的垃圾收集器，因为它第一次实现了让垃圾收集线程与用户线程基本上同时工作。ParNew收集器在单CPU的环境中绝对不会有比Serial收集器更好的效果，甚至由于线程交互的开销，该收集器在两个CPU的环境中都不能百分之百保证可以超越Serial收集器。当然，随着可用CPU数量的增加，它对于GC时系统资源的有效利用还是很有好处的。它默认开启的收集线程数与CPU数量相同，在CPU数量非常多的情况下，可以使用-XX:ParallelGCThreads参数来限制垃圾收集的线程数。ParNew收集器运行过程如下图所示：
+</code></pre><p>3、Parallel Scavenge收集器</p>
+<pre><code>Parallel Scavenge收集器也是一个新生代收集器，也是用复制算法的收集器，也是并行的多线程收集器，但是它的特点是它的关注点和其他收集器不同。介绍这个收集器主要还是介绍吞吐量的概念。CMS等收集器的关注点是尽可能缩短垃圾收集时用户线程的停顿时间，而Parallel Scavenge收集器的目标则是打到一个可控制的吞吐量。所谓吞吐量的意思就是CPU用于运行用户代码时间与CPU总消耗时间的比值，即吞吐量=运行用户代码时间/（运行用户代码时间+垃圾收集时间），虚拟机总运行100分钟，垃圾收集1分钟，那吞吐量就是99%。另外，Parallel Scavenge收集器是虚拟机运行在Server模式下的默认垃圾收集器。
+
+停顿时间短适合需要与用户交互的程序，良好的响应速度能提升用户体验；高吞吐量则可以高效率利用CPU时间，尽快完成运算任务，主要适合在后台运算而不需要太多交互的任务。
+
+虚拟机提供了-XX:MaxGCPauseMillis和-XX:GCTimeRatio两个参数来精确控制最大垃圾收集停顿时间和吞吐量大小。不过不要以为前者越小越好，GC停顿时间的缩短是以牺牲吞吐量和新生代空间换取的。由于与吞吐量关系密切，Parallel Scavenge收集器也被称为“吞吐量优先收集器”。Parallel Scavenge收集器有一个-XX:+UseAdaptiveSizePolicy参数，这是一个开关参数，这个参数打开之后，就不需要手动指定新生代大小、Eden区和Survivor参数等细节参数了，虚拟机会根据当前系统的运行情况手机性能监控信息，动态调整这些参数以提供最合适的停顿时间或者最大的吞吐量。如果对于垃圾收集器运作原理不太了解，以至于在优化比较困难的时候，使用Parallel Scavenge收集器配合自适应调节策略，把内存管理的调优任务交给虚拟机去完成将是一个不错的选择。
+</code></pre><p>4、Serial Old收集器</p>
+<p>Serial收集器的老年代版本，同样是一个单线程收集器，使用“标记-整理算法”，这个收集器的主要意义也是在于给Client模式下的虚拟机使用。</p>
+<p>5、Parallel Old收集器</p>
+<p>Parallel Scavenge收集器的老年代版本，使用多线程和“标记-整理”算法。这个收集器在JDK 1.6之后的出现，“吞吐量优先收集器”终于有了比较名副其实的应用组合，在注重吞吐量以及CPU资源敏感的场合，都可以优先考虑Parallel Scavenge收集器+Parallel Old收集器的组合。运行过程如下图所示：</p>
+<p>6、CMS收集器</p>
+<p>CMS（Conrrurent Mark Sweep）收集器是以获取最短回收停顿时间为目标的收集器。使用标记 - 清除算法，收集过程分为如下四步：</p>
+<p>(1). 初始标记，标记GCRoots能直接关联到的对象，时间很短。</p>
+<p>(2). 并发标记，进行GCRoots Tracing（可达性分析）过程，时间很长。</p>
+<p>(3). 重新标记，修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，时间较长。</p>
+<p>(4). 并发清除，回收内存空间，时间很长。</p>
+<p>其中，并发标记与并发清除两个阶段耗时最长，但是可以与用户线程并发执行。运行过程如下图所示:</p>
+<p>说明：1. 对CPU资源非常敏感，可能会导致应用程序变慢，吞吐率下降。2. 无法处理浮动垃圾，因为在并发清理阶段用户线程还在运行，自然就会产生新的垃圾，而在此次收集中无法收集他们，只能留到下次收集，这部分垃圾为浮动垃圾，同时，由于用户线程并发执行，所以需要预留一部分老年代空间提供并发收集时程序运行使用。3. 由于采用的标记 - 清除算法，会产生大量的内存碎片，不利于大对象的分配，可能会提前触发一次Full GC。虚拟机提供了-XX:+UseCMSCompactAtFullCollection参数来进行碎片的合并整理过程，这样会使得停顿时间变长，虚拟机还提供了一个参数配置，-XX:+CMSFullGCsBeforeCompaction，用于设置执行多少次不压缩的Full GC后，接着来一次带压缩的GC。</p>
+<p>7、G1收集器</p>
+<p>G1是目前技术发展的最前沿成果之一，HotSpot开发团队赋予它的使命是未来可以替换掉JDK1.5中发布的CMS收集器。与其他GC收集器相比，G1收集器有以下特点：</p>
+<p>(1). 并行和并发。使用多个CPU来缩短Stop The World停顿时间，与用户线程并发执行。</p>
+<p>(2). 分代收集。独立管理整个堆，但是能够采用不同的方式去处理新创建对象和已经存活了一段时间、熬过多次GC的旧对象，以获取更好的收集效果。</p>
+<p>(3). 空间整合。基于标记 - 整理算法，无内存碎片产生。</p>
+<p>(4). 可预测的停顿。能简历可预测的停顿时间模型，能让使用者明确指定在一个长度为M毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒。</p>
+<pre><code>在G1之前的垃圾收集器，收集的范围都是整个新生代或者老年代，而G1不再是这样。使用G1收集器时，Java堆的内存布局与其他收集器有很大差别，它将整个Java堆划分为多个大小相等的独立区域（Region），虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔离的了，它们都是一部分（可以不连续）Region的集合。
+</code></pre><p>8、常用的收集器组合</p>
+<p>七、理解GC日志</p>
+<pre><code>每种收集器的日志形式都是由它们自身的实现所决定的，换言之，每种收集器的日志格式都可以不一样。不过虚拟机为了方便用户阅读，将各个收集器的日志都维持了一定的共性，来看下面的一段GC日志：
+</code></pre><p>[GC [DefNew: 310K-&gt;194K(2368K), 0.0269163 secs] 310K-&gt;194K(7680K), 0.0269513 secs] [Times: user=0.00 sys=0.00, real=0.03 secs]<br>[GC [DefNew: 2242K-&gt;0K(2368K), 0.0018814 secs] 2242K-&gt;2241K(7680K), 0.0019172 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]<br>[Full GC (System) [Tenured: 2241K-&gt;193K(5312K), 0.0056517 secs] 4289K-&gt;193K(7680K), [Perm : 2950K-&gt;2950K(21248K)], 0.0057094 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]<br>Heap<br> def new generation   total 2432K, used 43K [0x00000000052a0000, 0x0000000005540000, 0x0000000006ea0000)<br>  eden space 2176K,   2% used [0x00000000052a0000, 0x00000000052aaeb8, 0x00000000054c0000)<br>  from space 256K,   0% used [0x00000000054c0000, 0x00000000054c0000, 0x0000000005500000)<br>  to   space 256K,   0% used [0x0000000005500000, 0x0000000005500000, 0x0000000005540000)<br> tenured generation   total 5312K, used 193K [0x0000000006ea0000, 0x00000000073d0000, 0x000000000a6a0000)<br>   the space 5312K,   3% used [0x0000000006ea0000, 0x0000000006ed0730, 0x0000000006ed0800, 0x00000000073d0000)<br> compacting perm gen  total 21248K, used 2982K [0x000000000a6a0000, 0x000000000bb60000, 0x000000000faa0000)<br>   the space 21248K,  14% used [0x000000000a6a0000, 0x000000000a989980, 0x000000000a989a00, 0x000000000bb60000)<br>No shared spaces configured.</p>
+<p>1、日志的开头“GC”、“Full GC”表示这次垃圾收集的停顿类型，而不是用来区分新生代GC还是老年代GC的。如果有Full，则说明本次GC停止了其他所有工作线程(Stop-The-World)。看到Full GC的写法是“Full GC(System)”，这说明是调用System.gc()方法所触发的GC。</p>
+<p>2、“GC”中接下来的“[DefNew”表示GC发生的区域，这里显示的区域名称与使用的GC收集器是密切相关的，例如上面样例所使用的Serial收集器中的新生代名为“Default New Generation”，所以显示的是“[DefNew”。如果是ParNew收集器，新生代名称就会变为“[ParNew”，意为“Parallel New Generation”。如果采用Parallel Scavenge收集器，那它配套的新生代称为“PSYoungGen”，老年代和永久代同理，名称也是由收集器决定的。</p>
+<p>3、后面方括号内部的“310K-&gt;194K(2368K)”、“2242K-&gt;0K(2368K)”，指的是该区域已使用的容量-&gt;GC后该内存区域已使用的容量(该内存区总容量)。方括号外面的“310K-&gt;194K(7680K)”、“2242K-&gt;2241K(7680K)”则指的是GC前Java堆已使用的容量-&gt;GC后Java堆已使用的容量(Java堆总容量)。</p>
+<p>4、再往后“0.0269163 secs”表示该内存区域GC所占用的时间，单位是秒。最后的“[Times: user=0.00 sys=0.00 real=0.03 secs]”则更具体了，user表示用户态消耗的CPU时间、内核态消耗的CPU时间、操作从开始到结束经过的墙钟时间。后面两个的区别是，墙钟时间包括各种非运算的等待消耗，比如等待磁盘I/O、等待线程阻塞，而CPU时间不包括这些耗时，但当系统有多CPU或者多核的话，多线程操作会叠加这些CPU时间，所以如果看到user或sys时间超过real时间是完全正常的。</p>
+<h2 id="5、“Heap”后面就列举出堆内存目前各个年代的区域的内存情况。"><a href="#5、“Heap”后面就列举出堆内存目前各个年代的区域的内存情况。" class="headerlink" title="5、“Heap”后面就列举出堆内存目前各个年代的区域的内存情况。"></a>5、“Heap”后面就列举出堆内存目前各个年代的区域的内存情况。</h2><p>作者：HybridTheory_<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/HybridTheory_/article/details/88805956" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88805956</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>
+
           
         
       
@@ -463,7 +635,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/linux-自动备份部署tomcat脚本/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/线程池原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="HybridTheory">
@@ -482,7 +654,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/12/linux-自动备份部署tomcat脚本/" itemprop="url">linux 自动备份部署tomcat脚本</a></h1>
+                <a class="post-title-link" href="/2019/04/22/线程池原理/" itemprop="url">线程池原理</a></h1>
         
 
         <div class="post-meta">
@@ -494,8 +666,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T14:52:00+08:00">
-                2019-04-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T19:45:27+08:00">
+                2019-04-22
               </time>
             
 
@@ -512,7 +684,7 @@
 
           
           
-             <span id="/2019/04/12/linux-自动备份部署tomcat脚本/" class="leancloud_visitors" data-flag-title="linux 自动备份部署tomcat脚本">
+             <span id="/2019/04/22/线程池原理/" class="leancloud_visitors" data-flag-title="线程池原理">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -537,7 +709,1507 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  211
+                  3.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前言<br>平时接触过多线程开发的童鞋应该都或多或少了解过线程池，之前发布的《阿里巴巴 Java 手册》里也有一条：</p>
+<p><img src="/images/pasted-47.png" alt="upload successful"></p>
+<p>可见线程池的重要性。</p>
+<p>简单来说使用线程池有以下几个目的：</p>
+<p>线程是稀缺资源，不能频繁的创建。<br>解耦作用；线程的创建于执行完全分开，方便维护。<br>应当将其放入一个池子中，可以给其他任务进行复用。<br>线程池原理<br>谈到线程池就会想到池化技术，其中最核心的思想就是把宝贵的资源放到一个池子中；每次使用都从里面获取，用完之后又放回池子供其他人使用，有点吃大锅饭的意思。</p>
+<p>那在 Java 中又是如何实现的呢？</p>
+<p>在 JDK 1.5 之后推出了相关的 api，常见的创建线程池方式有以下几种：</p>
+<p>Executors.newCachedThreadPool()：无限线程池。<br>Executors.newFixedThreadPool(nThreads)：创建固定大小的线程池。<br>Executors.newSingleThreadExecutor()：创建单个线程的线程池。<br>常见的四种线程池<br>newFixedThreadPool</p>
+<p>public static ExecutorService newFixedThreadPool(int var0) {<br>        return new ThreadPoolExecutor(var0, var0, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue());<br>    }<br>public static ExecutorService newFixedThreadPool(int var0, ThreadFactory var1) {<br>    return new ThreadPoolExecutor(var0, var0, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue(), var1);<br>}</p>
+<p>固定大小的线程池，可以指定线程池的大小，该线程池corePoolSize和maximumPoolSize相等，阻塞队列使用的是LinkedBlockingQueue，大小为整数最大值。</p>
+<p>该线程池中的线程数量始终不变，当有新任务提交时，线程池中有空闲线程则会立即执行，如果没有，则会暂存到阻塞队列。对于固定大小的线程池，不存在线程数量的变化。同时使用无界的LinkedBlockingQueue来存放执行的任务。当任务提交十分频繁的时候，LinkedBlockingQueue</p>
+<p>迅速增大，存在着耗尽系统资源的问题。而且在线程池空闲时，即线程池中没有可运行任务时，它也不会释放工作线程，还会占用一定的系统资源，需要shutdown。</p>
+<p>newSingleThreadExecutor</p>
+<p>public static ExecutorService newSingleThreadExecutor() {<br>        return new Executors.FinalizableDelegatedExecutorService(new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue()));<br>    }</p>
+<pre><code>public static ExecutorService newSingleThreadExecutor(ThreadFactory var0) {
+    return new Executors.FinalizableDelegatedExecutorService(new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue(), var0));
+}
+</code></pre><p>单个线程线程池，只有一个线程的线程池，阻塞队列使用的是LinkedBlockingQueue,若有多余的任务提交到线程池中，则会被暂存到阻塞队列，待空闲时再去执行。按照先入先出的顺序执行任务。</p>
+<p>newCachedThreadPool</p>
+<p>public static ExecutorService newCachedThreadPool() {<br>        return new ThreadPoolExecutor(0, 2147483647, 60L, TimeUnit.SECONDS, new SynchronousQueue());<br>    }</p>
+<pre><code>public static ExecutorService newCachedThreadPool(ThreadFactory var0) {
+    return new ThreadPoolExecutor(0, 2147483647, 60L, TimeUnit.SECONDS, new SynchronousQueue(), var0);
+}
+</code></pre><p>缓存线程池，缓存的线程默认存活60秒。线程的核心池corePoolSize大小为0，核心池最大为Integer.MAX_VALUE,阻塞队列使用的是SynchronousQueue。是一个直接提交的阻塞队列，    他总会迫使线程池增加新的线程去执行新的任务。在没有任务执行时，当线程的空闲时间超过keepAliveTime（60秒），则工作线程将会终止被回收，当提交新任务时，如果没有空闲线程，则创建新线程执行任务，会导致一定的系统开销。如果同时又大量任务被提交，而且任务执行的时间不是特别快，那么线程池便会新增出等量的线程池处理任务，这很可能会很快耗尽系统的资源。</p>
+<p>newScheduledThreadPool</p>
+<p>public static ScheduledExecutorService newScheduledThreadPool(int var0) {<br>        return new ScheduledThreadPoolExecutor(var0);<br>    }</p>
+<pre><code>public static ScheduledExecutorService newScheduledThreadPool(int var0, ThreadFactory var1) {
+    return new ScheduledThreadPoolExecutor(var0, var1);
+}
+</code></pre><p>定时线程池，该线程池可用于周期性地去执行任务，通常用于周期性的同步数据。</p>
+<p>scheduleAtFixedRate:是以固定的频率去执行任务，周期是指每次执行任务成功执行之间的间隔。</p>
+<p>schedultWithFixedDelay:是以固定的延时去执行任务，延时是指上一次执行成功之后和下一次开始执行的之前的时间。</p>
+<p>拒绝策略<br>AbortPolicy:丢弃任务并抛出RejectedExecutionException</p>
+<p>CallerRunsPolicy：只要线程池未关闭，该策略直接在调用者线程中，运行当前被丢弃的任务。显然这样做不会真的丢弃任务，但是，任务提交线程的性能极有可能会急剧下降。</p>
+<p>DiscardOldestPolicy：丢弃队列中最老的一个请求，也就是即将被执行的一个任务，并尝试再次提交当前任务。</p>
+<p>DiscardPolicy：丢弃任务，不做任何处理。</p>
+<p>其实看这三种方式创建的源码就会发现：</p>
+<pre><code>public static ExecutorService newCachedThreadPool() {
+    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                  60L, TimeUnit.SECONDS,
+                                  new SynchronousQueue&lt;Runnable&gt;());
+}
+</code></pre><p>实际上还是利用 ThreadPoolExecutor 类实现的。</p>
+<p>所以我们重点来看下 ThreadPoolExecutor 是怎么玩的。</p>
+<p>首先是创建线程的 api：</p>
+<p>ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<runnable> workQueue, RejectedExecutionHandler handler)<br>这几个核心参数的作用：</runnable></p>
+<p>corePoolSize 为线程池的基本大小。<br>maximumPoolSize 为线程池最大线程大小。<br>keepAliveTime 和 unit 则是线程空闲后的存活时间。<br>workQueue 用于存放任务的阻塞队列。<br>handler 当队列和最大线程池都满了之后的饱和策略。<br>了解了这几个参数再来看看实际的运用。</p>
+<p>通常我们都是使用:</p>
+<p>threadPool.execute(new Job());<br>这样的方式来提交一个任务到线程池中，所以核心的逻辑就是 execute() 函数了。</p>
+<p>在具体分析之前先了解下线程池中所定义的状态，这些状态都和线程的执行密切相关：</p>
+<p><img src="/images/pasted-48.png" alt="upload successful"></p>
+<p>RUNNING 自然是运行状态，指可以接受任务执行队列里的任务<br>SHUTDOWN 指调用了 shutdown() 方法，不再接受新任务了，但是队列里的任务得执行完毕。<br>STOP 指调用了 shutdownNow() 方法，不再接受新任务，同时抛弃阻塞队列里的所有任务并中断所有正在执行任务。<br>TIDYING 所有任务都执行完毕，在调用 shutdown()/shutdownNow() 中都会尝试更新为这个状态。<br>TERMINATED 终止状态，当执行 terminated() 后会更新为这个状态。<br>用图表示为：</p>
+<p><img src="/images/pasted-49.png" alt="upload successful"></p>
+<p>然后看看 execute() 方法是如何处理的：</p>
+<p><img src="/images/pasted-50.png" alt="upload successful"></p>
+<p>获取当前线程池的状态。<br>当前线程数量小于 coreSize 时创建一个新的线程运行。<br>如果当前线程处于运行状态，并且写入阻塞队列成功。<br>双重检查，再次获取线程状态；如果线程状态变了（非运行状态）就需要从阻塞队列移除任务，并尝试判断线程是否全部执行完毕。同时执行拒绝策略。<br>如果当前线程池为空就新创建一个线程并执行。<br>如果在第三步的判断为非运行状态，尝试新建线程，如果失败则执行拒绝策略。<br>这里借助《聊聊并发》的一张图来描述这个流程：</p>
+<p><img src="/images/pasted-51.png" alt="upload successful"></p>
+<p><img src="/images/pasted-52.png" alt="upload successful"></p>
+<p>如何配置线程<br>流程聊完了再来看看上文提到了几个核心参数应该如何配置呢？</p>
+<p>有一点是肯定的，线程池肯定是不是越大越好。</p>
+<p>通常我们是需要根据这批任务执行的性质来确定的。</p>
+<p>IO 密集型任务：由于线程并不是一直在运行，所以可以尽可能的多配置线程，比如 CPU 个数 * 2<br>CPU 密集型任务（大量复杂的运算）应当分配较少的线程，比如 CPU 个数相当的大小。<br>当然这些都是经验值，最好的方式还是根据实际情况测试得出最佳配置。</p>
+<p>优雅的关闭线程池<br>有运行任务自然也有关闭任务，从上文提到的 5 个状态就能看出如何来关闭线程池。</p>
+<p>其实无非就是两个方法 shutdown()/shutdownNow()。</p>
+<p>但他们有着重要的区别：</p>
+<p>shutdown() 执行后停止接受新任务，会把队列的任务执行完毕。<br>shutdownNow() 也是停止接受新任务，但会中断所有的任务，将线程池状态变为 stop。<br>两个方法都会中断线程，用户可自行判断是否需要响应中断。</p>
+<p>shutdownNow() 要更简单粗暴，可以根据实际场景选择不同的方法。</p>
+<p>我通常是按照以下方式关闭线程池的：</p>
+<pre><code>long start = System.currentTimeMillis();
+for (int i = 0; i &lt;= 5; i++) {
+    pool.execute(new Job());
+}
+
+pool.shutdown();
+
+while (!pool.awaitTermination(1, TimeUnit.SECONDS)) {
+    LOGGER.info(&quot;线程还在执行。。。&quot;);
+}
+long end = System.currentTimeMillis();
+LOGGER.info(&quot;一共处理了【{}】&quot;, (end - start));
+</code></pre><p>pool.awaitTermination(1, TimeUnit.SECONDS) 会每隔一秒钟检查一次是否执行完毕（状态为 TERMINATED），当从 while 循环退出时就表明线程池已经完全终止了。</p>
+<p>SpringBoot 使用线程池<br>2018 年了，SpringBoot 盛行；来看看在 SpringBoot 中应当怎么配置和使用线程池。</p>
+<p>既然用了 SpringBoot ，那自然得发挥 Spring 的特性，所以需要 Spring 来帮我们管理线程池：</p>
+<p>@Configuration<br>public class TreadPoolConfig {</p>
+<pre><code>/**
+ * 消费队列线程
+ * @return
+ */
+@Bean(value = &quot;consumerQueueThreadPool&quot;)
+public ExecutorService buildConsumerQueueThreadPool(){
+    ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
+            .setNameFormat(&quot;consumer-queue-thread-%d&quot;).build();
+
+    ExecutorService pool = new ThreadPoolExecutor(5, 5, 0L, TimeUnit.MILLISECONDS,
+            new ArrayBlockingQueue&lt;Runnable&gt;(5),namedThreadFactory,new ThreadPoolExecutor.AbortPolicy());
+
+    return pool ;
+}
+</code></pre><p>}<br>使用时：</p>
+<pre><code>@Resource(name = &quot;consumerQueueThreadPool&quot;)
+private ExecutorService consumerQueueThreadPool;
+
+
+@Override
+public void execute() {
+
+    //消费队列
+    for (int i = 0; i &lt; 5; i++) {
+        consumerQueueThreadPool.execute(new ConsumerQueueThread());
+    }
+
+}
+</code></pre><p>其实也挺简单，就是创建了一个线程池的 bean，在使用时直接从 Spring 中取出即可。</p>
+<p>监控线程池<br>谈到了 SpringBoot，也可利用它 actuator 组件来做线程池的监控。</p>
+<p>线程怎么说都是稀缺资源，对线程池的监控可以知道自己任务执行的状况、效率等。</p>
+<p>关于 actuator 就不再细说了，感兴趣的可以看看这篇，有详细整理过如何暴露监控端点。</p>
+<p>其实 ThreadPool 本身已经提供了不少 api 可以获取线程状态：</p>
+<p><img src="/images/pasted-53.png" alt="upload successful"></p>
+<p>很多方法看名字就知道其含义，只需要将这些信息暴露到 SpringBoot 的监控端点中，我们就可以在可视化页面查看当前的线程池状态了。</p>
+<p>甚至我们可以继承线程池扩展其中的几个函数来自定义监控逻辑：</p>
+<p><img src="/images/pasted-54.png" alt="upload successful"></p>
+<p><img src="/images/pasted-55.png" alt="upload successful"><br>看这些名称和定义都知道，这是让子类来实现的。</p>
+<p>可以在线程执行前、后、终止状态执行自定义逻辑。</p>
+<p>线程池隔离<br>线程池看似很美好，但也会带来一些问题。</p>
+<p>如果我们很多业务都依赖于同一个线程池,当其中一个业务因为各种不可控的原因消耗了所有的线程，导致线程池全部占满。</p>
+<p>这样其他的业务也就不能正常运转了，这对系统的打击是巨大的。</p>
+<p>比如我们 Tomcat 接受请求的线程池，假设其中一些响应特别慢，线程资源得不到回收释放；线程池慢慢被占满，最坏的情况就是整个应用都不能提供服务。</p>
+<p>所以我们需要将线程池进行隔离。</p>
+<p>通常的做法是按照业务进行划分：</p>
+<p>比如下单的任务用一个线程池，获取数据的任务用另一个线程池。这样即使其中一个出现问题把线程池耗尽，那也不会影响其他的任务运行。</p>
+<p>hystrix 隔离<br>这样的需求 Hystrix 已经帮我们实现了。</p>
+<p>Hystrix 是一款开源的容错插件，具有依赖隔离、系统容错降级等功能。</p>
+<p>下面来看看 Hystrix 简单的应用：</p>
+<p>首先需要定义两个线程池，分别用于执行订单、处理用户。</p>
+<p>/**</p>
+<ul>
+<li>Function:订单服务<br>*</li>
+<li>@author crossoverJie</li>
+<li>Date: 2018/7/28 16:43</li>
+<li><p>@since JDK 1.8<br>*/<br>public class CommandOrder extends HystrixCommand<string> {</string></p>
+<p> private final static Logger LOGGER = LoggerFactory.getLogger(CommandOrder.class);</p>
+<p> private String orderName;</p>
+<p> public CommandOrder(String orderName) {</p>
+</li>
+</ul>
+<pre><code>    super(Setter.withGroupKey(
+            //服务分组
+            HystrixCommandGroupKey.Factory.asKey(&quot;OrderGroup&quot;))
+            //线程分组
+            .andThreadPoolKey(HystrixThreadPoolKey.Factory.asKey(&quot;OrderPool&quot;))
+
+            //线程池配置
+            .andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()
+                    .withCoreSize(10)
+                    .withKeepAliveTimeMinutes(5)
+                    .withMaxQueueSize(10)
+                    .withQueueSizeRejectionThreshold(10000))
+
+            .andCommandPropertiesDefaults(
+                    HystrixCommandProperties.Setter()
+                            .withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.THREAD))
+    )
+    ;
+    this.orderName = orderName;
+}
+
+
+@Override
+public String run() throws Exception {
+
+    LOGGER.info(&quot;orderName=[{}]&quot;, orderName);
+
+    TimeUnit.MILLISECONDS.sleep(100);
+    return &quot;OrderName=&quot; + orderName;
+}
+</code></pre><p>}</p>
+<p>/**</p>
+<ul>
+<li>Function:用户服务<br>*</li>
+<li>@author crossoverJie</li>
+<li>Date: 2018/7/28 16:43</li>
+<li><p>@since JDK 1.8<br>*/<br>public class CommandUser extends HystrixCommand<string> {</string></p>
+<p> private final static Logger LOGGER = LoggerFactory.getLogger(CommandUser.class);</p>
+<p> private String userName;</p>
+<p> public CommandUser(String userName) {</p>
+</li>
+</ul>
+<pre><code>    super(Setter.withGroupKey(
+            //服务分组
+            HystrixCommandGroupKey.Factory.asKey(&quot;UserGroup&quot;))
+            //线程分组
+            .andThreadPoolKey(HystrixThreadPoolKey.Factory.asKey(&quot;UserPool&quot;))
+
+            //线程池配置
+            .andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()
+                    .withCoreSize(10)
+                    .withKeepAliveTimeMinutes(5)
+                    .withMaxQueueSize(10)
+                    .withQueueSizeRejectionThreshold(10000))
+
+            //线程池隔离
+            .andCommandPropertiesDefaults(
+                    HystrixCommandProperties.Setter()
+                            .withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.THREAD))
+    )
+    ;
+    this.userName = userName;
+}
+
+
+@Override
+public String run() throws Exception {
+
+    LOGGER.info(&quot;userName=[{}]&quot;, userName);
+
+    TimeUnit.MILLISECONDS.sleep(100);
+    return &quot;userName=&quot; + userName;
+}
+</code></pre><p>}<br>api 特别简洁易懂，具体详情请查看官方文档。</p>
+<p>然后模拟运行：</p>
+<pre><code>public static void main(String[] args) throws Exception {
+    CommandOrder commandPhone = new CommandOrder(&quot;手机&quot;);
+    CommandOrder command = new CommandOrder(&quot;电视&quot;);
+
+
+    //阻塞方式执行
+    String execute = commandPhone.execute();
+    LOGGER.info(&quot;execute=[{}]&quot;, execute);
+
+    //异步非阻塞方式
+    Future&lt;String&gt; queue = command.queue();
+    String value = queue.get(200, TimeUnit.MILLISECONDS);
+    LOGGER.info(&quot;value=[{}]&quot;, value);
+
+
+    CommandUser commandUser = new CommandUser(&quot;张三&quot;);
+    String name = commandUser.execute();
+    LOGGER.info(&quot;name=[{}]&quot;, name);
+}
+</code></pre><p>运行结果：</p>
+<p><img src="/images/pasted-56.png" alt="upload successful"></p>
+<p>可以看到两个任务分成了两个线程池运行，他们之间互不干扰。</p>
+<p>获取任务任务结果支持同步阻塞和异步非阻塞方式，可自行选择。</p>
+<p>它的实现原理其实容易猜到：</p>
+<p>利用一个 Map 来存放不同业务对应的线程池。</p>
+<p>通过刚才的构造函数也能证明：</p>
+<p><img src="/images/pasted-57.png" alt="upload successful"></p>
+<p>还要注意的一点是：</p>
+<p>自定义的 Command 并不是一个单例，每次执行需要 new 一个实例，不然会报 This instance can only be executed once. Please instantiate a new instance. 异常。</p>
+<p>总结<br>池化技术确实在平时应用广泛，熟练掌握能提高不少效率。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/红黑树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/22/红黑树/" itemprop="url"> 红黑树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T19:38:52+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/22/红黑树/" class="leancloud_visitors" data-flag-title=" 红黑树">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  980
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一、在理解红黑树之前，先看一些二叉查找树</p>
+<p>二叉查找树特性：<br>左字数上所有的节点的值都小于或等于他的根节点上的值</p>
+<p>右子树上所有节点的值均大于或等于他的根节点的值</p>
+<p>左、右子树也跟别为平衡二叉树</p>
+<p>举个二叉树的例子：</p>
+<p><img src="/images/pasted-31.png" alt="upload successful"><br>可以看到如果要查询10的话，10&gt;9</p>
+<p><img src="/images/pasted-32.png" alt="upload successful"><br>因此到他的右子树，右子树根节点为13，10&lt;13</p>
+<p><img src="/images/pasted-33.png" alt="upload successful"><br>因此到其左子树，左子树根节点为11&gt;10</p>
+<p><img src="/images/pasted-34.png" alt="upload successful"><br>到其左子树，为10，找到相应的节点</p>
+<p><img src="/images/pasted-35.png" alt="upload successful"><br> 不过二叉查找树有一些问题，可能会出现不平横的情况，即如下图所示的情况</p>
+<p><img src="/images/pasted-36.png" alt="upload successful"><br> 从这种情况可以看出，明显存在左子树和右子树深度相差过多，在使用平衡情况下的二叉查找树是时间复杂度为logn，而出现这种极端情况的话，想要查9的位置就需要每一次都遍历下一个右子树，很有可能时间复杂度变为n(与数组普通查询的时间复杂度相同)</p>
+<p> 基于上述情况，引入了平衡二叉树，红黑树即为平衡二叉树的一种</p>
+<p> 二、红黑树</p>
+<p> 特性：节点是红色或黑色</p>
+<p>  根节点一定是黑色</p>
+<p>  每个叶节点都是黑色的空节点(NIL节点)</p>
+<p>  每个红节点的两个子节点都是黑色的(从每个叶子到跟的所有路径上不能有两个连续的红节点)(即对于层来说除了NIL节点，红黑节点是交替的，第一层是黑节点那么其下一层肯定都是红节点，反之一样)</p>
+<p>  从任一节点到其每个叶子节点的所有路径都包含相同数目的黑色节点</p>
+<p>  正是由于这些原因使得红黑树是一个平衡二叉树</p>
+<p>  红黑树的例子</p>
+<p><img src="/images/pasted-37.png" alt="upload successful"><br>  向红黑树中插入节点14(一般默认插入节点是红色的)</p>
+<p><img src="/images/pasted-38.png" alt="upload successful"><br>  在原树上插入20</p>
+<p><img src="/images/pasted-39.png" alt="upload successful">  </p>
+<p>  可以看到，插入以后树已经不是一个平衡的二叉树，而且并不满足红黑树的要求，因为20和21均为红色，这种情况下就需要对红黑树进行变色，21需要变为黑色，22就会变成红色，如果22变成红色，则需要17和25都变成黑色</p>
+<p><img src="/images/pasted-40.png" alt="upload successful"><br>  而17变成黑色显然是不成立的，因为如果17变为黑色，那么13就会变为红色，不满足二叉树的规则，因此此处需要进行另一个操作———左旋操作</p>
+<p>  左旋：下图就是一个左旋的例子，一般情况下，如果左子树深度过深，那么便需要进行左旋操作以保证左右子树深度差变小</p>
+<p><img src="/images/pasted-41.png" alt="upload successful"><br>  对于上图由于右子树中17变为黑色以后需要把13变成红色，因此进行一次左旋，将17放在根节点，这样既可保证13为红色，左旋后结果</p>
+<p><img src="/images/pasted-42.png" alt="upload successful"><br>  而后根据红黑树的要求进行颜色的修改</p>
+<p><img src="/images/pasted-43.png" alt="upload successful"> 进行左旋后，发现从根节点17，到1左子树的叶子节点经过了两个黑节点，而到6的左叶子节点或者右叶子节点要经历3个黑节点，很显然也不满足红黑树，因此还需要进行下一步操作，需要进行右旋操作</p>
+<p>   右旋：与左旋正好相反</p>
+<p><img src="/images/pasted-44.png" alt="upload successful"> 由于是从13节点出现的不平衡，因此对13节点进行右旋，得到结果</p>
+<p><img src="/images/pasted-45.png" alt="upload successful"><br>而后再对其节点进行变色，得到结果</p>
+<p><img src="/images/pasted-46.png" alt="upload successful"><br>   这便是红黑树的一个变换，它主要用途有很多，例如java中的TreeMap以及JDK1.8以后的HashMap在当个节点中链表长度大于8时都会用到。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/HashMap、ConcurrentHashMap-原理分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/22/HashMap、ConcurrentHashMap-原理分析/" itemprop="url">HashMap、ConcurrentHashMap 原理分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T19:31:31+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/22/HashMap、ConcurrentHashMap-原理分析/" class="leancloud_visitors" data-flag-title="HashMap、ConcurrentHashMap 原理分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  4.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Map 这样的 Key Value 在软件开发中是非常经典的结构，常用于在内存中存放数据。</p>
+<p>本篇主要想讨论 ConcurrentHashMap 这样一个并发容器，在正式开始之前我觉得有必要谈谈 HashMap，没有它就不会有后面的 ConcurrentHashMap。</p>
+<h2 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h2><p>众所周知 HashMap 底层是基于 数组 + 链表 组成的，不过在 jdk1.7 和 1.8 中具体实现稍有不同。</p>
+<h2 id="Base-1-7"><a href="#Base-1-7" class="headerlink" title="Base 1.7"></a>Base 1.7</h2><p>1.7 中的数据结构图：</p>
+<p><img src="/images/pasted-16.png" alt="upload successful"></p>
+<p>先来看看 1.7 中的实现。</p>
+<p><img src="/images/pasted-17.png" alt="upload successful"></p>
+<p>这是 HashMap 中比较核心的几个成员变量；看看分别是什么意思？</p>
+<p>初始化桶大小，因为底层是数组，所以这是数组默认的大小。<br>桶最大值。<br>默认的负载因子（0.75）<br>table 真正存放数据的数组。<br>Map 存放数量的大小。<br>桶大小，可在初始化时显式指定。<br>负载因子，可在初始化时显式指定。<br>重点解释下负载因子：</p>
+<p>由于给定的 HashMap 的容量大小是固定的，比如默认初始化：</p>
+<pre><code>public HashMap() {
+
+this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
+
+}
+
+public HashMap(int initialCapacity, float loadFactor) {
+
+if (initialCapacity &lt; 0)
+
+throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +
+
+initialCapacity);
+
+if (initialCapacity &gt; MAXIMUM_CAPACITY)
+
+initialCapacity = MAXIMUM_CAPACITY;
+
+if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))
+
+throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +
+
+loadFactor);
+
+this.loadFactor = loadFactor;
+
+threshold = initialCapacity;
+
+init();
+
+}
+</code></pre><p>因此通常建议能提前预估 HashMap 的大小最好，尽量的减少扩容带来的性能损耗。给定的默认容量为 16，负载因子为 0.75。Map 在使用过程中不断的往里面存放数据，当数量达到了 16 * 0.75 = 12 就需要将当前 16 的容量进行扩容，而扩容这个过程涉及到 rehash、复制数据等操作，所以非常消耗性能。</p>
+<p>根据代码可以看到其实真正存放数据的是</p>
+<pre><code>transient Entry&lt;K,V&gt;[] table = (Entry&lt;K,V&gt;[]) EMPTY_TABLE;
+</code></pre><p>这个数组，那么它又是如何定义的呢？</p>
+<p><img src="/images/pasted-18.png" alt="upload successful"></p>
+<p>Entry 是 HashMap 中的一个内部类，从他的成员变量很容易看出：</p>
+<ol>
+<li>key 就是写入时的键。</li>
+<li>value 自然就是值。</li>
+<li>开始的时候就提到 HashMap 是由数组和链表组成，所以这个 next 就是用于实现链表结构。</li>
+<li>hash 存放的是当前 key 的 hashcode。<br>知晓了基本结构，那来看看其中重要的写入、获取函数：</li>
+</ol>
+<p>put 方法</p>
+<pre><code>public V put(K key, V value) {
+
+if (table == EMPTY_TABLE) {
+
+inflateTable(threshold);
+
+}
+
+if (key == null)
+
+return putForNullKey(value);
+
+int hash = hash(key);
+
+int i = indexFor(hash, table.length);
+
+for (Entry&lt;K,V&gt; e = table[i]; e != null; e = e.next) {
+
+Object k;
+
+if (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) {
+
+V oldValue = e.value;
+
+e.value = value;
+
+e.recordAccess(this);
+
+return oldValue;
+
+}
+
+}
+
+modCount++;
+
+addEntry(hash, key, value, i);
+
+return null;
+
+}
+void addEntry(int hash, K key, V value, int bucketIndex) {
+
+if ((size &gt;= threshold) &amp;&amp; (null != table[bucketIndex])) {
+
+resize(2 * table.length);
+
+hash = (null != key) ? hash(key) : 0;
+
+bucketIndex = indexFor(hash, table.length);
+
+}
+
+createEntry(hash, key, value, bucketIndex);
+
+}
+
+void createEntry(int hash, K key, V value, int bucketIndex) {
+
+Entry&lt;K,V&gt; e = table[bucketIndex];
+
+table[bucketIndex] = new Entry&lt;&gt;(hash, key, value, e);
+
+size++;
+
+}
+</code></pre><p>判断当前数组是否需要初始化。<br>如果 key 为空，则 put 一个空值进去。<br>根据 key 计算出 hashcode。<br>根据计算出的 hashcode 定位出所在桶。<br>如果桶是一个链表则需要遍历判断里面的 hashcode、key 是否和传入 key 相等，如果相等则进行覆盖，并返回原来的值。<br>如果桶是空的，说明当前位置没有数据存入；新增一个 Entry 对象写入当前位置。<br>当调用 addEntry 写入 Entry 时需要判断是否需要扩容。</p>
+<p>如果需要就进行两倍扩充，并将当前的 key 重新 hash 并定位。</p>
+<p>而在 createEntry 中会将当前位置的桶传入到新建的桶中，如果当前桶有值就会在位置形成链表。</p>
+<p>get 方法</p>
+<p>再来看看 get 函数：</p>
+<pre><code>public V get(Object key) {
+
+if (key == null)
+
+return getForNullKey();
+
+Entry&lt;K,V&gt; entry = getEntry(key);
+
+return null == entry ? null : entry.getValue();
+
+}
+
+final Entry&lt;K,V&gt; getEntry(Object key) {
+
+if (size == 0) {
+
+return null;
+
+}
+
+int hash = (key == null) ? 0 : hash(key);
+
+for (Entry&lt;K,V&gt; e = table[indexFor(hash, table.length)];
+
+e != null;
+
+e = e.next) {
+
+Object k;
+
+if (e.hash == hash &amp;&amp;
+
+((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+
+return e;
+
+}
+
+return null;
+
+}
+</code></pre><p>Base 1.8首先也是根据 key 计算出 hashcode，然后定位到具体的桶中。</p>
+<p>判断该位置是否为链表。<br>不是链表就根据 key、key 的 hashcode 是否相等来返回值。<br>为链表则需要遍历直到 key 及 hashcode 相等时候就返回值。<br>啥都没取到就直接返回 null 。<br>不知道 1.7 的实现大家看出需要优化的点没有？</p>
+<p>其实一个很明显的地方就是：</p>
+<p>当 Hash 冲突严重时，在桶上形成的链表会变的越来越长，这样在查询时的效率就会越来越低；时间复杂度为 O(N)。</p>
+<p>因此 1.8 中重点优化了这个查询效率。</p>
+<p>1.8 HashMap 结构图：</p>
+<p><img src="/images/pasted-19.png" alt="upload successful"></p>
+<p>先来看看几个核心的成员变量：</p>
+<pre><code>static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16
+
+/**
+* The maximum capacity, used if a higher value is implicitly specified
+* by either of the constructors with arguments.
+* MUST be a power of two &lt;= 1&lt;&lt;30.
+*/
+
+static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;
+
+/**
+* The load factor used when none specified in constructor.
+*/
+
+static final float DEFAULT_LOAD_FACTOR = 0.75f;
+
+static final int TREEIFY_THRESHOLD = 8;
+
+transient Node&lt;K,V&gt;[] table;
+
+/**
+* Holds cached entrySet(). Note that AbstractMap fields are used
+* for keySet() and values().
+*/
+
+transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;
+
+/**
+* The number of key-value mappings contained in this map.
+*/
+
+transient int size;
+</code></pre><p>TREEIFY_THRESHOLD 用于判断是否需要将链表转换为红黑树的阈值。和 1.7 大体上都差不多，还是有几个重要的区别：</p>
+<p>HashEntry 修改为 Node。<br>Node 的核心组成其实也是和 1.7 中的 HashEntry 一样，存放的都是 key value hashcode next 等数据。</p>
+<p>再来看看核心方法。</p>
+<p>put 方法</p>
+<p><img src="/images/pasted-20.png" alt="upload successful"></p>
+<p>看似要比 1.7 的复杂，我们一步步拆解：</p>
+<p>判断当前桶是否为空，空的就需要初始化（resize 中会判断是否进行初始化）。<br>根据当前 key 的 hashcode 定位到具体的桶中并判断是否为空，为空表明没有 Hash 冲突就直接在当前位置创建一个新桶即可。<br>如果当前桶有值（ Hash 冲突），那么就要比较当前桶中的 key、key 的 hashcode 与写入的 key 是否相等，相等就赋值给 e,在第 8 步的时候会统一进行赋值及返回。<br>如果当前桶为红黑树，那就要按照红黑树的方式写入数据。<br>如果是个链表，就需要将当前的 key、value 封装成一个新节点写入到当前桶的后面（形成链表）。<br>接着判断当前链表的大小是否大于预设的阈值，大于时就要转换为红黑树。<br>如果在遍历过程中找到 key 相同时直接退出遍历。<br>如果 e != null 就相当于存在相同的 key,那就需要将值覆盖。<br>最后判断是否需要进行扩容。<br>get 方法</p>
+<pre><code>public V get(Object key) {
+
+Node&lt;K,V&gt; e;
+
+return (e = getNode(hash(key), key)) == null ? null : e.value;
+
+}
+
+final Node&lt;K,V&gt; getNode(int hash, Object key) {
+
+Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; int n; K k;
+
+if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;
+
+(first = tab[(n - 1) &amp; hash]) != null) {
+
+if (first.hash == hash &amp;&amp; // always check first node
+
+((k = first.key) == key || (key != null &amp;&amp; key.equals(k))))
+
+return first;
+
+if ((e = first.next) != null) {
+
+if (first instanceof TreeNode)
+
+return ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);
+
+do {
+
+if (e.hash == hash &amp;&amp;
+
+((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+
+return e;
+
+} while ((e = e.next) != null);
+
+}
+
+}
+
+return null;
+
+}
+</code></pre><p>首先将 key hash 之后取得所定位的桶。get 方法看起来就要简单许多了。</p>
+<p>如果桶为空则直接返回 null 。<br>否则判断桶的第一个位置(有可能是链表、红黑树)的 key 是否为查询的 key，是就直接返回 value。<br>如果第一个不匹配，则判断它的下一个是红黑树还是链表。<br>红黑树就按照树的查找方式返回值。<br>不然就按照链表的方式遍历匹配返回值。<br>从这两个核心方法（get/put）可以看出 1.8 中对大链表做了优化，修改为红黑树之后查询效率直接提高到了 O(logn)。</p>
+<p>但是 HashMap 原有的问题也都存在，比如在并发场景下使用时容易出现死循环。</p>
+<pre><code>final HashMap&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
+
+for (int i = 0; i &lt; 1000; i++) {
+
+new Thread(new Runnable() {
+
+@Override
+
+public void run() {
+
+map.put(UUID.randomUUID().toString(), &quot;&quot;);
+
+}
+
+}).start();
+
+}
+</code></pre><p>看过上文的还记得在 HashMap 扩容的时候会调用 resize() 方法，就是这里的并发操作容易在一个桶上形成环形链表；这样当获取一个不存在的 key 时，计算出的 index 正好是环形链表的下标就会出现死循环。但是为什么呢？简单分析下。</p>
+<p>如下图：</p>
+<p><img src="/images/pasted-21.png" alt="upload successful"></p>
+<p><img src="/images/pasted-22.png" alt="upload successful"></p>
+<p>遍历方式<br>还有一个值得注意的是 HashMap 的遍历方式，通常有以下几种：</p>
+<pre><code>Iterator&lt;Map.Entry&lt;String, Integer&gt;&gt; entryIterator = map.entrySet().iterator();
+
+while (entryIterator.hasNext()) {
+
+Map.Entry&lt;String, Integer&gt; next = entryIterator.next();
+
+System.out.println(&quot;key=&quot; + next.getKey() + &quot; value=&quot; + next.getValue());
+
+}
+
+Iterator&lt;String&gt; iterator = map.keySet().iterator();
+
+while (iterator.hasNext()){
+
+String key = iterator.next();
+
+System.out.println(&quot;key=&quot; + key + &quot; value=&quot; + map.get(key));
+
+}
+</code></pre><p>第一种可以把 key value 同时取出，第二种还得需要通过 key 取一次 value，效率较低。强烈建议使用第一种 EntrySet 进行遍历。</p>
+<p>简单总结下 HashMap：无论是 1.7 还是 1.8 其实都能看出 JDK 没有对它做任何的同步操作，所以并发会出问题，甚至 1.7 中出现死循环导致系统不可用（1.8 已经修复死循环问题）。</p>
+<p>因此 JDK 推出了专项专用的 ConcurrentHashMap ，该类位于 java.util.concurrent 包下，专门用于解决并发问题。</p>
+<p>坚持看到这里的朋友算是已经把 ConcurrentHashMap 的基础已经打牢了，下面正式开始分析。</p>
+<p>ConcurrentHashMap<br>ConcurrentHashMap 同样也分为 1.7 、1.8 版，两者在实现上略有不同。</p>
+<p>Base 1.7<br>先来看看 1.7 的实现，下面是他的结构图：</p>
+<p><img src="/images/pasted-23.png" alt="upload successful"></p>
+<p>如图所示，是由 Segment 数组、HashEntry 组成，和 HashMap 一样，仍然是数组加链表。</p>
+<p>它的核心成员变量：</p>
+<pre><code>/**
+* Segment 数组，存放数据时首先需要定位到具体的 Segment 中。
+*/
+
+final Segment&lt;K,V&gt;[] segments;
+
+transient Set&lt;K&gt; keySet;
+
+transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;
+static final class Segment&lt;K,V&gt; extends ReentrantLock implements Serializable {
+
+private static final long serialVersionUID = 2249069246763182397L;
+
+// 和 HashMap 中的 HashEntry 作用一样，真正存放数据的桶
+
+transient volatile HashEntry&lt;K,V&gt;[] table;
+
+transient int count;
+
+transient int modCount;
+
+transient int threshold;
+
+final float loadFactor;
+
+}
+</code></pre><p>看看其中 HashEntry 的组成：Segment 是 ConcurrentHashMap 的一个内部类，主要的组成如下：</p>
+<p><img src="/images/pasted-24.png" alt="upload successful"></p>
+<p>和 HashMap 非常类似，唯一的区别就是其中的核心数据如 value ，以及链表都是 volatile 修饰的，保证了获取时的可见性。</p>
+<p>原理上来说：ConcurrentHashMap 采用了分段锁技术，其中 Segment 继承于 ReentrantLock。不会像 HashTable 那样不管是 put 还是 get 操作都需要做同步处理，理论上 ConcurrentHashMap 支持 CurrencyLevel (Segment 数组数量)的线程并发。每当一个线程占用锁访问一个 Segment 时，不会影响到其他的 Segment。</p>
+<p>下面也来看看核心的 put get 方法。</p>
+<p>put 方法</p>
+<pre><code>public V put(K key, V value) {
+
+Segment&lt;K,V&gt; s;
+
+if (value == null)
+
+throw new NullPointerException();
+
+int hash = hash(key);
+
+int j = (hash &gt;&gt;&gt; segmentShift) &amp; segmentMask;
+
+if ((s = (Segment&lt;K,V&gt;)UNSAFE.getObject // nonvolatile; recheck
+
+(segments, (j &lt;&lt; SSHIFT) + SBASE)) == null) // in ensureSegment
+
+s = ensureSegment(j);
+
+return s.put(key, hash, value, false);
+
+}
+
+
+final V put(K key, int hash, V value, boolean onlyIfAbsent) {
+
+HashEntry&lt;K,V&gt; node = tryLock() ? null :
+
+scanAndLockForPut(key, hash, value);
+
+V oldValue;
+
+try {
+
+HashEntry&lt;K,V&gt;[] tab = table;
+
+int index = (tab.length - 1) &amp; hash;
+
+HashEntry&lt;K,V&gt; first = entryAt(tab, index);
+
+for (HashEntry&lt;K,V&gt; e = first;;) {
+
+if (e != null) {
+
+K k;
+
+if ((k = e.key) == key ||
+
+(e.hash == hash &amp;&amp; key.equals(k))) {
+
+oldValue = e.value;
+
+if (!onlyIfAbsent) {
+
+e.value = value;
+
+++modCount;
+
+}
+
+break;
+
+}
+
+e = e.next;
+
+}
+
+else {
+
+if (node != null)
+
+node.setNext(first);
+
+else
+
+node = new HashEntry&lt;K,V&gt;(hash, key, value, first);
+
+int c = count + 1;
+
+if (c &gt; threshold &amp;&amp; tab.length &lt; MAXIMUM_CAPACITY)
+
+rehash(node);
+
+else
+
+setEntryAt(tab, index, node);
+
+++modCount;
+
+count = c;
+
+oldValue = null;
+
+break;
+
+}
+
+}
+
+} finally {
+
+unlock();
+
+}
+
+return oldValue;
+
+}
+</code></pre><p>虽然 HashEntry 中的 value 是用 volatile 关键词修饰的，但是并不能保证并发的原子性，所以 put 操作时仍然需要加锁处理。首先是通过 key 定位到 Segment，之后在对应的 Segment 中进行具体的 put。</p>
+<p>首先第一步的时候会尝试获取锁，如果获取失败肯定就有其他线程存在竞争，则利用 scanAndLockForPut() 自旋获取锁。</p>
+<p><img src="/images/pasted-25.png" alt="upload successful"></p>
+<p>尝试自旋获取锁。<br>如果重试的次数达到了 MAX_SCAN_RETRIES 则改为阻塞锁获取，保证能获取成功。</p>
+<p><img src="/images/pasted-26.png" alt="upload successful"></p>
+<p>再结合图看看 put 的流程。</p>
+<p>将当前 Segment 中的 table 通过 key 的 hashcode 定位到 HashEntry。<br>遍历该 HashEntry，如果不为空则判断传入的 key 和当前遍历的 key 是否相等，相等则覆盖旧的 value。<br>不为空则需要新建一个 HashEntry 并加入到 Segment 中，同时会先判断是否需要扩容。<br>最后会解除在 1 中所获取当前 Segment 的锁。<br>get 方法</p>
+<pre><code>public V get(Object key) {
+
+Segment&lt;K,V&gt; s; // manually integrate access methods to reduce overhead
+
+HashEntry&lt;K,V&gt;[] tab;
+
+int h = hash(key);
+
+long u = (((h &gt;&gt;&gt; segmentShift) &amp; segmentMask) &lt;&lt; SSHIFT) + SBASE;
+
+if ((s = (Segment&lt;K,V&gt;)UNSAFE.getObjectVolatile(segments, u)) != null &amp;&amp;
+
+(tab = s.table) != null) {
+
+for (HashEntry&lt;K,V&gt; e = (HashEntry&lt;K,V&gt;) UNSAFE.getObjectVolatile
+
+(tab, ((long)(((tab.length - 1) &amp; h)) &lt;&lt; TSHIFT) + TBASE);
+
+e != null; e = e.next) {
+
+K k;
+
+if ((k = e.key) == key || (e.hash == h &amp;&amp; key.equals(k)))
+
+return e.value;
+
+}
+
+}
+
+return null;
+
+}
+</code></pre><p>只需要将 Key 通过 Hash 之后定位到具体的 Segment ，再通过一次 Hash 定位到具体的元素上。get 逻辑比较简单：</p>
+<p>由于 HashEntry 中的 value 属性是用 volatile 关键词修饰的，保证了内存可见性，所以每次获取时都是最新值。</p>
+<p>ConcurrentHashMap 的 get 方法是非常高效的，因为整个过程都不需要加锁。</p>
+<p>Base 1.8<br>1.7 已经解决了并发问题，并且能支持 N 个 Segment 这么多次数的并发，但依然存在 HashMap 在 1.7 版本中的问题。</p>
+<p>那就是查询遍历链表效率太低。</p>
+<p>因此 1.8 做了一些数据结构上的调整。</p>
+<p>首先来看下底层的组成结构：</p>
+<p><img src="/images/pasted-27.png" alt="upload successful"></p>
+<p>看起来是不是和 1.8 HashMap 结构类似？</p>
+<p>其中抛弃了原有的 Segment 分段锁，而采用了 CAS + synchronized 来保证并发安全性。</p>
+<p><img src="/images/pasted-28.png" alt="upload successful"></p>
+<p>也将 1.7 中存放数据的 HashEntry 改为 Node，但作用都是相同的。</p>
+<p>其中的 val next 都用了 volatile 修饰，保证了可见性。</p>
+<p>put 方法</p>
+<p>重点来看看 put 函数：</p>
+<p><img src="/images/pasted-29.png" alt="upload successful"></p>
+<p>根据 key 计算出 hashcode 。<br>判断是否需要进行初始化。<br>f 即为当前 key 定位出的 Node，如果为空表示当前位置可以写入数据，利用 CAS 尝试写入，失败则自旋保证成功。<br>如果当前位置的 hashcode == MOVED == -1,则需要进行扩容。<br>如果都不满足，则利用 synchronized 锁写入数据。<br>如果数量大于 TREEIFY_THRESHOLD 则要转换为红黑树。<br>get 方法</p>
+<p><img src="/images/pasted-30.png" alt="upload successful"></p>
+<p>根据计算出来的 hashcode 寻址，如果就在桶上那么直接返回值。<br>如果是红黑树那就按照树的方式获取值。<br>就不满足那就按照链表的方式遍历获取值。<br>1.8 在 1.7 的数据结构上做了大的改动，采用红黑树之后可以保证查询效率（O(logn)），甚至取消了 ReentrantLock 改为了 synchronized，这样可以看出在新版的 JDK 中对 synchronized 优化是很到位的。</p>
+<p>总结<br>看完了整个 HashMap 和 ConcurrentHashMap 在 1.7 和 1.8 中不同的实现方式相信大家对他们的理解应该会更加到位。</p>
+<p>其实这块也是面试的重点内容，通常的套路是：</p>
+<p>谈谈你理解的 HashMap，讲讲其中的 get put 过程。<br>1.8 做了什么优化？<br>是线程安全的嘛？<br>不安全会导致哪些问题？<br>如何解决？有没有线程安全的并发容器？<br>ConcurrentHashMap 是如何实现的？ 1.7、1.8 实现有何不同？为什么这么做？<br>这一串问题相信大家仔细看完都能怼回面试官。</p>
+<p>除了面试会问到之外平时的应用其实也蛮多，像之前谈到的 Guava 中 Cache 的实现就是利用 ConcurrentHashMap 的思想。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/synchronized-关键字原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/22/synchronized-关键字原理/" itemprop="url">synchronized 关键字原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T15:22:18+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/22/synchronized-关键字原理/" class="leancloud_visitors" data-flag-title="synchronized 关键字原理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>众所周知 synchronized 关键字是解决并发问题常用解决方案，有以下三种使用方式:</p>
+<ol>
+<li>同步普通方法，锁的是当前对象。</li>
+<li>同步静态方法，锁的是当前 Class 对象。</li>
+<li>同步块，锁的是 () 中的对象。</li>
+</ol>
+<p>实现原理： JVM 是通过进入、退出对象监视器( Monitor )来实现对方法、同步块的同步的。</p>
+<p>具体实现是在编译之后在同步方法调用前加入一个 monitor.enter 指令，在退出方法和异常处插入 monitor.exit 的指令。</p>
+<p>其本质就是对一个对象监视器( Monitor )进行获取，而这个获取过程具有排他性从而达到了同一时刻只能一个线程访问的目的。</p>
+<p>而对于没有获取到锁的线程将会阻塞到方法入口处，直到获取锁的线程 monitor.exit 之后才能尝试继续获取锁。</p>
+<p>流程图如下:</p>
+<p><img src="/images/pasted-15.png" alt="upload successful"></p>
+<p>通过一段代码来演示:</p>
+<pre><code>public static void main(String[] args) {
+    synchronized (Synchronize.class){
+        System.out.println(&quot;Synchronize&quot;);
+    }
+}
+</code></pre><p>使用 javap -c Synchronize 可以查看编译之后的具体信息。<br>    public class com.crossoverjie.synchronize.Synchronize {<br>      public com.crossoverjie.synchronize.Synchronize();<br>        Code:<br>           0: aload_0<br>           1: invokespecial #1                  // Method java/lang/Object.”<init>“:()V<br>           4: return</init></p>
+<pre><code>  public static void main(java.lang.String[]);
+    Code:
+       0: ldc           #2                  // class com/crossoverjie/synchronize/Synchronize
+       2: dup
+       3: astore_1
+       **4: monitorenter**
+       5: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       8: ldc           #4                  // String Synchronize
+      10: invokevirtual #5                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      13: aload_1
+      **14: monitorexit**
+      15: goto          23
+      18: astore_2
+      19: aload_1
+      20: monitorexit
+      21: aload_2
+      22: athrow
+      23: return
+    Exception table:
+       from    to  target type
+           5    15    18   any
+          18    21    18   any
+}
+</code></pre><p>可以看到在同步块的入口和出口分别有 monitorenter,monitorexit 指令。</p>
+<h2 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h2><p>synchronized 很多都称之为重量锁，JDK1.6 中对 synchronized 进行了各种优化，为了能减少获取和释放锁带来的消耗引入了偏向锁和轻量锁。</p>
+<p>轻量锁<br>当代码进入同步块时，如果同步对象为无锁状态时，当前线程会在栈帧中创建一个锁记录(Lock Record)区域，同时将锁对象的对象头中 Mark Word 拷贝到锁记录中，再尝试使用 CAS 将 Mark Word 更新为指向锁记录的指针。</p>
+<p>如果更新成功，当前线程就获得了锁。</p>
+<p>如果更新失败 JVM 会先检查锁对象的 Mark Word 是否指向当前线程的锁记录。</p>
+<p>如果是则说明当前线程拥有锁对象的锁，可以直接进入同步块。</p>
+<p>不是则说明有其他线程抢占了锁，如果存在多个线程同时竞争一把锁，轻量锁就会膨胀为重量锁。</p>
+<h2 id="解锁"><a href="#解锁" class="headerlink" title="解锁"></a>解锁</h2><p>轻量锁的解锁过程也是利用 CAS 来实现的，会尝试锁记录替换回锁对象的 Mark Word 。如果替换成功则说明整个同步操作完成，失败则说明有其他线程尝试获取锁，这时就会唤醒被挂起的线程(此时已经膨胀为重量锁)</p>
+<p>轻量锁能提升性能的原因是：</p>
+<p>认为大多数锁在整个同步周期都不存在竞争，所以使用 CAS 比使用互斥开销更少。但如果锁竞争激烈，轻量锁就不但有互斥的开销，还有 CAS 的开销，甚至比重量锁更慢。</p>
+<h2 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h2><p>为了进一步的降低获取锁的代价，JDK1.6 之后还引入了偏向锁。</p>
+<p>偏向锁的特征是:锁不存在多线程竞争，并且应由一个线程多次获得锁。</p>
+<p>当线程访问同步块时，会使用 CAS 将线程 ID 更新到锁对象的 Mark Word 中，如果更新成功则获得偏向锁，并且之后每次进入这个对象锁相关的同步块时都不需要再次获取锁了。</p>
+<h2 id="释放锁"><a href="#释放锁" class="headerlink" title="释放锁"></a>释放锁</h2><p>当有另外一个线程获取这个锁时，持有偏向锁的线程就会释放锁，释放时会等待全局安全点(这一时刻没有字节码运行)，接着会暂停拥有偏向锁的线程，根据锁对象目前是否被锁来判定将对象头中的 Mark Word 设置为无锁或者是轻量锁状态。</p>
+<p>偏向锁可以提高带有同步却没有竞争的程序性能，但如果程序中大多数锁都存在竞争时，那偏向锁就起不到太大作用。可以使用 -XX:-userBiasedLocking=false 来关闭偏向锁，并默认进入轻量锁。</p>
+<h2 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h2><p>适应性自旋</p>
+<p>在使用 CAS 时，如果操作失败，CAS 会自旋再次尝试。由于自旋是需要消耗 CPU 资源的，所以如果长期自旋就白白浪费了 CPU。JDK1.6加入了适应性自旋:    </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/设计一个秒杀系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/22/设计一个秒杀系统/" itemprop="url">设计一个秒杀系统</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T15:20:53+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/22/设计一个秒杀系统/" class="leancloud_visitors" data-flag-title="设计一个秒杀系统">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  460
                 </span>
               
 
@@ -576,7 +2248,18 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#将脚本放在webapp目录下，war放入webapp的backup目录下，执行脚本shell publish.sh xx .. 参数为war包名称 tomcat路径</span><br><span class="line">function publish()&#123;</span><br><span class="line">	echo &quot;update...&quot;</span><br><span class="line">	echo $2</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">	if  [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">	echo &quot;请输入war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	if [ ! -f &quot;$1.war&quot; ];then</span><br><span class="line">	echo &quot;请输入正确的war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	cp $1.war $2/backup/$1/$1.war</span><br><span class="line">	cd $2</span><br><span class="line">	if [ ! -f &quot;./backup/$1/$1.war&quot; ];then</span><br><span class="line">	echo &quot;请上传正确的war包名称&quot;;</span><br><span class="line">	return 0;</span><br><span class="line">	fi</span><br><span class="line">	last_time=`stat $1.war|grep Modify|awk &apos;&#123;print $2&#125;&apos;|sed s/-//g`;</span><br><span class="line">	if [ ! -f &quot;./backup/$1/$last_time/$1.war&quot; ];then</span><br><span class="line">	mkdir -p &quot;./backup/$1/$last_time&quot;;</span><br><span class="line">	mv $1.war ./backup/$1/$last_time;</span><br><span class="line">	else</span><br><span class="line">	file_count=`ls ./backup/$1/$last_time -l |grep &quot;^-&quot;|wc -l`;</span><br><span class="line">	echo $file_count;</span><br><span class="line">	#file_count=$[file_count+1];</span><br><span class="line">	mv $1.war ./backup/$1/$last_time/$1$file_count.war;</span><br><span class="line">	fi</span><br><span class="line">	mv backup/$1/$1.war $1.war;</span><br><span class="line">	echo &quot;完成备份并发布应用&quot;;</span><br><span class="line">	return 1;</span><br><span class="line">&#125;</span><br><span class="line">publish $1 $2</span><br></pre></td></tr></table></figure>
+            <p>具体实现参考 秒杀架构实践</p>
+<p>主要做到以下两点:</p>
+<p>尽量将请求过滤在上游。<br>尽可能的利用缓存(大多数场景下都是查多于写)。<br>常用的系统分层结构:</p>
+<p><img src="/images/pasted-14.png" alt="upload successful"></p>
+<p>针对于浏览器端，可以使用 JS 进行请求过滤，比如五秒钟之类只能点一次抢购按钮，五秒钟只能允许请求一次后端服务。(APP 同理)</p>
+<p>这样其实就可以过滤掉大部分普通用户。</p>
+<p>但是防不住直接抓包循环调用。这种情况可以最简单的处理:在Web层通过限制一个 UID 五秒之类的请求服务层的次数(可利用 Redis 实现)。</p>
+<p>但如果是真的有 10W 个不同的 UID 来请求，比如黑客抓肉鸡的方式。</p>
+<p>这种情况可以在服务层 针对于写请求使用请求队列，再通过限流算法(限流算法)每秒钟放一部分请求到队列。</p>
+<p>对于读请求则尽量使用缓存，可以提前将数据准备好，不管是 Redis 还是其他缓存中间件效率都是非常高的。</p>
+<p>ps : 刷新缓存情况，比如库存扣除成功这种情况不用马上刷新缓存，如果库存扣到了 0 再刷新缓存。因为大多数用户都只关心是否有货，并不关心现在还剩余多少。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果流量巨大，导致各个层的压力都很大可以适当的加机器横向扩容。如果加不了机器那就只有放弃流量直接返回失败。快速失败非常重要，至少可以保证系统的可用性。<br>业务分批执行：对于下单、付款等操作可以异步执行提高吞吐率。</p>
 
           
         
@@ -625,7 +2308,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/cron表达式详解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/Centos7-运维常用命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="HybridTheory">
@@ -644,7 +2327,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/12/cron表达式详解/" itemprop="url">cron表达式详解</a></h1>
+                <a class="post-title-link" href="/2019/04/22/Centos7-运维常用命令/" itemprop="url">Centos7 运维常用命令</a></h1>
         
 
         <div class="post-meta">
@@ -656,8 +2339,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-12T13:48:00+08:00">
-                2019-04-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T15:08:54+08:00">
+                2019-04-22
               </time>
             
 
@@ -674,7 +2357,7 @@
 
           
           
-             <span id="/2019/04/12/cron表达式详解/" class="leancloud_visitors" data-flag-title="cron表达式详解">
+             <span id="/2019/04/22/Centos7-运维常用命令/" class="leancloud_visitors" data-flag-title="Centos7 运维常用命令">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -699,7 +2382,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  1.5k
+                  66
                 </span>
               
 
@@ -715,7 +2398,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  5
+                  1
                 </span>
               
             </div>
@@ -738,450 +2421,11 @@
       
         
           
-            <h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>corn从左到右（用空格隔开）：秒 分 小时 月份中的日期 月份 星期中的日期 年份</p>
-<h2 id="各字段的含义"><a href="#各字段的含义" class="headerlink" title="各字段的含义"></a>各字段的含义</h2><table>
-<thead>
-<tr>
-<th>字段</th>
-<th>允许值</th>
-<th>允许的特殊字符</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>秒（Seconds）</td>
-<td>0~59的整数</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>分（Minutes）</td>
-<td>0~59的整数</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>小时（Hours）</td>
-<td>0~23的整数</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>日期（DayofMonth）</td>
-<td>1~31的整数（但是你需要考虑你月的天数）</td>
-<td>,- * ? / L W C     八个字符</td>
-</tr>
-<tr>
-<td>月份（Month）</td>
-<td>1~12的整数或者 JAN-DEC</td>
-<td>, - * /    四个字符</td>
-</tr>
-<tr>
-<td>星期（DayofWeek）</td>
-<td>1~7的整数或者 SUN-SAT （1=SUN）</td>
-<td>, - * ? / L C #     八个字符</td>
-</tr>
-<tr>
-<td>年(可选，留空)（Year）</td>
-<td>1970~2099</td>
-<td>, - * /    四个字符</td>
-</tr>
-</tbody>
-</table>
-<pre><code>（1）*：表示匹配该域的任意值。假如在Minutes域使用*, 即表示每分钟都会触发事件。
-</code></pre><p>　　（2）?：只能用在DayofMonth和DayofWeek两个域。它也匹配域的任意值，但实际不会。因为DayofMonth和DayofWeek会相互影响。例如想在每月的20日触发调度，不管20日到底是星期几，则只能使用如下写法： 13 13 15 20 <em> ?, 其中最后一位只能用？，而不能使用</em>，如果使用*表示不管星期几都会触发，实际上并不是这样。</p>
-<p>　　（3）-：表示范围。例如在Minutes域使用5-20，表示从5分到20分钟每分钟触发一次 </p>
-<p>　　（4）/：表示起始时间开始触发，然后每隔固定时间触发一次。例如在Minutes域使用5/20,则意味着5分钟触发一次，而25，45等分别触发一次. </p>
-<p>　　（5）,：表示列出枚举值。例如：在Minutes域使用5,20，则意味着在5和20分每分钟触发一次。 </p>
-<p>　　（6）L：表示最后，只能出现在DayofWeek和DayofMonth域。如果在DayofWeek域使用5L,意味着在最后的一个星期四触发。 </p>
-<p>　　（7）W:表示有效工作日(周一到周五),只能出现在DayofMonth域，系统将在离指定日期的最近的有效工作日触发事件。例如：在 DayofMonth使用5W，如果5日是星期六，则将在最近的工作日：星期五，即4日触发。如果5日是星期天，则在6日(周一)触发；如果5日在星期一到星期五中的一天，则就在5日触发。另外一点，W的最近寻找不会跨过月份 。</p>
-<p>　　（8）LW:这两个字符可以连用，表示在某个月最后一个工作日，即最后一个星期五。 </p>
-<p>　　（9）#:用于确定每个月第几个星期几，只能出现在DayofMonth域。例如在4#2，表示某月的第二个星期三。</p>
-<h2 id="常用表达式例子"><a href="#常用表达式例子" class="headerlink" title="常用表达式例子"></a>常用表达式例子</h2><p>（1）0 0 2 1 <em> ? </em>   表示在每月的1日的凌晨2点调整任务</p>
-<p>　　（2）0 15 10 ? * MON-FRI   表示周一到周五每天上午10:15执行作业</p>
-<p>　　（3）0 15 10 ? 6L 2002-2006   表示2002-2006年的每个月的最后一个星期五上午10:15执行作</p>
-<p>　　（4）0 0 10,14,16 <em> </em> ?   每天上午10点，下午2点，4点 </p>
-<p>　　（5）0 0/30 9-17 <em> </em> ?   朝九晚五工作时间内每半小时 </p>
-<p>　　（6）0 0 12 ? * WED    表示每个星期三中午12点 </p>
-<p>　　（7）0 0 12 <em> </em> ?   每天中午12点触发 </p>
-<p>　　（8）0 15 10 ? <em> </em>    每天上午10:15触发 </p>
-<p>　　（9）0 15 10 <em> </em> ?     每天上午10:15触发 </p>
-<p>　　（10）0 15 10 <em> </em> ? *    每天上午10:15触发 </p>
-<p>　　（11）0 15 10 <em> </em> ? 2005    2005年的每天上午10:15触发 </p>
-<p>　　（12）0 <em> 14 </em> * ?     在每天下午2点到下午2:59期间的每1分钟触发 </p>
-<p>　　（13）0 0/5 14 <em> </em> ?    在每天下午2点到下午2:55期间的每5分钟触发 </p>
-<p>　　（14）0 0/5 14,18 <em> </em> ?     在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发 </p>
-<p>　　（15）0 0-5 14 <em> </em> ?    在每天下午2点到下午2:05期间的每1分钟触发 </p>
-<p>　　（16）0 10,44 14 ? 3 WED    每年三月的星期三的下午2:10和2:44触发 </p>
-<p>　　（17）0 15 10 ? * MON-FRI    周一至周五的上午10:15触发 </p>
-<p>　　（18）0 15 10 15 * ?    每月15日上午10:15触发 </p>
-<p>　　（19）0 15 10 L * ?    每月最后一日的上午10:15触发 </p>
-<p>　　（20）0 15 10 ? * 6L    每月的最后一个星期五上午10:15触发 </p>
-<p>　　（21）0 15 10 ? * 6L 2002-2005   2002年至2005年的每月的最后一个星期五上午10:15触发 </p>
-<p>　　（22）0 15 10 ? * 6#3   每月的第三个星期五上午10:15触发</p>
-<p>　　</p>
-<p>　　注：</p>
-<p>　　（1）有些子表达式能包含一些范围或列表</p>
-<p>　　例如：子表达式（天（星期））可以为 “MON-FRI”，“MON，WED，FRI”，“MON-WED,SAT”</p>
-<p>“*”字符代表所有可能的值</p>
-<p>　　因此，“<em>”在子表达式（月）里表示每个月的含义，“</em>”在子表达式（天（星期））表示星期的每一天</p>
-<p>　　“/”字符用来指定数值的增量<br>　　例如：在子表达式（分钟）里的“0/15”表示从第0分钟开始，每15分钟<br>在子表达式（分钟）里的“3/20”表示从第3分钟开始，每20分钟（它和“3，23，43”）的含义一样</p>
-<p>　　“？”字符仅被用于天（月）和天（星期）两个子表达式，表示不指定值<br>　　当2个子表达式其中之一被指定了值以后，为了避免冲突，需要将另一个子表达式的值设为“？”</p>
-<p>　　“L” 字符仅被用于天（月）和天（星期）两个子表达式，它是单词“last”的缩写<br>　　但是它在两个子表达式里的含义是不同的。<br>　　在天（月）子表达式中，“L”表示一个月的最后一天<br>　　在天（星期）自表达式中，“L”表示一个星期的最后一天，也就是SAT</p>
-<p>　　如果在“L”前有具体的内容，它就具有其他的含义了</p>
-<p>　　例如：“6L”表示这个月的倒数第６天，“FRIL”表示这个月的最一个星期五<br>　　注意：在使用“L”参数时，不要指定列表或范围，因为这会导致问题</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/CentoOS服务器环境安装/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/09/CentoOS服务器环境安装/" itemprop="url">CentoOS服务器环境安装</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-09T10:53:00+08:00">
-                2019-04-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/09/CentoOS服务器环境安装/" class="leancloud_visitors" data-flag-title="CentoOS服务器环境安装">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  1.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="java安装"><a href="#java安装" class="headerlink" title="java安装"></a>java安装</h2><ol>
-<li><p>在/usr/目录下创建java目录</p>
-<pre><code>[root@localhost ~]#mkdir /usr/java
-
-[root@localhost ~]#cd /usr/java
-</code></pre></li>
-<li><p>下载jdk,然后解压</p>
-<pre><code>wget --no-check-certificate --no-cookie --header &quot;Cookie: oraclelicense=accept-securebackup-cookie;&quot;  http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
-
-tar xzf .tar.gz
-</code></pre></li>
-<li><p>设置环境变量</p>
-<p> [root@localhost java]# vi /etc/profile</p>
-</li>
-<li><p>在profile中添加如下内容:</p>
-<pre><code>#set java environment
-JAVA_HOME=/usr/java/jdk1.7.0_79
-JRE_HOME=/usr/java/jdk1.7.0_79/jre
-CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
-PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
-export JAVA_HOME JRE_HOME CLASS_PATH PATH
-</code></pre></li>
-<li><p>让修改生效:</p>
-<pre><code>[root@localhost java]# source /etc/profile
-</code></pre></li>
-</ol>
-<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><ol>
-<li><p>CentOS 7的yum源中貌似没有正常安装mysql时的mysql-sever文件，需要去官网上下载</p>
-<pre><code>wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
-
-rpm -ivh mysql-community-release-el7-5.noarch.rpm
-
-yum install mysql-community-server
-</code></pre></li>
-</ol>
-<ol start="2">
-<li><p>成功安装之后重启mysql服务</p>
-<pre><code>service mysqld restart
-</code></pre></li>
-<li><p>设置开机启动</p>
-<pre><code>chkconfig mysqld on
-
-查看是否设置成功
-
-chkconfig --list  mysqld
-</code></pre></li>
-</ol>
-<ol start="4">
-<li><p>创建root管理员：</p>
-<pre><code>mysqladmin -u root password 123456
-
-登录：
-
-mysql -u root -p
-
-输入密码就可以了
-</code></pre></li>
-</ol>
-<ol start="5">
-<li><p>开启远程访问</p>
-<pre><code>insert into user(Host,User) values(&quot;%&quot;,&quot;root&quot;);
-</code></pre></li>
-<li><p>设置权限</p>
-<pre><code>GRANT ALL PRIVILEGES ON *.* TO &apos;root&apos;@&apos;%&apos; IDENTIFIED BY &apos;youpassword&apos; WITH GRANT OPTION;
-</code></pre></li>
-<li><p>重载授权表：</p>
-<pre><code>FLUSH PRIVILEGES;
-</code></pre></li>
-</ol>
-<ol start="8">
-<li><p>ps:忘记密码重新设置密码</p>
-<pre><code>service mysqld stop  停止服务
-
-mysqld_safe --user=root --skip-grant-tables  清空mysql密码
-
-mysql -u root  登录mysql 
-
-use mysql  使用mysql库
-</code></pre></li>
-</ol>
-<h2 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h2><pre><code>mkdir /usr/tomcat8
-cd tomcat8
-wget http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz
-</code></pre><h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><pre><code>yum install git
-</code></pre><h2 id="服务器端口占用"><a href="#服务器端口占用" class="headerlink" title="服务器端口占用"></a>服务器端口占用</h2><pre><code>netstat -apn|grep 8080
-kill -9 port
-</code></pre><h2 id="解压命令"><a href="#解压命令" class="headerlink" title="解压命令"></a>解压命令</h2><pre><code>tar xzf .tar.gz
-</code></pre><h2 id="yum-切换163源"><a href="#yum-切换163源" class="headerlink" title="yum 切换163源"></a>yum 切换163源</h2><ol>
-<li>首先备份/etc/yum.repos.d/CentOS-Base.repo<pre><code>cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-</code></pre></li>
-<li>进入yum源配置文件所在文件夹<pre><code>[root@localhost yum.repos.d]# cd /etc/yum.repos.d/
-</code></pre></li>
-<li>下载163的yum源配置文件，放入/etc/yum.repos.d/(操作前请做好相应备份)<pre><code>[root@localhost yum.repos.d]# wget http://mirrors.163.com/.help/CentOS6-Base-163.repo
-</code></pre></li>
-<li>运行yum makecache生成缓存        <pre><code>[root@localhost yum.repos.d]# yum makecache
-</code></pre></li>
-<li>更新系统(时间比较久,主要看个人网速)<pre><code>[root@localhost yum.repos.d]# yum -y update
-</code></pre></li>
-</ol>
-<h2 id="阿里云挂载磁盘"><a href="#阿里云挂载磁盘" class="headerlink" title="阿里云挂载磁盘"></a>阿里云挂载磁盘</h2><ol>
-<li>查看新磁盘，找到新添加的磁盘的编号为/dev/vdc<pre><code>[root@cgsl ]# fdisk –l
-</code></pre></li>
-<li>硬盘分区 进入fdisk模式  <pre><code>[root@cgsl ]# /sbin/fdisk /dev/vdc
-</code></pre></li>
-<li>输入n进行分区  <pre><code>[root@cgsl ]# Command (m for help): n
-</code></pre></li>
-<li>选择分区类型（p主分区）<pre><code>[root@cgsl ]# Select (default p): p
-</code></pre></li>
-<li>选择分区个数（也是分区id）<pre><code>[root@cgsl ]# Partition number (1-4, default 1): 1
-</code></pre></li>
-<li>选择分区空间大小，回车默认大小<pre><code>Last sector, +sectors or +size{K,M,G} (2048-1953525167, default 1953525167): +300GB
-</code></pre></li>
-<li>一直回车，最后输入q退出 将新分区格式化为ext3文件系统<pre><code>[root@cgsl ]# mkfs -t ext3 /dev/vdc
-</code></pre></li>
-<li>挂载硬盘 创建挂载点，在根目录下创建storage目录      <pre><code>[root@cgsl ]# mkdir /storage
-</code></pre></li>
-<li>将/dev/vdc挂载到/storage下<pre><code>[root@cgsl ]# mount /dev/vdc /storage
-</code></pre></li>
-<li>设置开机启动自动挂载<br>新创建的分区不能开机自动挂载，每次重启机器都要手动挂载。<br>设置开机自动挂载需要修改/etc/fstab文件 <pre><code>#vi /etc/fstab 
-</code></pre>在文件的最后增加一行 <pre><code>/dev/vdc /storage ext3 defaults 1 2 
-</code></pre>注意要查询一下自己的硬盘格式，用df -T查询。</li>
-<li>ps 取消挂载<pre><code># unmount /dev/sdb
-# vi /etc/fstab
-</code></pre>进行格式化<pre><code># mkfs.xfs /dev/sdb
-</code></pre></li>
-</ol>
-<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><ol>
-<li>下载redis<pre><code>https://redis.io/download
-</code></pre></li>
-<li><p>配置redis密码</p>
-<p> redis.conf中，打开配置文件找到 去掉行前的注释</p>
-<pre><code>#requirepass foobared 
-</code></pre><p> 远程登录，打开配置文件把下面对应的注释掉</p>
-<pre><code># bind 127.0.0.1 
-</code></pre><p> Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程，设置为no</p>
-<pre><code>daemonize no
-</code></pre><p> 注释保护模式</p>
-<pre><code>protected-mode no 
-</code></pre><p> redis 启动</p>
-<pre><code>./redis-server ../redis.conf
-</code></pre><p> redis 停止服务</p>
-<pre><code>./redis-cli shutdown
-</code></pre></li>
-</ol>
-<h2 id="RabbitMq"><a href="#RabbitMq" class="headerlink" title="RabbitMq"></a>RabbitMq</h2><ol>
-<li><p>首先需要安装erlang，参考：<a href="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse" target="_blank" rel="noopener">http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</a></p>
-<pre><code>rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
-yum install erlang
-</code></pre></li>
-</ol>
-<p>安装过程中会有提示，一路输入“y”即可。</p>
-<ol start="2">
-<li><p>完成后安装RabbitMQ：</p>
-<p> 先下载rpm： </p>
-<pre><code>wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm
-</code></pre><p> 下载完成后安装：</p>
-<pre><code>yum install rabbitmq-server-3.6.6-1.el7.noarch.rpm 
-</code></pre><p>  完成后启动服务：</p>
-<pre><code>service rabbitmq-server start
-</code></pre><p>  可以查看服务状态：</p>
-<pre><code>service rabbitmq-server status
-</code></pre></li>
-</ol>
-<p><img src="/images/pasted-3.png" alt="upload successful"></p>
-<p>这里可以看到log文件的位置，转到文件位置，打开文件：</p>
-<p><img src="/images/pasted-4.png" alt="upload successful"></p>
-<p>这里显示的是没有找到配置文件，我们可以自己创建这个文件</p>
-<pre><code>cd /etc/rabbitmq/
-vi rabbitmq.config
-</code></pre><p>编辑内容如下：<br>        [{rabbit, [{loopback_users, []}]}].<br>这里的意思是开放使用，rabbitmq默认创建的用户guest，密码也是guest，这个用户默认只能是本机访问，localhost或者127.0.0.1，从外部访问需要添加上面的配置。</p>
-<p>保存配置后重启服务：<br>        service rabbitmq-server stop<br>        service rabbitmq-server start<br>此时就可以从外部访问了，但此时再看log文件，发现内容还是原来的，还是显示没有找到配置文件，可以手动删除这个文件再重启服务，不过这不影响使用</p>
-<pre><code>rm rabbit\@mythsky.log 
-service rabbitmq-server stop
-service rabbitmq-server start
-</code></pre><p>开启管理UI：</p>
-<pre><code>rabbitmq-plugins enable rabbitmq_management
-firewall-cmd --zone=public --add-port=15672/tcp --permanent
-firewall-cmd --reload        
-</code></pre><p>修改RabbitMQ配置<br>在CentOS7中，如果是以systemd方式管理rabbitmq服务，则需要修改rabbitmq的service文件。</p>
-<pre><code>vi /usr/lib/systemd/system/rabbitmq-server.service
-</code></pre><p>添加如下参数，其值请根据实际情况进行调整：</p>
-<pre><code>[Service]
-LimitNOFILE=16384
-</code></pre><p>重启rabbitmq即可</p>
-<pre><code>systemctl daemon-reload
-systemctl restart rabbitmq-server
-</code></pre><h2 id="防火墙开放端口"><a href="#防火墙开放端口" class="headerlink" title="防火墙开放端口"></a>防火墙开放端口</h2><p>打开防火墙</p>
-<pre><code>systemctl start firewalld
-</code></pre><p>打开端口</p>
-<pre><code>firewall-cmd --zone=public --add-port=5672/tcp --permanent
-</code></pre><p>重载防火墙</p>
-<pre><code>firewall-cmd --reload
-</code></pre><p>查看打开端口</p>
-<pre><code>firewall-cmd --list-all        
+            <h2 id="查看java运行所有程序"><a href="#查看java运行所有程序" class="headerlink" title="查看java运行所有程序"></a>查看java运行所有程序</h2><pre><code>ps -ef | grep java | grep -v grep | awk &apos;{print $2}&apos; 
+#kill 所以java程序
+ps -ef | grep java | grep -v grep | awk &apos;{print $2}&apos; | xargs kill -9
+</code></pre><h2 id="查看内存占用最高的程序"><a href="#查看内存占用最高的程序" class="headerlink" title="查看内存占用最高的程序"></a>查看内存占用最高的程序</h2><pre><code>ps -aux | sort -k4nr | head -20
+</code></pre><h2 id="端口占用"><a href="#端口占用" class="headerlink" title="端口占用"></a>端口占用</h2><pre><code>netstat -lnp|grep 8080
 </code></pre>
           
         
@@ -1230,7 +2474,7 @@ systemctl restart rabbitmq-server
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/demo2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/非阻塞同步算法与CAS-Compare-and-Swap-无锁算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="HybridTheory">
@@ -1249,7 +2493,7 @@ systemctl restart rabbitmq-server
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/01/demo2/" itemprop="url">todolist</a></h1>
+                <a class="post-title-link" href="/2019/04/22/非阻塞同步算法与CAS-Compare-and-Swap-无锁算法/" itemprop="url">非阻塞同步算法与CAS(Compare and Swap)无锁算法</a></h1>
         
 
         <div class="post-meta">
@@ -1261,8 +2505,8 @@ systemctl restart rabbitmq-server
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-01T22:35:00+08:00">
-                2019-04-01
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T11:41:33+08:00">
+                2019-04-22
               </time>
             
 
@@ -1279,7 +2523,7 @@ systemctl restart rabbitmq-server
 
           
           
-             <span id="/2019/04/01/demo2/" class="leancloud_visitors" data-flag-title="todolist">
+             <span id="/2019/04/22/非阻塞同步算法与CAS-Compare-and-Swap-无锁算法/" class="leancloud_visitors" data-flag-title="非阻塞同步算法与CAS(Compare and Swap)无锁算法">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1304,7 +2548,7 @@ systemctl restart rabbitmq-server
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  0
+                  4.4k
                 </span>
               
 
@@ -1320,7 +2564,7 @@ systemctl restart rabbitmq-server
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  16
                 </span>
               
             </div>
@@ -1343,7 +2587,123 @@ systemctl restart rabbitmq-server
       
         
           
-            <iframe src="https://hybridtheorylink.github.io/module/todolist/" width="100%" height="1500" frameborder="0" scrolling="no"></iframe>
+            <h2 id="锁（lock）的代价"><a href="#锁（lock）的代价" class="headerlink" title="锁（lock）的代价"></a>锁（lock）的代价</h2><p>锁是用来做并发最简单的方式，当然其代价也是最高的。内核态的锁的时候需要操作系统进行一次上下文切换，加锁、释放锁会导致比较多的上下文切换和调度延时，等待锁的线程会被挂起直至锁释放。在上下文切换的时候，cpu之前缓存的指令和数据都将失效，对性能有很大的损失。操作系统对多线程的锁进行判断就像两姐妹在为一个玩具在争吵，然后操作系统就是能决定他们谁能拿到玩具的父母，这是很慢的。用户态的锁虽然避免了这些问题，但是其实它们只是在没有真实的竞争时才有效。</p>
+<p>Java在JDK1.5之前都是靠synchronized关键字保证同步的，这种通过使用一致的锁定协议来协调对共享状态的访问，可以确保无论哪个线程持有守护变量的锁，都采用独占的方式来访问这些变量，如果出现多个线程同时访问锁，那第一些线线程将被挂起，当线程恢复执行时，必须等待其它线程执行完他们的时间片以后才能被调度执行，在挂起和恢复执行过程中存在着很大的开销。锁还存在着其它一些缺点，当一个线程正在等待锁时，它不能做任何事。如果一个线程在持有锁的情况下被延迟执行，那么所有需要这个锁的线程都无法执行下去。如果被阻塞的线程优先级高，而持有锁的线程优先级低，将会导致优先级反转(Priority Inversion)。</p>
+<h2 id="乐观锁与悲观锁"><a href="#乐观锁与悲观锁" class="headerlink" title="乐观锁与悲观锁"></a>乐观锁与悲观锁</h2><p>独占锁是一种悲观锁，synchronized就是一种独占锁，它假设最坏的情况，并且只有在确保其它线程不会造成干扰的情况下执行，会导致其它所有需要锁的线程挂起，等待持有锁的线程释放锁。而另一个更加有效的锁就是乐观锁。所谓乐观锁就是，每次不加锁而是假设没有冲突而去完成某项操作，如果因为冲突失败就重试，直到成功为止。</p>
+<h2 id="volatile的问题"><a href="#volatile的问题" class="headerlink" title="volatile的问题"></a>volatile的问题</h2><p>与锁相比，volatile变量是一和更轻量级的同步机制，因为在使用这些变量时不会发生上下文切换和线程调度等操作，但是volatile变量也存在一些局限：不能用于构建原子的复合操作，因此当一个变量依赖旧值时就不能使用volatile变量。（参考：谈谈volatiile）</p>
+<p>volatile只能保证变量对各个线程的可见性，但不能保证原子性。为什么？见我的另外一篇文章：《为什么volatile不能保证原子性而Atomic可以？》</p>
+<h2 id="Java中的原子操作-atomic-operations"><a href="#Java中的原子操作-atomic-operations" class="headerlink" title="Java中的原子操作( atomic operations)"></a>Java中的原子操作( atomic operations)</h2><p>原子操作指的是在一步之内就完成而且不能被中断。原子操作在多线程环境中是线程安全的，无需考虑同步的问题。在java中，下列操作是原子操作：</p>
+<p>all assignments of primitive types except for long and double<br>all assignments of references<br>all operations of java.concurrent.Atomic* classes<br>all assignments to volatile longs and doubles<br>问题来了，为什么long型赋值不是原子操作呢？例如：</p>
+<p>long foo = 65465498L;</p>
+<p>实时上java会分两步写入这个long变量，先写32位，再写后32位。这样就线程不安全了。如果改成下面的就线程安全了：</p>
+<p>private volatile long foo;</p>
+<p>因为volatile内部已经做了synchronized.</p>
+<h2 id="CAS无锁算法"><a href="#CAS无锁算法" class="headerlink" title="CAS无锁算法"></a>CAS无锁算法</h2><p>要实现无锁（lock-free）的非阻塞算法有多种实现方法，其中CAS（比较与交换，Compare and swap）是一种有名的无锁算法。CAS, CPU指令，在大多数处理器架构，包括IA32、Space中采用的都是CAS指令，CAS的语义是“我认为V的值应该为A，如果是，那么将V的值更新为B，否则不修改并告诉V的值实际为多少”，CAS是项乐观锁技术，当多个线程尝试使用CAS同时更新同一个变量时，只有其中一个线程能更新变量的值，而其它线程都失败，失败的线程并不会被挂起，而是被告知这次竞争中失败，并可以再次尝试。CAS有3个操作数，内存值V，旧的预期值A，要修改的新值B。当且仅当预期值A和内存值V相同时，将内存值V修改为B，否则什么都不做。CAS无锁算法的C实现如下</p>
+<pre><code>int compare_and_swap (int* reg, int oldval, int newval) 
+{
+  ATOMIC();
+  int old_reg_val = *reg;
+  if (old_reg_val == oldval) 
+     *reg = newval;
+  END_ATOMIC();
+  return old_reg_val;
+}
+</code></pre><h2 id="CAS（乐观锁算法）的基本假设前提"><a href="#CAS（乐观锁算法）的基本假设前提" class="headerlink" title="CAS（乐观锁算法）的基本假设前提"></a>CAS（乐观锁算法）的基本假设前提</h2><p>CAS比较与交换的伪代码可以表示为：</p>
+<p>do{<br>       备份旧数据；<br>       基于旧数据构造新数据；<br>}while(!CAS( 内存地址，备份的旧数据，新数据 ))  </p>
+<p><img src="/images/pasted-10.png" alt="upload successful"></p>
+<p>（上图的解释：CPU去更新一个值，但如果想改的值不再是原来的值，操作就失败，因为很明显，有其它操作先改变了这个值。）</p>
+<p>就是指当两者进行比较时，如果相等，则证明共享数据没有被修改，替换成新值，然后继续往下运行；如果不相等，说明共享数据已经被修改，放弃已经所做的操作，然后重新执行刚才的操作。容易看出 CAS 操作是基于共享数据不会被修改的假设，采用了类似于数据库的 commit-retry 的模式。当同步冲突出现的机会很少时，这种假设能带来较大的性能提升。</p>
+<h2 id="CAS的开销（CPU-Cache-Miss-problem）"><a href="#CAS的开销（CPU-Cache-Miss-problem）" class="headerlink" title="CAS的开销（CPU Cache Miss problem）"></a>CAS的开销（CPU Cache Miss problem）</h2><p>前面说过了，CAS（比较并交换）是CPU指令级的操作，只有一步原子操作，所以非常快。而且CAS避免了请求操作系统来裁定锁的问题，不用麻烦操作系统，直接在CPU内部就搞定了。但CAS就没有开销了吗？不！有cache miss的情况。这个问题比较复杂，首先需要了解CPU的硬件体系结构：</p>
+<p><img src="/images/pasted-11.png" alt="upload successful"><br>上图可以看到一个8核CPU计算机系统，每个CPU有cache（CPU内部的高速缓存，寄存器），管芯内还带有一个互联模块，使管芯内的两个核可以互相通信。在图中央的系统互联模块可以让四个管芯相互通信，并且将管芯与主存连接起来。数据以“缓存线”为单位在系统中传输，“缓存线”对应于内存中一个 2 的幂大小的字节块，大小通常为 32 到 256 字节之间。当 CPU 从内存中读取一个变量到它的寄存器中时，必须首先将包含了该变量的缓存线读取到 CPU 高速缓存。同样地，CPU 将寄存器中的一个值存储到内存时，不仅必须将包含了该值的缓存线读到 CPU 高速缓存，还必须确保没有其他 CPU 拥有该缓存线的拷贝。</p>
+<p>比如，如果 CPU0 在对一个变量执行“比较并交换”（CAS）操作，而该变量所在的缓存线在 CPU7 的高速缓存中，就会发生以下经过简化的事件序列：</p>
+<p>CPU0 检查本地高速缓存，没有找到缓存线。<br>请求被转发到 CPU0 和 CPU1 的互联模块，检查 CPU1 的本地高速缓存，没有找到缓存线。<br>请求被转发到系统互联模块，检查其他三个管芯，得知缓存线被 CPU6和 CPU7 所在的管芯持有。<br>请求被转发到 CPU6 和 CPU7 的互联模块，检查这两个 CPU 的高速缓存，在 CPU7 的高速缓存中找到缓存线。<br>CPU7 将缓存线发送给所属的互联模块，并且刷新自己高速缓存中的缓存线。<br>CPU6 和 CPU7 的互联模块将缓存线发送给系统互联模块。<br>系统互联模块将缓存线发送给 CPU0 和 CPU1 的互联模块。<br>CPU0 和 CPU1 的互联模块将缓存线发送给 CPU0 的高速缓存。<br>CPU0 现在可以对高速缓存中的变量执行 CAS 操作了<br>以上是刷新不同CPU缓存的开销。最好情况下的 CAS 操作消耗大概 40 纳秒，超过 60 个时钟周期。这里的“最好情况”是指对某一个变量执行 CAS 操作的 CPU 正好是最后一个操作该变量的CPU，所以对应的缓存线已经在 CPU 的高速缓存中了，类似地，最好情况下的锁操作（一个“round trip 对”包括获取锁和随后的释放锁）消耗超过 60 纳秒，超过 100 个时钟周期。这里的“最好情况”意味着用于表示锁的数据结构已经在获取和释放锁的 CPU 所属的高速缓存中了。锁操作比 CAS 操作更加耗时，是因深入理解并行编程<br>为锁操作的数据结构中需要两个原子操作。缓存未命中消耗大概 140 纳秒，超过 200 个时钟周期。需要在存储新值时查询变量的旧值的 CAS 操作，消耗大概 300 纳秒，超过 500 个时钟周期。想想这个，在执行一次 CAS 操作的时间里，CPU 可以执行 500 条普通指令。这表明了细粒度锁的局限性。</p>
+<p>以下是cache miss cas 和lock的性能对比：</p>
+<p><img src="/images/pasted-12.png" alt="upload successful"></p>
+<h2 id="JVM对CAS的支持：AtomicInt-AtomicLong-incrementAndGet"><a href="#JVM对CAS的支持：AtomicInt-AtomicLong-incrementAndGet" class="headerlink" title="JVM对CAS的支持：AtomicInt, AtomicLong.incrementAndGet()"></a>JVM对CAS的支持：AtomicInt, AtomicLong.incrementAndGet()</h2><p>在JDK1.5之前，如果不编写明确的代码就无法执行CAS操作，在JDK1.5中引入了底层的支持，在int、long和对象的引用等类型上都公开了CAS的操作，并且JVM把它们编译为底层硬件提供的最有效的方法，在运行CAS的平台上，运行时把它们编译为相应的机器指令，如果处理器/CPU不支持CAS指令，那么JVM将使用自旋锁。因此，值得注意的是，CAS解决方案与平台/编译器紧密相关（比如x86架构下其对应的汇编指令是lock cmpxchg，如果想要64Bit的交换，则应使用lock cmpxchg8b。在.NET中我们可以使用Interlocked.CompareExchange函数）。</p>
+<p>在原子类变量中，如java.util.concurrent.atomic中的AtomicXXX，都使用了这些底层的JVM支持为数字类型的引用类型提供一种高效的CAS操作，而在java.util.concurrent中的大多数类在实现时都直接或间接的使用了这些原子变量类。</p>
+<p>Java 1.6中AtomicLong.incrementAndGet()的实现源码为：</p>
+<p>由此可见，AtomicLong.incrementAndGet的实现用了乐观锁技术，调用了sun.misc.Unsafe类库里面的 CAS算法，用CPU指令来实现无锁自增。所以，AtomicLong.incrementAndGet的自增比用synchronized的锁效率倍增。</p>
+<pre><code>public final int getAndIncrement() {  
+        for (;;) {  
+            int current = get();  
+            int next = current + 1;  
+            if (compareAndSet(current, next))  
+                return current;  
+        }  
+}  
+
+public final boolean compareAndSet(int expect, int update) {  
+    return unsafe.compareAndSwapInt(this, valueOffset, expect, update);  
+}
+</code></pre><p>下面是测试代码：可以看到用AtomicLong.incrementAndGet的性能比用synchronized高出几倍。</p>
+<p><img src="/images/pasted-13.png" alt="upload successful"></p>
+<h2 id="CAS的例子：非阻塞堆栈"><a href="#CAS的例子：非阻塞堆栈" class="headerlink" title="CAS的例子：非阻塞堆栈"></a>CAS的例子：非阻塞堆栈</h2><p>下面是比非阻塞自增稍微复杂一点的CAS的例子：非阻塞堆栈/ConcurrentStack 。ConcurrentStack 中的 push() 和 pop() 操作在结构上与NonblockingCounter 上相似，只是做的工作有些冒险，希望在 “提交” 工作的时候，底层假设没有失效。push() 方法观察当前最顶的节点，构建一个新节点放在堆栈上，然后，如果最顶端的节点在初始观察之后没有变化，那么就安装新节点。如果 CAS 失败，意味着另一个线程已经修改了堆栈，那么过程就会重新开始。</p>
+<pre><code>public class ConcurrentStack&lt;E&gt; {
+    AtomicReference&lt;Node&lt;E&gt;&gt; head = new AtomicReference&lt;Node&lt;E&gt;&gt;();
+    public void push(E item) {
+        Node&lt;E&gt; newHead = new Node&lt;E&gt;(item);
+        Node&lt;E&gt; oldHead;
+        do {
+            oldHead = head.get();
+            newHead.next = oldHead;
+        } while (!head.compareAndSet(oldHead, newHead));
+    }
+    public E pop() {
+        Node&lt;E&gt; oldHead;
+        Node&lt;E&gt; newHead;
+        do {
+            oldHead = head.get();
+            if (oldHead == null) 
+                return null;
+            newHead = oldHead.next;
+        } while (!head.compareAndSet(oldHead,newHead));
+        return oldHead.item;
+    }
+    static class Node&lt;E&gt; {
+        final E item;
+        Node&lt;E&gt; next;
+        public Node(E item) { this.item = item; }
+    }
+}
+</code></pre><p>在轻度到中度的争用情况下，非阻塞算法的性能会超越阻塞算法，因为 CAS 的多数时间都在第一次尝试时就成功，而发生争用时的开销也不涉及线程挂起和上下文切换，只多了几个循环迭代。没有争用的 CAS 要比没有争用的锁便宜得多（这句话肯定是真的，因为没有争用的锁涉及 CAS 加上额外的处理），而争用的 CAS 比争用的锁获取涉及更短的延迟。</p>
+<p>在高度争用的情况下（即有多个线程不断争用一个内存位置的时候），基于锁的算法开始提供比非阻塞算法更好的吞吐率，因为当线程阻塞时，它就会停止争用，耐心地等候轮到自己，从而避免了进一步争用。但是，这么高的争用程度并不常见，因为多数时候，线程会把线程本地的计算与争用共享数据的操作分开，从而给其他线程使用共享数据的机会。</p>
+<h2 id="CAS的例子3：非阻塞链表"><a href="#CAS的例子3：非阻塞链表" class="headerlink" title="CAS的例子3：非阻塞链表"></a>CAS的例子3：非阻塞链表</h2><p>以上的示例（自增计数器和堆栈）都是非常简单的非阻塞算法，一旦掌握了在循环中使用 CAS，就可以容易地模仿它们。对于更复杂的数据结构，非阻塞算法要比这些简单示例复杂得多，因为修改链表、树或哈希表可能涉及对多个指针的更新。CAS 支持对单一指针的原子性条件更新，但是不支持两个以上的指针。所以，要构建一个非阻塞的链表、树或哈希表，需要找到一种方式，可以用 CAS 更新多个指针，同时不会让数据结构处于不一致的状态。</p>
+<p>在链表的尾部插入元素，通常涉及对两个指针的更新：“尾” 指针总是指向列表中的最后一个元素，“下一个” 指针从过去的最后一个元素指向新插入的元素。因为需要更新两个指针，所以需要两个 CAS。在独立的 CAS 中更新两个指针带来了两个需要考虑的潜在问题：如果第一个 CAS 成功，而第二个 CAS 失败，会发生什么？如果其他线程在第一个和第二个 CAS 之间企图访问链表，会发生什么？</p>
+<p>对于非复杂数据结构，构建非阻塞算法的 “技巧” 是确保数据结构总处于一致的状态（甚至包括在线程开始修改数据结构和它完成修改之间），还要确保其他线程不仅能够判断出第一个线程已经完成了更新还是处在更新的中途，还能够判断出如果第一个线程走向 AWOL，完成更新还需要什么操作。如果线程发现了处在更新中途的数据结构，它就可以 “帮助” 正在执行更新的线程完成更新，然后再进行自己的操作。当第一个线程回来试图完成自己的更新时，会发现不再需要了，返回即可，因为 CAS 会检测到帮助线程的干预（在这种情况下，是建设性的干预）。</p>
+<p>这种 “帮助邻居” 的要求，对于让数据结构免受单个线程失败的影响，是必需的。如果线程发现数据结构正处在被其他线程更新的中途，然后就等候其他线程完成更新，那么如果其他线程在操作中途失败，这个线程就可能永远等候下去。即使不出现故障，这种方式也会提供糟糕的性能，因为新到达的线程必须放弃处理器，导致上下文切换，或者等到自己的时间片过期（而这更糟）。</p>
+<pre><code>public class LinkedQueue &lt;E&gt; {
+    private static class Node &lt;E&gt; {
+        final E item;
+        final AtomicReference&lt;Node&lt;E&gt;&gt; next;
+        Node(E item, Node&lt;E&gt; next) {
+            this.item = item;
+            this.next = new AtomicReference&lt;Node&lt;E&gt;&gt;(next);
+        }
+    }
+    private AtomicReference&lt;Node&lt;E&gt;&gt; head
+        = new AtomicReference&lt;Node&lt;E&gt;&gt;(new Node&lt;E&gt;(null, null));
+    private AtomicReference&lt;Node&lt;E&gt;&gt; tail = head;
+    public boolean put(E item) {
+        Node&lt;E&gt; newNode = new Node&lt;E&gt;(item, null);
+        while (true) {
+            Node&lt;E&gt; curTail = tail.get();
+            Node&lt;E&gt; residue = curTail.next.get();
+            if (curTail == tail.get()) {
+                if (residue == null) /* A */ {
+                    if (curTail.next.compareAndSet(null, newNode)) /* C */ {
+                        tail.compareAndSet(curTail, newNode) /* D */ ;
+                        return true;
+                    }
+                } else {
+                    tail.compareAndSet(curTail, residue) /* B */;
+                }
+            }
+        }
+    }
+}
+</code></pre><p>具体算法相见IBM Developerworks      </p>
+<h2 id="深入JVM的OS的无锁非阻塞算法"><a href="#深入JVM的OS的无锁非阻塞算法" class="headerlink" title="深入JVM的OS的无锁非阻塞算法"></a>深入JVM的OS的无锁非阻塞算法</h2><p>如果深入 JVM 和操作系统，会发现非阻塞算法无处不在。垃圾收集器使用非阻塞算法加快并发和平行的垃圾搜集；调度器使用非阻塞算法有效地调度线程和进程，实现内在锁。在 Mustang（Java 6.0）中，基于锁的 SynchronousQueue 算法被新的非阻塞版本代替。很少有开发人员会直接使用 SynchronousQueue，但是通过 Executors.newCachedThreadPool() 工厂构建的线程池用它作为工作队列。比较缓存线程池性能的对比测试显示，新的非阻塞同步队列实现提供了几乎是当前实现 3 倍的速度。在 Mustang 的后续版本（代码名称为 Dolphin）中，已经规划了进一步的改进。</p>
+
           
         
       
@@ -1391,7 +2751,7 @@ systemctl restart rabbitmq-server
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/movie/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/Centos7安装rabbitmq/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="HybridTheory">
@@ -1410,7 +2770,7 @@ systemctl restart rabbitmq-server
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/01/movie/" itemprop="url">movie</a></h1>
+                <a class="post-title-link" href="/2019/04/22/Centos7安装rabbitmq/" itemprop="url">Centos7安装rabbitmq</a></h1>
         
 
         <div class="post-meta">
@@ -1422,8 +2782,8 @@ systemctl restart rabbitmq-server
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-01T19:20:00+08:00">
-                2019-04-01
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T11:38:24+08:00">
+                2019-04-22
               </time>
             
 
@@ -1440,7 +2800,7 @@ systemctl restart rabbitmq-server
 
           
           
-             <span id="/2019/04/01/movie/" class="leancloud_visitors" data-flag-title="movie">
+             <span id="/2019/04/22/Centos7安装rabbitmq/" class="leancloud_visitors" data-flag-title="Centos7安装rabbitmq">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1465,7 +2825,7 @@ systemctl restart rabbitmq-server
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  0
+                  539
                 </span>
               
 
@@ -1481,7 +2841,7 @@ systemctl restart rabbitmq-server
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  2
                 </span>
               
             </div>
@@ -1504,7 +2864,56 @@ systemctl restart rabbitmq-server
       
         
           
-            <iframe src="/module/movie/movie.html" width="100%" height="1500" frameborder="0" scrolling="yes"></iframe>
+            <p>首先需要安装erlang，参考：<a href="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse" target="_blank" rel="noopener">http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</a></p>
+<pre><code>rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
+yum install erlang
+</code></pre><p>安装过程中会有提示，一路输入“y”即可。</p>
+<p>完成后安装RabbitMQ：</p>
+<p>先下载rpm：</p>
+<pre><code>wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm
+</code></pre><p>下载完成后安装：<br>        yum install rabbitmq-server-3.6.6-1.el7.noarch.rpm<br>完成后启动服务：</p>
+<pre><code>service rabbitmq-server start
+</code></pre><p>可以查看服务状态：</p>
+<pre><code>service rabbitmq-server status
+</code></pre><p><img src="/images/pasted-8.png" alt="upload successful"></p>
+<p>这里可以看到log文件的位置，转到文件位置，打开文件：</p>
+<p><img src="/images/pasted-9.png" alt="upload successful"></p>
+<p>这里显示的是没有找到配置文件，我们可以自己创建这个文件</p>
+<pre><code>cd /etc/rabbitmq/
+vi rabbitmq.config
+</code></pre><p>编辑内容如下：</p>
+<pre><code>[{rabbit, [{loopback_users, []}]}].
+</code></pre><p>这里的意思是开放使用，rabbitmq默认创建的用户guest，密码也是guest，这个用户默认只能是本机访问，localhost或者127.0.0.1，从外部访问需要添加上面的配置。</p>
+<p>保存配置后重启服务：</p>
+<pre><code>service rabbitmq-server stop
+service rabbitmq-server start
+</code></pre><p>此时就可以从外部访问了，但此时再看log文件，发现内容还是原来的，还是显示没有找到配置文件，可以手动删除这个文件再重启服务，不过这不影响使用</p>
+<pre><code>rm rabbit\@mythsky.log 
+service rabbitmq-server stop
+service rabbitmq-server start
+</code></pre><p>开放5672端口</p>
+<pre><code>firewall-cmd --zone=public --add-port=5672/tcp --permanent
+firewall-cmd --reload 
+</code></pre><p>开启管理UI：</p>
+<pre><code>rabbitmq-plugins enable rabbitmq_management
+firewall-cmd --zone=public --add-port=15672/tcp --permanent
+firewall-cmd --reload
+</code></pre><p>centos出现“FirewallD is not running”怎么办</p>
+<p>执行firewall-cmd –permanent –zone=public –add-port=3306/tcp，提示FirewallD is not running，如下图所示。</p>
+<p>通过systemctl status firewalld查看firewalld状态，发现当前是dead状态，即防火墙未开启。</p>
+<p>通过systemctl start firewalld开启防火墙，没有任何提示即开启成功。</p>
+<p>修改RabbitMQ配置<br>socket连接数过多时或mq无法启动时，可修改连接配置限制</p>
+<p>在CentOS7中，如果是以systemd方式管理rabbitmq服务，则需要修改rabbitmq的service文件。</p>
+<pre><code>vi /usr/lib/systemd/system/rabbitmq-server.service
+</code></pre><p>添加如下参数，其值请根据实际情况进行调整：</p>
+<pre><code>[Service]
+LimitNOFILE=16384
+重启rabbitmq即可
+
+systemctl daemon-reload
+
+systemctl restart rabbitmq-server
+</code></pre>
           
         
       
@@ -1552,7 +2961,7 @@ systemctl restart rabbitmq-server
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/music/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/centos7-使用crontab-，tomcat-日志分割脚本/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="HybridTheory">
@@ -1571,7 +2980,7 @@ systemctl restart rabbitmq-server
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/01/music/" itemprop="url">music</a></h1>
+                <a class="post-title-link" href="/2019/04/22/centos7-使用crontab-，tomcat-日志分割脚本/" itemprop="url">centos7 使用crontab ，tomcat 日志分割脚本</a></h1>
         
 
         <div class="post-meta">
@@ -1583,8 +2992,8 @@ systemctl restart rabbitmq-server
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-01T10:11:00+08:00">
-                2019-04-01
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T11:21:42+08:00">
+                2019-04-22
               </time>
             
 
@@ -1601,7 +3010,7 @@ systemctl restart rabbitmq-server
 
           
           
-             <span id="/2019/04/01/music/" class="leancloud_visitors" data-flag-title="music">
+             <span id="/2019/04/22/centos7-使用crontab-，tomcat-日志分割脚本/" class="leancloud_visitors" data-flag-title="centos7 使用crontab ，tomcat 日志分割脚本">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1626,7 +3035,7 @@ systemctl restart rabbitmq-server
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  0
+                  324
                 </span>
               
 
@@ -1665,7 +3074,57 @@ systemctl restart rabbitmq-server
       
         
           
-            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="800" height="600" src="//music.163.com/outchain/player?type=0&id=536624059&auto=0&height=430"></iframe>
+            <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>yum install vixie-cron
+yum install vixie-cron
+</code></pre><h2 id="添加作业"><a href="#添加作业" class="headerlink" title="添加作业"></a>添加作业</h2><pre><code>crontab -e //编辑某个用户的cron服务
+0 * * * * /data/shell/split_catalina.sh //每小时执行
+</code></pre><h2 id="开机启动"><a href="#开机启动" class="headerlink" title="开机启动"></a>开机启动</h2><pre><code>vim /etc/rc.d/rc.local
+/sbin/service crond start
+</code></pre><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><pre><code>    　　crontab -u //设定某个用户的cron服务，一般root用户在执行这个命令的时候需要此参数
+
+    　　crontab -l //列出某个用户cron服务的详细内容
+
+    　　crontab -r //删除没个用户的cron服务
+
+    　　crontab -e //编辑某个用户的cron服务
+
+    　　比如说root查看自己的cron设置:crontab -u root -l
+
+    　　再例如，root想删除fred的cron设置:crontab -u fred -r
+
+    　　在编辑cron服务时，编辑的内容有一些格式和约定，输入:crontab -u root -e    
+</code></pre><h2 id="tomcat日志分割脚本"><a href="#tomcat日志分割脚本" class="headerlink" title="tomcat日志分割脚本"></a>tomcat日志分割脚本</h2><pre><code>#!/bin/sh
+function publish(){
+    cd $1
+    y=`date &quot;+%Y&quot;`
+    m=`date &quot;+%m&quot;`
+    d=`date &quot;+%d&quot;`
+    H=`date &quot;+%H&quot;`
+    dataStr=$y-$m-$d
+    echo $dataStr
+    if [ ! -d $dataStr ];then
+        echo &quot;创建文件夹&quot;$dataStr
+        mkdir $dataStr
+        else
+    echo &quot;文件夹已经存在&quot;
+    fi
+    cd $dataStr
+    if [ ! -d $H ];then
+        mkdir $H
+        cd $H
+        echo &quot;创建文件夹&quot;$H
+        cp ../../catalina.out catalina.out.$y-$m-$d-$H
+        touch &gt; ../../catalina.out
+        else
+        echo &quot;文件夹已经存在&quot;
+    fi
+    #cd .
+    #cp catalina.out catalina.out.$y$m$d
+    #echo &gt; catalina.out
+    #exit
+}
+publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所在位置
+</code></pre>
           
         
       
@@ -1704,7 +3163,7 @@ systemctl restart rabbitmq-server
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1752,7 +3211,7 @@ systemctl restart rabbitmq-server
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1889,7 +3348,7 @@ systemctl restart rabbitmq-server
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">19.3k</span>
+    <span title="Site words total count">43.9k</span>
   
 </div>
 

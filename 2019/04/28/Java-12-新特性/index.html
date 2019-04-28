@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="https://blog.csdn.net/HybridTheory_/article/details/89081472 在 Java 9 之前，当一个版本被宣布为首选版本，存在一个“培育”（bedded-in）新 GA 版本的重叠期。在此期间，上一个版本将会继续进行免费更新。为确保新旧版本间的干净切换，即便旧版本已不再是首选版本，通常也会继续维护 12 个月以上。但是随着 Java 版本发布更改">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 12 新特性">
+<meta property="og:url" content="http://yoursite.com/2019/04/28/Java-12-新特性/index.html">
+<meta property="og:site_name" content="HybridTheory">
+<meta property="og:description" content="https://blog.csdn.net/HybridTheory_/article/details/89081472 在 Java 9 之前，当一个版本被宣布为首选版本，存在一个“培育”（bedded-in）新 GA 版本的重叠期。在此期间，上一个版本将会继续进行免费更新。为确保新旧版本间的干净切换，即便旧版本已不再是首选版本，通常也会继续维护 12 个月以上。但是随着 Java 版本发布更改">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-28T09:47:46.931Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 12 新特性">
+<meta name="twitter:description" content="https://blog.csdn.net/HybridTheory_/article/details/89081472 在 Java 9 之前，当一个版本被宣布为首选版本，存在一个“培育”（bedded-in）新 GA 版本的重叠期。在此期间，上一个版本将会继续进行免费更新。为确保新旧版本间的干净切换，即便旧版本已不再是首选版本，通常也会继续维护 12 个月以上。但是随着 Java 版本发布更改">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/28/Java-12-新特性/">
+
+
+
+
+
+  <title>Java 12 新特性 | HybridTheory</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HybridTheory</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep learning</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-blog">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            BLOG
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            TAGS
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-todolist">
+          <a href="/2019/04/01/demo2/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            TODOLIST
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-english">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            ENGLISH
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-music">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            MUSIC
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-movie">
+          <a href="/2019/04/01/movie/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            MOVIE
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-news">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            NEWS
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-weekly">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            WEEKLY
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-space">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            SPACE
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/Java-12-新特性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 12 新特性</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:47:36+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/28/Java-12-新特性/" class="leancloud_visitors" data-flag-title="Java 12 新特性">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://blog.csdn.net/HybridTheory_/article/details/89081472" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/89081472</a></p>
+<p>在 Java 9 之前，当一个版本被宣布为首选版本，存在一个“培育”（bedded-in）新 GA 版本的重叠期。在此期间，上一个版本将会继续进行免费更新。为确保新旧版本间的干净切换，即便旧版本已不再是首选版本，通常也会继续维护 12 个月以上。但是随着 Java 版本发布更改为遵循严格的时间表后，事实上宣告了传统的免费支持期将寿终正寝。</p>
+<p>Oracle 对 Java 8 的官方支持时间持续到 2020 年 12 月，之后将不再为个人桌面用户提供 Oracle JDK 8 的修复更新；在 2019 年 1 月之后，不再提供免费的商业版本更新，届时想要继续获得 Oracle 的商业支持和维护，需付费订阅。</p>
+<p>Java 是很多程序员的饭碗，Java 生态圈下的程序员们似乎对于 Oracle 也有诸多不满，当 Java 也像 Android 系统走上版本号的稳定道路后，新版本的发布意义还有那么大吗？Java 12 已经发布了，但使用版本最多的还是 Java 8，你会选择升级吗？</p>
+<p>JDK12 如期而至，不知不觉 Java 半年为周期的发布模式（Half-year-cadence）已经成功运行了一年多，OpenJDK 社区和 Oracle 充分展示了其坚决的执行力。今天当然要尝鲜 JDK12 的新特性，与此同时，笔者也会从不同角度，来分析新发布模式是否达到了其初衷。</p>
+<p>下载地址：</p>
+<p><a href="https://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="noopener">https://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
+<p>JDK 12 新特性一览：</p>
+<p>189：Shenandoah: A Low-Pause-Time Garbage Collector (Experimental)</p>
+<p>230：Microbenchmark Suite</p>
+<p>325：Switch Expressions (Preview)</p>
+<p>334：JVM Constants API</p>
+<p>340：One AArch64 Port, Not Two</p>
+<p>341：Default CDS Archives</p>
+<p>344：Abortable Mixed Collections for G1</p>
+<p>346：Promptly Return Unused Committed Memory from G1</p>
+<p>首先值得关注的是 Switch Expressions，这是一个为开发者准备的特性，我们可以利用具体代码快速了解一下，下面是传统 statement 形式的 switch 语法：</p>
+<p>switch(day){<br>     case MONDAY:<br>     case FRIDAY:<br>     case SUNDAY:<br>            System.out.println(6);<br>            break;<br>     case TUESDAY:<br>            System.out.println(7);<br>            break;<br>     case THURSDAY:<br>     case SATURDAY:<br>            System.out.println(8);<br>            break;<br>     case WEDNESDAY:<br>            System.out.println(9);<br>            break;<br>}<br>如果有编码经验，你一定知道，switch 语句如果漏写了一个 break，那么逻辑往往就跑偏了，这种方式既繁琐，又容易出错。如果换成 switch 表达式，Pattern Matching 机制能够自然地保证只有单一路径会被执行，请看下面的代码示例：</p>
+<p>switch (day) {<br>        case MONDAY, FRIDAY, SUNDAY -&gt; System.out.println(6);<br>        case TUESDAY -&gt; System.out.println(7);<br>        case THURSDAY, SATURDAY -&gt; System.out.println(8);<br>        case WEDNESDAY -&gt; System.out.println(9);<br>}<br>更进一步，下面的表达式，为我们提供了优雅地表达特定场合计算逻辑的方式</p>
+<p>int numLetters = switch (day) {<br>       case MONDAY, FRIDAY, SUNDAY -&gt; 6;<br>       case TUESDAY -&gt; 7;<br>       case THURSDAY, SATURDAY -&gt; 8;<br>       case WEDNESDAY -&gt; 9;<br>};<br>Switch Expressions 或者说起相关的 Pattern Matching 特性，为我们提供了勾勒出了 Java 语法进化的一个趋势，将开发者从复杂繁琐的低层次抽象中逐渐解放出来，以更高层次更优雅的抽象，既降低代码量，又避免意外编程错误的出现，进而提高代码质量和开发效率。</p>
+<p>第二，则是很有现实意义度 Shenandoah GC。它是 Redhat 主导开发的 Pauseless GC 实现，从大概 2013 年开始研发，终于取得了重要的阶段性成果，与其他 Pauseless GC 类似，Shenandoah GC 主要目标是 99.9% 的暂停小于 10ms，暂停与堆大小无关等。</p>
+<p>也许了解 Shenandoah GC 的人比较少，业界声音比较响亮的是 Oracle 在 JDK11 中开源出来的 ZGC，或者商业版本的 Azul C4（Continuously Concurrent Compacting Collector）。但是，笔者认为，至少目前，其实际意义大于后两者，因为：</p>
+<p>使用 ZGC 的最低门槛是升级到 JDK11，对很多团队来说，这种版本的跳跃并不是非常低成本的事情，更何况是尚不清楚 ZGC 在自身业务场景中的实际表现如何。</p>
+<p>而 C4，毕竟是土豪们的选择，现实情况是，有多少公司连个几十块钱的 License 都不舍得…</p>
+<p>而 Shenandoah GC 可是有稳定的 JDK8u 版本发布的哦，据我所知已经有个别公司在 HBase 等高实时性产品中实践许久。</p>
+<p>从原理的角度，我们可以参考该项目官方的示意图，其内存结构与 G1 非常相似，都是将内存划分为类似棋盘的 region。整体流程与 G1 也是比较相似的，最大的区别在于实现了并发的 Evacuation 环节，引入的 Brooks Forwarding Pointer 技术使得 GC 在移动对象时，对象引用仍然可以访问。</p>
+<p>下面是 jbb15 benchmark 中，Shenandoah GC 相对于其他主流 GC 的表现，GC 暂停相比于 CMS 等选择有数量级程度的提高，对于 GC 暂停非常敏感的场景，价值还是很明显的，能够在 SLA 层面有显著提高。当然，这种对于低延迟的保证，也是以消耗 CPU 等计算资源为代价的，实际吞吐量表现也不是非常明朗，需要看企业的实际场景需求，并不是一个一劳永逸的解决方案。</p>
+<p>其他的一些特性，例如，G1 相关的两个特性是对 G1 在特定场景不足的有效改进，但谈不上是突破性的提高，不再一一列举。</p>
+<p>与 JDK11 这种长期支持版本（Long-Term-Support，LTS）相比，JDK12 似乎关注度有限，大家对于 JDK 这种频繁的节奏也有点麻木了，那么</p>
+<p>JDK12 这种非 LTS 版本，是否有什么生产环境价值？</p>
+<p>Java 新的发布模式是否达到了其快速落地和迭代新特性的目的？</p>
+<p>也许不会有太多公司直接选择 JDK12，但个别的生产实践并不遥远。比如，我所在部门在实践场景中发现，利用 JDK 12 的 Abortable Mixed Collections for G1，解决了 HDFS 在特定场景中 G1 Evacuation 时间过长的困扰，虽然最后团队选择将其 backport 到了自己的 JDK11 版本中，但如果没有快速交付的预览版 JDK12，也不会如此快速的得到结论。</p>
+<p>而对另一个问题，笔者认为目前看是非常成功的，解开了 Java/JVM 演进的许多枷锁，至关重要的是，OpenJDK 的权力中心，正在转移到开发社区和开发者手中。在新的模式中，既可以利用 LTS 满足企业长期可靠支持的需求，也可以满足各种开发者对于新特性迭代的诉求。你可能注意到了 Switch Expressions 被打上了预览（Preview）的标签，Shenandoah GC 则是实验（Experimental）特性，这些都是以往的发布周期下不大现实的，因为用 2-3 年的最小间隔粒度来实验一个特性，基本是不现实的。</p>
+<p>可以预计，JDK8 在未来的一段时间仍将是主流，我们已经注意到 Amazon、Alibaba、Redhat、AdoptOpenJDK 等等厂商或社区，纷纷发布了自己的 JDK8 等产品，开始竞赛长期支持版本 JDK 的主导权，笔者认为这是非常好的迹象，反映了主流厂商对于 Java 的投资力度增大。</p>
+<p>是否会带来 Java/JVM 的碎片化呢？多少会发生一些，但从目前的合作模式来看，OpenJDK 仍然是合作的中心，主导这 Java 历史版本维护和未来的演进路线。</p>
+<p>一些小鲜肉语言嘲笑 Java，实现类似功能，Java 代码要多写近一倍，程序要笨重一个数量级，有些也许是言过其实，但语法的表达能力和 JVM 的庞大，确实逐渐成为 Java 发展的短板，JDK10～12 发布的不间断成功，让我们看到了 Java/JVM 大踏步前进的曙光！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/28/桥接模式/" rel="next" title="桥接模式">
+                <i class="fa fa-chevron-left"></i> 桥接模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/28/Java-11-新特性/" rel="prev" title="Java 11 新特性">
+                Java 11 新特性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container"></div>    
+  
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="HybridTheory">
+            
+              <p class="site-author-name" itemprop="name">HybridTheory</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry ,Stay foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="200" height="86" src="//music.163.com/outchain/player?type=2&id=1329464393&auto=0&height=66"></iframe>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yourname" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/yourname" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://vk.com/yourname" target="_blank" title="VK Group">
+                      
+                        <i class="fa fa-fw fa-vk"></i>VK Group</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://youtube.com/yourname" target="_blank" title="YouTube">
+                      
+                        <i class="fa fa-fw fa-youtube"></i>YouTube</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/yourname" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="skype:yourname?call|chat" target="_blank" title="Skype">
+                      
+                        <i class="fa fa-fw fa-skype"></i>Skype</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HybridTheory</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">43.9k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '44406a7966060e9be009',
+          clientSecret: 'b5460838bc521964384a5d553bdf0c852ca2c9d1',
+          repo: 'hybridtheorylink.github.io',
+          owner: 'hybridtheorylink',
+          admin: ['hybridtheorylink'],
+          id: decodeURI(window.location.pathname),
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Sv4QpdTAhVRkfNsWlhNnvGfo-gzGzoHsz", "4g1FnHoULfh2ekJwdKDWsfhY");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

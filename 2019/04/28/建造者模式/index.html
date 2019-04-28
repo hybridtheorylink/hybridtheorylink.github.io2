@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="https://blog.csdn.net/HybridTheory_/article/details/89032852 建造者模式建造者模式（Builder Pattern）使用多个简单的对象一步一步构建成一个复杂的对象。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。 一个 Builder 类会一步一步构造最终的对象。该 Builder 类是独立于其他对象的。 介绍意图：将一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="建造者模式">
+<meta property="og:url" content="http://yoursite.com/2019/04/28/建造者模式/index.html">
+<meta property="og:site_name" content="HybridTheory">
+<meta property="og:description" content="https://blog.csdn.net/HybridTheory_/article/details/89032852 建造者模式建造者模式（Builder Pattern）使用多个简单的对象一步一步构建成一个复杂的对象。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。 一个 Builder 类会一步一步构造最终的对象。该 Builder 类是独立于其他对象的。 介绍意图：将一">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-28T09:46:24.868Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="建造者模式">
+<meta name="twitter:description" content="https://blog.csdn.net/HybridTheory_/article/details/89032852 建造者模式建造者模式（Builder Pattern）使用多个简单的对象一步一步构建成一个复杂的对象。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。 一个 Builder 类会一步一步构造最终的对象。该 Builder 类是独立于其他对象的。 介绍意图：将一">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/28/建造者模式/">
+
+
+
+
+
+  <title>建造者模式 | HybridTheory</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HybridTheory</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep learning</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-blog">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            BLOG
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            TAGS
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-todolist">
+          <a href="/2019/04/01/demo2/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            TODOLIST
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-english">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            ENGLISH
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-music">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            MUSIC
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-movie">
+          <a href="/2019/04/01/movie/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            MOVIE
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-news">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            NEWS
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-weekly">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            WEEKLY
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-space">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            SPACE
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/建造者模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">建造者模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:46:14+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/28/建造者模式/" class="leancloud_visitors" data-flag-title="建造者模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://blog.csdn.net/HybridTheory_/article/details/89032852" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/89032852</a></p>
+<p>建造者模式<br>建造者模式（Builder Pattern）使用多个简单的对象一步一步构建成一个复杂的对象。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>一个 Builder 类会一步一步构造最终的对象。该 Builder 类是独立于其他对象的。</p>
+<p>介绍<br>意图：将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表示。</p>
+<p>主要解决：主要解决在软件系统中，有时候面临着”一个复杂对象”的创建工作，其通常由各个部分的子对象用一定的算法构成；由于需求的变化，这个复杂对象的各个部分经常面临着剧烈的变化，但是将它们组合在一起的算法却相对稳定。</p>
+<p>何时使用：一些基本部件不会变，而其组合经常变化的时候。</p>
+<p>如何解决：将变与不变分离开。</p>
+<p>关键代码：建造者：创建和提供实例，导演：管理建造出来的实例的依赖关系。</p>
+<p>应用实例： 1、去肯德基，汉堡、可乐、薯条、炸鸡翅等是不变的，而其组合是经常变化的，生成出所谓的”套餐”。 2、JAVA 中的 StringBuilder。</p>
+<p>优点： 1、建造者独立，易扩展。 2、便于控制细节风险。</p>
+<p>缺点： 1、产品必须有共同点，范围有限制。 2、如内部变化复杂，会有很多的建造类。</p>
+<p>使用场景： 1、需要生成的对象具有复杂的内部结构。 2、需要生成的对象内部属性本身相互依赖。</p>
+<p>注意事项：与工厂模式的区别是：建造者模式更加关注与零件装配的顺序。</p>
+<p>实现<br>我们假设一个快餐店的商业案例，其中，一个典型的套餐可以是一个汉堡（Burger）和一杯冷饮（Cold drink）。汉堡（Burger）可以是素食汉堡（Veg Burger）或鸡肉汉堡（Chicken Burger），它们是包在纸盒中。冷饮（Cold drink）可以是可口可乐（coke）或百事可乐（pepsi），它们是装在瓶子中。</p>
+<p>我们将创建一个表示食物条目（比如汉堡和冷饮）的 Item 接口和实现 Item 接口的实体类，以及一个表示食物包装的 Packing 接口和实现 Packing接口的实体类，汉堡是包在纸盒中，冷饮是装在瓶子中。</p>
+<p>然后我们创建一个 Meal 类，带有 Item 的 ArrayList 和一个通过结合 Item 来创建不同类型的 Meal 对象的 MealBuilder。BuilderPatternDemo，我们的演示类使用 MealBuilder 来创建一个 Meal。</p>
+<p>步骤 1<br>创建一个表示食物条目和食物包装的接口。</p>
+<p>Item.java<br>public interface Item {<br>   public String name();<br>   public Packing packing();<br>   public float price();<br>}<br>Packing.java<br>public interface Packing { public String pack(); }<br>步骤 2<br>创建实现 Packing 接口的实体类。</p>
+<p>Wrapper.java<br>public class Wrapper implements Packing { @Override public String pack() { return “Wrapper”; } }<br>Bottle.java<br>public class Bottle implements Packing {</p>
+<p>   @Override<br>   public String pack() {<br>      return “Bottle”;<br>   }<br>}<br>步骤 3<br>创建实现 Item 接口的抽象类，该类提供了默认的功能。</p>
+<p>Burger.java<br>public abstract class Burger implements Item {</p>
+<p>   @Override<br>   public Packing packing() {<br>      return new Wrapper();<br>   }</p>
+<p>   @Override<br>   public abstract float price();<br>}<br>ColdDrink.java<br>public abstract class ColdDrink implements Item {</p>
+<pre><code>@Override
+public Packing packing() {
+   return new Bottle();
+}
+
+@Override
+public abstract float price();
+</code></pre><p>}<br>步骤 4<br>创建扩展了 Burger 和 ColdDrink 的实体类。</p>
+<p>VegBurger.java<br>public class VegBurger extends Burger {</p>
+<p>   @Override<br>   public float price() {<br>      return 25.0f;<br>   }</p>
+<p>   @Override<br>   public String name() {<br>      return “Veg Burger”;<br>   }<br>}<br>ChickenBurger.java<br>public class ChickenBurger extends Burger {</p>
+<p>   @Override<br>   public float price() {<br>      return 50.5f;<br>   }</p>
+<p>   @Override<br>   public String name() {<br>      return “Chicken Burger”;<br>   }<br>}<br>Coke.java<br>public class Coke extends ColdDrink {</p>
+<p>   @Override<br>   public float price() {<br>      return 30.0f;<br>   }</p>
+<p>   @Override<br>   public String name() {<br>      return “Coke”;<br>   }<br>}<br>Pepsi.java<br>public class Pepsi extends ColdDrink {</p>
+<p>   @Override<br>   public float price() {<br>      return 35.0f;<br>   }</p>
+<p>   @Override<br>   public String name() {<br>      return “Pepsi”;<br>   }<br>}<br>步骤 5<br>创建一个 Meal 类，带有上面定义的 Item 对象。</p>
+<p>Meal.java</p>
+<p>import java.util.ArrayList;<br>import java.util.List;</p>
+<p>public class Meal {<br>   private List<item> items = new ArrayList<item>();    </item></item></p>
+<p>   public void addItem(Item item){<br>      items.add(item);<br>   }</p>
+<p>   public float getCost(){<br>      float cost = 0.0f;<br>      for (Item item : items) {<br>         cost += item.price();<br>      }<br>      return cost;<br>   }</p>
+<p>   public void showItems(){<br>      for (Item item : items) {<br>         System.out.print(“Item : “+item.name());<br>         System.out.print(“, Packing : “+item.packing().pack());<br>         System.out.println(“, Price : “+item.price());<br>      }<br>   }<br>}<br>步骤 6<br>创建一个 MealBuilder 类，实际的 builder 类负责创建 Meal 对象。</p>
+<p>MealBuilder.java<br>public class MealBuilder {</p>
+<p>   public Meal prepareVegMeal (){<br>      Meal meal = new Meal();<br>      meal.addItem(new VegBurger());<br>      meal.addItem(new Coke());<br>      return meal;<br>   }   </p>
+<p>   public Meal prepareNonVegMeal (){<br>      Meal meal = new Meal();<br>      meal.addItem(new ChickenBurger());<br>      meal.addItem(new Pepsi());<br>      return meal;<br>   }<br>}<br>步骤 7<br>BuiderPatternDemo 使用 MealBuider 来演示建造者模式（Builder Pattern）。</p>
+<p>BuilderPatternDemo.java<br>public class BuilderPatternDemo {<br>   public static void main(String[] args) {<br>      MealBuilder mealBuilder = new MealBuilder();</p>
+<pre><code>Meal vegMeal = mealBuilder.prepareVegMeal();
+System.out.println(&quot;Veg Meal&quot;);
+vegMeal.showItems();
+System.out.println(&quot;Total Cost: &quot; +vegMeal.getCost());
+
+Meal nonVegMeal = mealBuilder.prepareNonVegMeal();
+System.out.println(&quot;\n\nNon-Veg Meal&quot;);
+nonVegMeal.showItems();
+System.out.println(&quot;Total Cost: &quot; +nonVegMeal.getCost());
+</code></pre><p>   }<br>}<br>步骤 8<br>执行程序，输出结果：</p>
+<p>Veg Meal<br>Item : Veg Burger, Packing : Wrapper, Price : 25.0<br>Item : Coke, Packing : Bottle, Price : 30.0<br>Total Cost: 55.0</p>
+<p>Non-Veg Meal<br>Item : Chicken Burger, Packing : Wrapper, Price : 50.5<br>Item : Pepsi, Packing : Bottle, Price : 35.0<br>Total Cost: 85.5<br> 单例模式</p>
+<p>原型模式 </p>
+<p>2 篇笔记 写笔记</p>
+<p>建造者模式举例：去肯德基点餐，我们可以认为点餐就属于一个建造订单的过程。我们点餐的顺序是无关的，点什么东西也是没有要求的，可以单点，也可以点套餐，也可以套餐加单点，但是最后一定要点确认来完成订单。</p>
+<p>public class OrderBuilder{<br>    private Burger mBurger;<br>    private Suit mSuit;</p>
+<pre><code>//单点汉堡,num为数量
+public OrderBuilder burger(Burger burger， int num){
+    mBurger = burger;
+}
+
+//点套餐，实际中套餐也可以点多份
+public OrderBuilder suit(Suit suit, int num){
+mSuit = suit;
+}
+
+//完成订单
+public Order build(){
+    Order order = new Order();
+    order.setBurger(mBurger);
+    order.setSuit(mSuit);
+    return order;
+}
+</code></pre><p>}<br>另外适用于快速失败，在 build 时可以做校验，如果不满足必要条件，则可以直接抛出创建异常，在 OkHttp3 中的 Request.Builder 中就是这样用的。</p>
+<p>public Request build() {<br>    if (url == null) throw new IllegalStateException(“url == null”);<br>    return new Request(this);<br>}<br>例如订单要求价格至少达到 30 块:</p>
+<p>//完成订单<br>public Order build(){<br>    Order order = new Order();<br>    order.setBurger(mBurger);<br>    order.setSuit(mSuit);<br>    if(order.getPrice() &lt; 30){<br>        throw new BuildException(“订单金额未达到30元”);<br>    }<br>    return order;<br>}<br>另外，在构建时如果有必传参数和可选参数，可以为 Builder 类添加构造函数来保证必传参数不会遗漏，例如在构建一个 http 请求时, url 是必传的:</p>
+<p>public class RequestBuilder{<br>    private final String mUrl;<br>    private Map&lt;String, String&gt; mHeaders = new HashMap&lt;String, String&gt;();</p>
+<pre><code>private RequestBuilder(String url){
+    mUrl = url;
+}
+
+public static RequestBuilder newBuilder(String url){
+    return new RequestBuilder(url);
+}
+
+public RequestBuilder addHeader(String key, String value){
+    mHeaders.put(key, value);
+}
+
+public Request build(){
+    Request request = new Request();
+    request.setUrl(mUrl);
+    request.setHeaders(mHeaders);
+    return request;
+}
+</code></pre><p>}</p>
+<p>建造者模式，又称生成器模式：将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表示。</p>
+<p>三个角色：建造者、具体的建造者、监工、使用者（严格来说不算）</p>
+<p>注意：定义中“将一个复杂的构建过程与其表示相分离”，表示并不是由建造者负责一切，而是由监工负责控制（定义）一个复杂的构建过程，由各个不同的建造者分别负责实现构建过程中所用到的所有构建步骤。不然，就无法做到“使得同样的构建过程可以创建不同的表示”这一目标。</p>
+<p>建造者角色：</p>
+<p>public abstract class Builder {<br>    public abstract void buildPart1();<br>    public abstract void buildPart2();<br>    public abstract void buildPart3();<br>}<br>监工角色：</p>
+<p>public class Director {    // 将一个复杂的构建过程与其表示相分离<br>    private Builder builder;    // 针对接口编程，而不是针对实现编程<br>    public Director(Builder builder) {<br>        this.builder = builder;<br>    }<br>    public void setBuilder(Builder builder) {<br>        this.builder = builder;<br>    }</p>
+<pre><code>public void construct() {   // 控制（定义）一个复杂的构建过程
+    builder.buildPart1();
+    for (int i = 0; i &lt; 5; i++) {   // 提示：如果想在运行过程中替换构建算法，可以考虑结合策略模式。
+        builder.buildPart2();
+    }
+    builder.buildPart3();
+}
+</code></pre><p>}<br>具体的建造者角色：</p>
+<p>/**</p>
+<ul>
+<li>此处实现了建造纯文本文档的具体建造者。</li>
+<li>可以考虑再实现一个建造HTML文档、XML文档，或者其它什么文档的具体建造者。</li>
+<li><p>这样，就可以使得同样的构建过程可以创建不同的表示<br>*/<br>public class ConcreteBuilder1 extends Builder {<br>private StringBuffer buffer = new StringBuffer();//假设 buffer.toString() 就是最终生成的产品</p>
+<p> @Override<br> public void buildPart1() {//实现构建最终实例需要的所有方法</p>
+<pre><code>buffer.append(&quot;Builder1 : Part1\n&quot;);
+</code></pre><p> }</p>
+<p> @Override<br> public void buildPart2() {</p>
+<pre><code>buffer.append(&quot;Builder1 : Part2\n&quot;);
+</code></pre><p> }</p>
+<p> @Override<br> public void buildPart3() {</p>
+<pre><code>buffer.append(&quot;Builder1 : Part3\n&quot;);
+</code></pre><p> }</p>
+<p> public String getResult() {//定义获取最终生成实例的方法</p>
+<pre><code>return buffer.toString();
+</code></pre><p> }<br>}<br>客户角色：</p>
+</li>
+</ul>
+<p>public class Client {<br>    public void testBuilderPattern() {<br>        ConcreteBuilder1 b1 = new ConcreteBuilder1();//建造者<br>        Director director = new Director(b1);//监工<br>        director.construct();//建造实例(监工负责监督，建造者实际建造)<br>        String result = b1.getResult();//获取最终生成结果<br>        System.out.printf(“the result is :%n%s”, result);<br>    }<br>}</p>
+<p> 建造者角色：定义生成实例所需要的所有方法；<br> 具体的建造者角色：实现生成实例所需要的所有方法，并且定义获取最终生成实例的方法；<br> 监工角色：定义使用建造者角色中的方法来生成实例的方法；<br> 使用者：使用建造者模式。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/28/代理模式、动态代理模式/" rel="next" title="代理模式、动态代理模式">
+                <i class="fa fa-chevron-left"></i> 代理模式、动态代理模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/28/桥接模式/" rel="prev" title="桥接模式">
+                桥接模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container"></div>    
+  
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="HybridTheory">
+            
+              <p class="site-author-name" itemprop="name">HybridTheory</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry ,Stay foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="200" height="86" src="//music.163.com/outchain/player?type=2&id=1329464393&auto=0&height=66"></iframe>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yourname" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/yourname" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://vk.com/yourname" target="_blank" title="VK Group">
+                      
+                        <i class="fa fa-fw fa-vk"></i>VK Group</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://youtube.com/yourname" target="_blank" title="YouTube">
+                      
+                        <i class="fa fa-fw fa-youtube"></i>YouTube</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/yourname" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="skype:yourname?call|chat" target="_blank" title="Skype">
+                      
+                        <i class="fa fa-fw fa-skype"></i>Skype</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HybridTheory</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">43.9k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '44406a7966060e9be009',
+          clientSecret: 'b5460838bc521964384a5d553bdf0c852ca2c9d1',
+          repo: 'hybridtheorylink.github.io',
+          owner: 'hybridtheorylink',
+          admin: ['hybridtheorylink'],
+          id: decodeURI(window.location.pathname),
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Sv4QpdTAhVRkfNsWlhNnvGfo-gzGzoHsz", "4g1FnHoULfh2ekJwdKDWsfhY");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

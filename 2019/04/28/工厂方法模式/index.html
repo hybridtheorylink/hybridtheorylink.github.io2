@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="https://blog.csdn.net/HybridTheory_/article/details/88929956一、问题在前一章《设计模式读书笔记—–简单工厂模式》中通过披萨的实例介绍了简单工厂模式。在披萨实例中，如果我想根据地域的不同生产出不同口味的披萨，如纽约口味披萨，芝加哥口味披萨。如果利用简单工厂模式，我们需要两个不同的工厂，NYPizzaFactory、ChicagoPizzaF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工厂方法模式">
+<meta property="og:url" content="http://yoursite.com/2019/04/28/工厂方法模式/index.html">
+<meta property="og:site_name" content="HybridTheory">
+<meta property="og:description" content="https://blog.csdn.net/HybridTheory_/article/details/88929956一、问题在前一章《设计模式读书笔记—–简单工厂模式》中通过披萨的实例介绍了简单工厂模式。在披萨实例中，如果我想根据地域的不同生产出不同口味的披萨，如纽约口味披萨，芝加哥口味披萨。如果利用简单工厂模式，我们需要两个不同的工厂，NYPizzaFactory、ChicagoPizzaF">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-28T09:41:28.478Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="工厂方法模式">
+<meta name="twitter:description" content="https://blog.csdn.net/HybridTheory_/article/details/88929956一、问题在前一章《设计模式读书笔记—–简单工厂模式》中通过披萨的实例介绍了简单工厂模式。在披萨实例中，如果我想根据地域的不同生产出不同口味的披萨，如纽约口味披萨，芝加哥口味披萨。如果利用简单工厂模式，我们需要两个不同的工厂，NYPizzaFactory、ChicagoPizzaF">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/28/工厂方法模式/">
+
+
+
+
+
+  <title>工厂方法模式 | HybridTheory</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HybridTheory</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep learning</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-blog">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            BLOG
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            TAGS
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-todolist">
+          <a href="/2019/04/01/demo2/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            TODOLIST
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-english">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            ENGLISH
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-music">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            MUSIC
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-movie">
+          <a href="/2019/04/01/movie/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            MOVIE
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-news">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            NEWS
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-weekly">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            WEEKLY
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-space">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            SPACE
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/工厂方法模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">工厂方法模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:41:15+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/28/工厂方法模式/" class="leancloud_visitors" data-flag-title="工厂方法模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88929956" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88929956</a><br>一、问题<br>在前一章《设计模式读书笔记—–简单工厂模式》中通过披萨的实例介绍了简单工厂模式。在披萨实例中，如果我想根据地域的不同生产出不同口味的披萨，如纽约口味披萨，芝加哥口味披萨。如果利用简单工厂模式，我们需要两个不同的工厂，NYPizzaFactory、ChicagoPizzaFactory。在该地域中有很多的披萨店，他们并不想依照总店的制作流程来生成披萨，而是希望采用他们自己的制作流程。这个时候如果还使用简单工厂模式，因为简单工厂模式是将披萨的制作流程完全承包了。那么怎么办？</p>
+<p>二、解决方案<br>我们可以这样解决：将披萨的制作方法交给各个披萨店完成，但是他们只能提供制作完成的披萨，披萨的订单处理仍然要交给披萨工厂去做。也就是说，我们将createPizza()方法放回到PizzaStore中，其他的部分还是保持不变。</p>
+<p>三、基本定义<br>工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法模式让实例化推迟到子类。</p>
+<p>四、模式结构<br>工厂方法模式的UML结构图：</p>
+<p>Product：抽象产品。所有的产品必须实现这个共同的接口，这样一来，使用这些产品的类既可以引用这个接口。而不是具体类。<br>ConcreteProduct：具体产品。<br>Creator：抽象工厂。它实现了所有操纵产品的方法，但不实现工厂方法。Creator所有的子类都必须要实现factoryMethod()方法。<br>ConcreteCreator：具体工厂。制造产品的实际工厂。它负责创建一个或者多个具体产品，只有ConcreteCreator类知道如何创建这些产品。<br>工厂方法模式是简单工厂模式的延伸。在工厂方法模式中，核心工厂类不在负责产品的创建，而是将具体的创建工作交给子类去完成。也就是后所这个核心工厂仅仅只是提供创建的接口，具体实现方法交给继承它的子类去完成。当我们的系统需要增加其他新的对象时，我们只需要添加一个具体的产品和它的创建工厂即可，不需要对原工厂进行任何修改，这样很好地符合了“开闭原则”。</p>
+<p>五、工厂方法模式实现<br>针对上面的解决方案，得到如下UML结构图：</p>
+<p>抽象产品类：Pizza.java</p>
+<p> 1 public abstract class Pizza {<br> 2     protected String name;        //名称<br> 3     protected String dough;       //面团<br> 4     protected String sause;       //酱料<br> 5     protected List<string> toppings = new ArrayList<string>();       //佐料<br> 6<br> 7<br> 8     public void prepare() {<br> 9         System.out.println(“Preparing “+name);<br>10         System.out.println(“Tossing dough”);<br>11         System.out.println(“Adding sause”);<br>12         System.out.println(“Adding toppings”);<br>13         for(int i = 0;i &lt; toppings.size();i++){<br>14             System.out.println(“   “+toppings.get(i));<br>15         }<br>16     }<br>17<br>18     public void bake() {<br>19         System.out.println(“Bake for 25 minutes at 350”);<br>20     }<br>21<br>22     public void cut() {<br>23         System.out.println(“Cutting the pizza into diagonal slices”);<br>24     }<br>25<br>26     public void box() {<br>27         System.out.println(“Place pizza in official PizzaStore box”);<br>28     }<br>29<br>30     public String getName(){<br>31         return name;<br>32     }<br>33 }<br>具体产品类：NYStyleCheesePizza.java</string></string></p>
+<p> 1 public class NYStyleCheesePizza extends Pizza{<br> 2     public NYStyleCheesePizza(){<br> 3         name = “Ny Style Sauce and Cheese Pizza”;<br> 4         dough = “Thin Crust Dough”;<br> 5         sause = “Marinara Sauce”;<br> 6<br> 7         toppings.add(“Crated Reggiano Cheese”);<br> 8     }<br> 9<br>10 }<br>ChicagoStyleCheesePizza.java</p>
+<p> 1 public class ChicagoStyleCheesePizza extends Pizza {<br> 2     public ChicagoStyleCheesePizza(){<br> 3         name = “Chicago Style Deep Dish Cheese Pizza”;<br> 4         dough = “Extra Thick Crust Dough”;<br> 5         sause = “Plum Tomato Sauce”;<br> 6<br> 7         toppings.add(“Shredded Mozzarella Cheese”);<br> 8     }<br> 9<br>10     public void cut(){<br>11         System.out.println(“Cutting the Pizza into square slices”);<br>12     }<br>13 }<br>抽象工厂：披萨总店。PizzaStore.java</p>
+<p> 1 public abstract class PizzaStore {<br> 2     public Pizza orderPizza(String type){<br> 3         Pizza pizza;<br> 4         pizza = createPizza(type);<br> 5<br> 6         pizza.prepare();<br> 7         pizza.bake();<br> 8         pizza.cut();<br> 9         pizza.box();<br>10<br>11         return pizza;<br>12     }<br>13<br>14     /<em><br>15      </em> 创建pizza的方法交给子类去实现<br>16      */<br>17     abstract Pizza createPizza(String type);<br>18 }<br>具体工厂。披萨分店。NYPizzaStore.java</p>
+<p> 1 public class NYPizzaStore extends PizzaStore{<br> 2<br> 3     @Override<br> 4     Pizza createPizza(String item) {<br> 5         Pizza pizza = null;<br> 6         if(“cheese”.equals(item)){<br> 7             pizza = new NYStyleCheesePizza();<br> 8         }<br> 9         else if(“veggie”.equals(item)){<br>10             pizza = new NYStyleVeggiePizza();<br>11         }<br>12         else if(“clam”.equals(item)){<br>13             pizza = new NYStyleClamPizza();<br>14         }<br>15         else if(“pepperoni”.equals(item)){<br>16             pizza = new NYStylePepperoniPizza();<br>17         }<br>18<br>19         return pizza;<br>20     }<br>ChicagoPizzaStore.java</p>
+<p> 1 public class ChicagoPizzaStore extends PizzaStore {<br> 2     Pizza createPizza(String type) {<br> 3         Pizza pizza = null;<br> 4         if(“cheese”.equals(type)){<br> 5             pizza = new ChicagoStyleCheesePizza();<br> 6         }<br> 7         else if(“clam”.equals(type)){<br> 8             pizza = new ChicagoStyleClamPizza();<br> 9         }<br>10         else if(“pepperoni”.equals(type)) {<br>11             pizza = new ChicagoStylePepperoniPizza();<br>12         }<br>13         else if(“veggie”.equals(type)){<br>14             pizza = new ChicagoStyleVeggiePizza();<br>15         }<br>16         return pizza;<br>17     }<br>18<br>19 }<br>做了这么多，应该可以吃披萨了吧。Ethan要一份纽约口味的披萨，Joel需要芝加哥口味的披萨。</p>
+<p>PizzaTestDrive.java</p>
+<p> 1 public class PizzaTestDrive {<br> 2     public static void main(String[] args) {<br> 3         System.out.println(“———Joel 需要的芝加哥的深盘披萨———“);<br> 4         ChicagoPizzaStore chicagoPizzaStore = new ChicagoPizzaStore();       //建立芝加哥的披萨店<br> 5         Pizza joelPizza =chicagoPizzaStore.orderPizza(“cheese”);             //下订单<br> 6         System.out.println(“Joel ordered a “ + joelPizza.getName() + “\n”);<br> 7<br> 8         System.out.println(“———Ethan 需要的纽约风味的披萨———“);<br> 9         NYPizzaStore nyPizzaStore = new NYPizzaStore();<br>10         Pizza ethanPizza = nyPizzaStore.orderPizza(“cheese”);<br>11         System.out.println(“Ethan ordered a “ + ethanPizza.getName() + “\n”);<br>12<br>13     }<br>14 }<br>运行结果。</p>
+<p>六、工厂方法模式的优缺点<br>优点<br>1、  在工厂方法中，用户只需要知道所要产品的具体工厂，无须关系具体的创建过程，甚至不需要具体产品类的类名。<br>2、  在系统增加新的产品时，我们只需要添加一个具体产品类和对应的实现工厂，无需对原工厂进行任何修改，很好地符合了“开闭原则”。<br>缺点<br>1、  每次增加一个产品时，都需要增加一个具体类和对象实现工厂，是的系统中类的个数成倍增加，在一定程度上增加了系统的复杂度，同时也增加了系统具体类的依赖。这并不是什么好事。<br>七、工厂方法适用场景<br>1、一个类不知道它所需要的对象的类。在工厂方法模式中，我们不需要具体产品的类名，我们只需要知道创建它的具体工厂即可。<br>2、一个类通过其子类来指定创建那个对象。在工厂方法模式中，对于抽象工厂类只需要提供一个创建产品的接口，而由其子类来确定具体要创建的对象，在程序运行时，子类对象将覆盖父类对象，从而使得系统更容易扩展。<br>3、将创建对象的任务委托给多个工厂子类中的某一个，客户端在使用时可以无须关心是哪一个工厂子类创建产品子类，需要时再动态指定。<br>八、总结<br>1、工厂方法模式完全符合“开闭原则”。<br>2、工厂方法模式使用继承，将对象的创建委托给子类，通过子类实现工厂方法来创建对象。<br>3、工厂方法允许类将实例化延伸到子类进行。<br>4、工厂方法让子类决定要实例化的类时哪一个。在这里我们要明白这并不是工厂来决定生成哪种产品，而是在编写创建者类时，不需要知道实际创建的产品是哪个，选择了使用哪个子类，就已经决定了实际创建的产品时哪个了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/28/简单工厂模式/" rel="next" title="简单工厂模式">
+                <i class="fa fa-chevron-left"></i> 简单工厂模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/28/抽象工厂模式/" rel="prev" title="抽象工厂模式">
+                抽象工厂模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container"></div>    
+  
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="HybridTheory">
+            
+              <p class="site-author-name" itemprop="name">HybridTheory</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry ,Stay foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="200" height="86" src="//music.163.com/outchain/player?type=2&id=1329464393&auto=0&height=66"></iframe>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yourname" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/yourname" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://vk.com/yourname" target="_blank" title="VK Group">
+                      
+                        <i class="fa fa-fw fa-vk"></i>VK Group</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://youtube.com/yourname" target="_blank" title="YouTube">
+                      
+                        <i class="fa fa-fw fa-youtube"></i>YouTube</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/yourname" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="skype:yourname?call|chat" target="_blank" title="Skype">
+                      
+                        <i class="fa fa-fw fa-skype"></i>Skype</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HybridTheory</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">43.9k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '44406a7966060e9be009',
+          clientSecret: 'b5460838bc521964384a5d553bdf0c852ca2c9d1',
+          repo: 'hybridtheorylink.github.io',
+          owner: 'hybridtheorylink',
+          admin: ['hybridtheorylink'],
+          id: decodeURI(window.location.pathname),
+          distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Sv4QpdTAhVRkfNsWlhNnvGfo-gzGzoHsz", "4g1FnHoULfh2ekJwdKDWsfhY");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
