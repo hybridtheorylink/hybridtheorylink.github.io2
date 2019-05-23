@@ -302,6 +302,1047 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/单例模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/28/单例模式/" itemprop="url">单例模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:44:28+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/28/单例模式/" class="leancloud_visitors" data-flag-title="单例模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88933605" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88933605</a></p>
+<p>单例模式（Singleton Pattern）是 Java 中最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
+<p>注意：</p>
+<p>1、单例类只能有一个实例。<br>2、单例类必须自己创建自己的唯一实例。<br>3、单例类必须给所有其他对象提供这一实例。</p>
+<p>介绍<br>意图：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
+<p>主要解决：一个全局使用的类频繁地创建与销毁。</p>
+<p>何时使用：当您想控制实例数目，节省系统资源的时候。</p>
+<p>如何解决：判断系统是否已经有这个单例，如果有则返回，如果没有则创建。</p>
+<p>关键代码：构造函数是私有的。</p>
+<p>应用实例：</p>
+<p>1、一个班级只有一个班主任。<br>2、Windows 是多进程多线程的，在操作一个文件的时候，就不可避免地出现多个进程或线程同时操作一个文件的现象，所以所有文件的处理必须通过唯一的实例来进行。<br>3、一些设备管理器常常设计为单例模式，比如一个电脑有两台打印机，在输出的时候就要处理不能两台打印机打印同一个文件。<br>优点：</p>
+<p>1、在内存里只有一个实例，减少了内存的开销，尤其是频繁的创建和销毁实例（比如管理学院首页页面缓存）。<br>2、避免对资源的多重占用（比如写文件操作）。<br>缺点：没有接口，不能继承，与单一职责原则冲突，一个类应该只关心内部逻辑，而不关心外面怎么样来实例化。</p>
+<p>使用场景：</p>
+<p>1、要求生产唯一序列号。<br>2、WEB 中的计数器，不用每次刷新都在数据库里加一次，用单例先缓存起来。<br>3、创建的一个对象需要消耗的资源过多，比如 I/O 与数据库的连接等。<br>注意事项：getInstance() 方法中需要使用同步锁 synchronized (Singleton.class) 防止多线程同时进入造成 instance 被多次实例化。</p>
+<p>实现<br>我们将创建一个 SingleObject 类。SingleObject 类有它的私有构造函数和本身的一个静态实例。</p>
+<p>SingleObject 类提供了一个静态方法，供外界获取它的静态实例。SingletonPatternDemo，我们的演示类使用 SingleObject 类来获取 SingleObject 对象。</p>
+<p>步骤 1<br>创建一个 Singleton 类。</p>
+<p>SingleObject.java<br>public class SingleObject { //创建 SingleObject 的一个对象 private static SingleObject instance = new SingleObject(); //让构造函数为 private，这样该类就不会被实例化 private SingleObject(){} //获取唯一可用的对象 public static SingleObject getInstance(){ return instance; } public void showMessage(){ System.out.println(“Hello World!”); } }</p>
+<p>步骤 2<br>从 singleton 类获取唯一的对象。</p>
+<p>SingletonPatternDemo.java<br>public class SingletonPatternDemo { public static void main(String[] args) { //不合法的构造函数 //编译时错误：构造函数 SingleObject() 是不可见的 //SingleObject object = new SingleObject(); //获取唯一可用的对象 SingleObject object = SingleObject.getInstance(); //显示消息 object.showMessage(); } }</p>
+<p>步骤 3<br>执行程序，输出结果：</p>
+<p>Hello World!<br>单例模式的几种实现方式<br>单例模式的实现有多种方式，如下所示：</p>
+<p>1、懒汉式，线程不安全<br>是否 Lazy 初始化：是</p>
+<p>是否多线程安全：否</p>
+<p>实现难度：易</p>
+<p>描述：这种方式是最基本的实现方式，这种实现最大的问题就是不支持多线程。因为没有加锁 synchronized，所以严格意义上它并不算单例模式。<br>这种方式 lazy loading 很明显，不要求线程安全，在多线程不能正常工作。</p>
+<p>实例<br>public class Singleton { private static Singleton instance; private Singleton (){} public static Singleton getInstance() { if (instance == null) { instance = new Singleton(); } return instance; } }</p>
+<p>接下来介绍的几种实现方式都支持多线程，但是在性能上有所差异。</p>
+<p>2、懒汉式，线程安全<br>是否 Lazy 初始化：是</p>
+<p>是否多线程安全：是</p>
+<p>实现难度：易</p>
+<p>描述：这种方式具备很好的 lazy loading，能够在多线程中很好的工作，但是，效率很低，99% 情况下不需要同步。<br>优点：第一次调用才初始化，避免内存浪费。<br>缺点：必须加锁 synchronized 才能保证单例，但加锁会影响效率。<br>getInstance() 的性能对应用程序不是很关键（该方法使用不太频繁）。</p>
+<p>实例<br>public class Singleton { private static Singleton instance; private Singleton (){} public static synchronized Singleton getInstance() { if (instance == null) { instance = new Singleton(); } return instance; } }</p>
+<p>3、饿汉式<br>是否 Lazy 初始化：否</p>
+<p>是否多线程安全：是</p>
+<p>实现难度：易</p>
+<p>描述：这种方式比较常用，但容易产生垃圾对象。<br>优点：没有加锁，执行效率会提高。<br>缺点：类加载时就初始化，浪费内存。<br>它基于 classloader 机制避免了多线程的同步问题，不过，instance 在类装载时就实例化，虽然导致类装载的原因有很多种，在单例模式中大多数都是调用 getInstance 方法， 但是也不能确定有其他的方式（或者其他的静态方法）导致类装载，这时候初始化 instance 显然没有达到 lazy loading 的效果。</p>
+<p>实例<br>public class Singleton { private static Singleton instance = new Singleton(); private Singleton (){} public static Singleton getInstance() { return instance; } }</p>
+<p>4、双检锁/双重校验锁（DCL，即 double-checked locking）<br>JDK 版本：JDK1.5 起</p>
+<p>是否 Lazy 初始化：是</p>
+<p>是否多线程安全：是</p>
+<p>实现难度：较复杂</p>
+<p>描述：这种方式采用双锁机制，安全且在多线程情况下能保持高性能。<br>getInstance() 的性能对应用程序很关键。</p>
+<p>实例<br>public class Singleton { private volatile static Singleton singleton; private Singleton (){} public static Singleton getSingleton() { if (singleton == null) { synchronized (Singleton.class) { if (singleton == null) { singleton = new Singleton(); } } } return singleton; } }</p>
+<p>5、登记式/静态内部类<br>是否 Lazy 初始化：是</p>
+<p>是否多线程安全：是</p>
+<p>实现难度：一般</p>
+<p>描述：这种方式能达到双检锁方式一样的功效，但实现更简单。对静态域使用延迟初始化，应使用这种方式而不是双检锁方式。这种方式只适用于静态域的情况，双检锁方式可在实例域需要延迟初始化时使用。<br>这种方式同样利用了 classloader 机制来保证初始化 instance 时只有一个线程，它跟第 3 种方式不同的是：第 3 种方式只要 Singleton 类被装载了，那么 instance 就会被实例化（没有达到 lazy loading 效果），而这种方式是 Singleton 类被装载了，instance 不一定被初始化。因为 SingletonHolder 类没有被主动使用，只有通过显式调用 getInstance 方法时，才会显式装载 SingletonHolder 类，从而实例化 instance。想象一下，如果实例化 instance 很消耗资源，所以想让它延迟加载，另外一方面，又不希望在 Singleton 类加载时就实例化，因为不能确保 Singleton 类还可能在其他的地方被主动使用从而被加载，那么这个时候实例化 instance 显然是不合适的。这个时候，这种方式相比第 3 种方式就显得很合理。</p>
+<p>实例<br>public class Singleton { private static class SingletonHolder { private static final Singleton INSTANCE = new Singleton(); } private Singleton (){} public static final Singleton getInstance() { return SingletonHolder.INSTANCE; } }</p>
+<p>6、枚举<br>JDK 版本：JDK1.5 起</p>
+<p>是否 Lazy 初始化：否</p>
+<p>是否多线程安全：是</p>
+<p>实现难度：易</p>
+<p>描述：这种实现方式还没有被广泛采用，但这是实现单例模式的最佳方法。它更简洁，自动支持序列化机制，绝对防止多次实例化。<br>这种方式是 Effective Java 作者 Josh Bloch 提倡的方式，它不仅能避免多线程同步问题，而且还自动支持序列化机制，防止反序列化重新创建新的对象，绝对防止多次实例化。不过，由于 JDK1.5 之后才加入 enum 特性，用这种方式写不免让人感觉生疏，在实际工作中，也很少用。<br>不能通过 reflection attack 来调用私有构造方法。</p>
+<p>实例<br>public enum Singleton { INSTANCE; public void whateverMethod() { } }</p>
+<p>经验之谈：一般情况下，不建议使用第 1 种和第 2 种懒汉方式，建议使用第 3 种饿汉方式。只有在要明确实现 lazy loading 效果时，才会使用第 5 种登记方式。如果涉及到反序列化创建对象时，可以尝试使用第 6 种枚举方式。如果有其他特殊的需求，可以考虑使用第 4 种双检锁方式。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/抽象工厂模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/28/抽象工厂模式/" itemprop="url">抽象工厂模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:42:30+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/28/抽象工厂模式/" class="leancloud_visitors" data-flag-title="抽象工厂模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88933360" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88933360</a></p>
+<p>抽象工厂模式（Abstract Factory Pattern）是围绕一个超级工厂创建其他工厂。该超级工厂又称为其他工厂的工厂。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>在抽象工厂模式中，接口是负责创建一个相关对象的工厂，不需要显式指定它们的类。每个生成的工厂都能按照工厂模式提供对象。</p>
+<p>介绍<br>意图：提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类。</p>
+<p>主要解决：主要解决接口选择的问题。</p>
+<p>何时使用：系统的产品有多于一个的产品族，而系统只消费其中某一族的产品。</p>
+<p>如何解决：在一个产品族里面，定义多个产品。</p>
+<p>关键代码：在一个工厂里聚合多个同类产品。</p>
+<p>应用实例：工作了，为了参加一些聚会，肯定有两套或多套衣服吧，比如说有商务装（成套，一系列具体产品）、时尚装（成套，一系列具体产品），甚至对于一个家庭来说，可能有商务女装、商务男装、时尚女装、时尚男装，这些也都是成套的，即一系列具体产品。假设一种情况（现实中是不存在的，要不然，没法进入共产主义了，但有利于说明抽象工厂模式），在您的家中，某一个衣柜（具体工厂）只能存放某一种这样的衣服（成套，一系列具体产品），每次拿这种成套的衣服时也自然要从这个衣柜中取出了。用 OO 的思想去理解，所有的衣柜（具体工厂）都是衣柜类的（抽象工厂）某一个，而每一件成套的衣服又包括具体的上衣（某一具体产品），裤子（某一具体产品），这些具体的上衣其实也都是上衣（抽象产品），具体的裤子也都是裤子（另一个抽象产品）。</p>
+<p>优点：当一个产品族中的多个对象被设计成一起工作时，它能保证客户端始终只使用同一个产品族中的对象。</p>
+<p>缺点：产品族扩展非常困难，要增加一个系列的某一产品，既要在抽象的 Creator 里加代码，又要在具体的里面加代码。</p>
+<p>使用场景： 1、QQ 换皮肤，一整套一起换。 2、生成不同操作系统的程序。</p>
+<p>注意事项：产品族难扩展，产品等级易扩展。</p>
+<p>实现<br>我们将创建 Shape 和 Color 接口和实现这些接口的实体类。下一步是创建抽象工厂类 AbstractFactory。接着定义工厂类 ShapeFactory 和 ColorFactory，这两个工厂类都是扩展了 AbstractFactory。然后创建一个工厂创造器/生成器类 FactoryProducer。</p>
+<p>AbstractFactoryPatternDemo，我们的演示类使用 FactoryProducer 来获取 AbstractFactory 对象。它将向 AbstractFactory 传递形状信息 Shape（CIRCLE / RECTANGLE / SQUARE），以便获取它所需对象的类型。同时它还向 AbstractFactory 传递颜色信息 Color（RED / GREEN / BLUE），以便获取它所需对象的类型。</p>
+<p>步骤 1<br>为形状创建一个接口。</p>
+<p>Shape.java<br>public interface Shape { void draw(); }</p>
+<p>步骤 2<br>创建实现接口的实体类。</p>
+<p>Rectangle.java</p>
+<p>Rectangle.java<br>public class Rectangle implements Shape { @Override public void draw() { System.out.println(“Inside Rectangle::draw() method.”); } }</p>
+<p>Square.java<br>public class Square implements Shape { @Override public void draw() { System.out.println(“Inside Square::draw() method.”); } }</p>
+<p>Circle.java<br>public class Circle implements Shape { @Override public void draw() { System.out.println(“Inside Circle::draw() method.”); } }</p>
+<p>步骤 3<br>为颜色创建一个接口。</p>
+<p>Color.java<br>public interface Color { void fill(); }</p>
+<p>步骤4<br>创建实现接口的实体类。</p>
+<p>Red.java<br>public class Red implements Color { @Override public void fill() { System.out.println(“Inside Red::fill() method.”); } }</p>
+<p>Green.java<br>public class Green implements Color { @Override public void fill() { System.out.println(“Inside Green::fill() method.”); } }</p>
+<p>Blue.java<br>public class Blue implements Color { @Override public void fill() { System.out.println(“Inside Blue::fill() method.”); } }</p>
+<p>步骤 5<br>为 Color 和 Shape 对象创建抽象类来获取工厂。</p>
+<p>AbstractFactory.java<br>public abstract class AbstractFactory { public abstract Color getColor(String color); public abstract Shape getShape(String shape) ; }</p>
+<p>步骤 6<br>创建扩展了 AbstractFactory 的工厂类，基于给定的信息生成实体类的对象。</p>
+<p>ShapeFactory.java<br>public class ShapeFactory extends AbstractFactory { @Override public Shape getShape(String shapeType){ if(shapeType == null){ return null; } if(shapeType.equalsIgnoreCase(“CIRCLE”)){ return new Circle(); } else if(shapeType.equalsIgnoreCase(“RECTANGLE”)){ return new Rectangle(); } else if(shapeType.equalsIgnoreCase(“SQUARE”)){ return new Square(); } return null; } @Override public Color getColor(String color) { return null; } }</p>
+<p>ColorFactory.java<br>public class ColorFactory extends AbstractFactory { @Override public Shape getShape(String shapeType){ return null; } @Override public Color getColor(String color) { if(color == null){ return null; } if(color.equalsIgnoreCase(“RED”)){ return new Red(); } else if(color.equalsIgnoreCase(“GREEN”)){ return new Green(); } else if(color.equalsIgnoreCase(“BLUE”)){ return new Blue(); } return null; } }</p>
+<p>步骤 7<br>创建一个工厂创造器/生成器类，通过传递形状或颜色信息来获取工厂。</p>
+<p>FactoryProducer.java<br>public class FactoryProducer { public static AbstractFactory getFactory(String choice){ if(choice.equalsIgnoreCase(“SHAPE”)){ return new ShapeFactory(); } else if(choice.equalsIgnoreCase(“COLOR”)){ return new ColorFactory(); } return null; } }</p>
+<p>步骤 8<br>使用 FactoryProducer 来获取 AbstractFactory，通过传递类型信息来获取实体类的对象。</p>
+<p>AbstractFactoryPatternDemo.java<br>public class AbstractFactoryPatternDemo { public static void main(String[] args) { //获取形状工厂 AbstractFactory shapeFactory = FactoryProducer.getFactory(“SHAPE”); //获取形状为 Circle 的对象 Shape shape1 = shapeFactory.getShape(“CIRCLE”); //调用 Circle 的 draw 方法 shape1.draw(); //获取形状为 Rectangle 的对象 Shape shape2 = shapeFactory.getShape(“RECTANGLE”); //调用 Rectangle 的 draw 方法 shape2.draw(); //获取形状为 Square 的对象 Shape shape3 = shapeFactory.getShape(“SQUARE”); //调用 Square 的 draw 方法 shape3.draw(); //获取颜色工厂 AbstractFactory colorFactory = FactoryProducer.getFactory(“COLOR”); //获取颜色为 Red 的对象 Color color1 = colorFactory.getColor(“RED”); //调用 Red 的 fill 方法 color1.fill(); //获取颜色为 Green 的对象 Color color2 = colorFactory.getColor(“Green”); //调用 Green 的 fill 方法 color2.fill(); //获取颜色为 Blue 的对象 Color color3 = colorFactory.getColor(“BLUE”); //调用 Blue 的 fill 方法 color3.fill(); } }</p>
+<p>步骤 9<br>执行程序，输出结果：</p>
+<p>Inside Circle::draw() method.<br>Inside Rectangle::draw() method.<br>Inside Square::draw() method.<br>Inside Red::fill() method.<br>Inside Green::fill() method.<br>Inside Blue::fill() method.<br> 工厂模式</p>
+<p>单例模式 </p>
+<p>1 篇笔记 写笔记</p>
+<p>   涛</p>
+<p>  <a href="mailto:307***9849@qq.com" target="_blank" rel="noopener">307***9849@qq.com</a></p>
+<p>   参考地址</p>
+<p>下面例子中鼠标，键盘，耳麦为产品，惠普，戴尔为工厂。</p>
+<p>简单工厂模式<br>简单工厂模式不是 23 种里的一种，简而言之，就是有一个专门生产某个产品的类。</p>
+<p>比如下图中的鼠标工厂，专业生产鼠标，给参数 0，生产戴尔鼠标，给参数 1，生产惠普鼠标。</p>
+<p>工厂模式<br>工厂模式也就是鼠标工厂是个父类，有生产鼠标这个接口。</p>
+<p>戴尔鼠标工厂，惠普鼠标工厂继承它，可以分别生产戴尔鼠标，惠普鼠标。</p>
+<p>生产哪种鼠标不再由参数决定，而是创建鼠标工厂时，由戴尔鼠标工厂创建。</p>
+<p>后续直接调用鼠标工厂.生产鼠标()即可</p>
+<p>抽象工厂模式<br>抽象工厂模式也就是不仅生产鼠标，同时生产键盘。</p>
+<p>也就是 PC 厂商是个父类，有生产鼠标，生产键盘两个接口。</p>
+<p>戴尔工厂，惠普工厂继承它，可以分别生产戴尔鼠标+戴尔键盘，和惠普鼠标+惠普键盘。</p>
+<p>创建工厂时，由戴尔工厂创建。</p>
+<p>后续工厂.生产鼠标()则生产戴尔鼠标，工厂.生产键盘()则生产戴尔键盘。</p>
+<p>在抽象工厂模式中，假设我们需要增加一个工厂</p>
+<p>假设我们增加华硕工厂，则我们需要增加华硕工厂，和戴尔工厂一样，继承 PC 厂商。</p>
+<p>之后创建华硕鼠标，继承鼠标类。创建华硕键盘，继承键盘类即可。</p>
+<p>在抽象工厂模式中，假设我们需要增加一个产品</p>
+<p>假设我们增加耳麦这个产品，则首先我们需要增加耳麦这个父类，再加上戴尔耳麦，惠普耳麦这两个子类。</p>
+<p>之后在PC厂商这个父类中，增加生产耳麦的接口。最后在戴尔工厂，惠普工厂这两个类中，分别实现生产戴尔耳麦，惠普耳麦的功能。 以上。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/工厂方法模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/28/工厂方法模式/" itemprop="url">工厂方法模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:41:15+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/28/工厂方法模式/" class="leancloud_visitors" data-flag-title="工厂方法模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88929956" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88929956</a><br>一、问题<br>在前一章《设计模式读书笔记—–简单工厂模式》中通过披萨的实例介绍了简单工厂模式。在披萨实例中，如果我想根据地域的不同生产出不同口味的披萨，如纽约口味披萨，芝加哥口味披萨。如果利用简单工厂模式，我们需要两个不同的工厂，NYPizzaFactory、ChicagoPizzaFactory。在该地域中有很多的披萨店，他们并不想依照总店的制作流程来生成披萨，而是希望采用他们自己的制作流程。这个时候如果还使用简单工厂模式，因为简单工厂模式是将披萨的制作流程完全承包了。那么怎么办？</p>
+<p>二、解决方案<br>我们可以这样解决：将披萨的制作方法交给各个披萨店完成，但是他们只能提供制作完成的披萨，披萨的订单处理仍然要交给披萨工厂去做。也就是说，我们将createPizza()方法放回到PizzaStore中，其他的部分还是保持不变。</p>
+<p>三、基本定义<br>工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法模式让实例化推迟到子类。</p>
+<p>四、模式结构<br>工厂方法模式的UML结构图：</p>
+<p>Product：抽象产品。所有的产品必须实现这个共同的接口，这样一来，使用这些产品的类既可以引用这个接口。而不是具体类。<br>ConcreteProduct：具体产品。<br>Creator：抽象工厂。它实现了所有操纵产品的方法，但不实现工厂方法。Creator所有的子类都必须要实现factoryMethod()方法。<br>ConcreteCreator：具体工厂。制造产品的实际工厂。它负责创建一个或者多个具体产品，只有ConcreteCreator类知道如何创建这些产品。<br>工厂方法模式是简单工厂模式的延伸。在工厂方法模式中，核心工厂类不在负责产品的创建，而是将具体的创建工作交给子类去完成。也就是后所这个核心工厂仅仅只是提供创建的接口，具体实现方法交给继承它的子类去完成。当我们的系统需要增加其他新的对象时，我们只需要添加一个具体的产品和它的创建工厂即可，不需要对原工厂进行任何修改，这样很好地符合了“开闭原则”。</p>
+<p>五、工厂方法模式实现<br>针对上面的解决方案，得到如下UML结构图：</p>
+<p>抽象产品类：Pizza.java</p>
+<p> 1 public abstract class Pizza {<br> 2     protected String name;        //名称<br> 3     protected String dough;       //面团<br> 4     protected String sause;       //酱料<br> 5     protected List<string> toppings = new ArrayList<string>();       //佐料<br> 6<br> 7<br> 8     public void prepare() {<br> 9         System.out.println(“Preparing “+name);<br>10         System.out.println(“Tossing dough”);<br>11         System.out.println(“Adding sause”);<br>12         System.out.println(“Adding toppings”);<br>13         for(int i = 0;i &lt; toppings.size();i++){<br>14             System.out.println(“   “+toppings.get(i));<br>15         }<br>16     }<br>17<br>18     public void bake() {<br>19         System.out.println(“Bake for 25 minutes at 350”);<br>20     }<br>21<br>22     public void cut() {<br>23         System.out.println(“Cutting the pizza into diagonal slices”);<br>24     }<br>25<br>26     public void box() {<br>27         System.out.println(“Place pizza in official PizzaStore box”);<br>28     }<br>29<br>30     public String getName(){<br>31         return name;<br>32     }<br>33 }<br>具体产品类：NYStyleCheesePizza.java</string></string></p>
+<p> 1 public class NYStyleCheesePizza extends Pizza{<br> 2     public NYStyleCheesePizza(){<br> 3         name = “Ny Style Sauce and Cheese Pizza”;<br> 4         dough = “Thin Crust Dough”;<br> 5         sause = “Marinara Sauce”;<br> 6<br> 7         toppings.add(“Crated Reggiano Cheese”);<br> 8     }<br> 9<br>10 }<br>ChicagoStyleCheesePizza.java</p>
+<p> 1 public class ChicagoStyleCheesePizza extends Pizza {<br> 2     public ChicagoStyleCheesePizza(){<br> 3         name = “Chicago Style Deep Dish Cheese Pizza”;<br> 4         dough = “Extra Thick Crust Dough”;<br> 5         sause = “Plum Tomato Sauce”;<br> 6<br> 7         toppings.add(“Shredded Mozzarella Cheese”);<br> 8     }<br> 9<br>10     public void cut(){<br>11         System.out.println(“Cutting the Pizza into square slices”);<br>12     }<br>13 }<br>抽象工厂：披萨总店。PizzaStore.java</p>
+<p> 1 public abstract class PizzaStore {<br> 2     public Pizza orderPizza(String type){<br> 3         Pizza pizza;<br> 4         pizza = createPizza(type);<br> 5<br> 6         pizza.prepare();<br> 7         pizza.bake();<br> 8         pizza.cut();<br> 9         pizza.box();<br>10<br>11         return pizza;<br>12     }<br>13<br>14     /<em><br>15      </em> 创建pizza的方法交给子类去实现<br>16      */<br>17     abstract Pizza createPizza(String type);<br>18 }<br>具体工厂。披萨分店。NYPizzaStore.java</p>
+<p> 1 public class NYPizzaStore extends PizzaStore{<br> 2<br> 3     @Override<br> 4     Pizza createPizza(String item) {<br> 5         Pizza pizza = null;<br> 6         if(“cheese”.equals(item)){<br> 7             pizza = new NYStyleCheesePizza();<br> 8         }<br> 9         else if(“veggie”.equals(item)){<br>10             pizza = new NYStyleVeggiePizza();<br>11         }<br>12         else if(“clam”.equals(item)){<br>13             pizza = new NYStyleClamPizza();<br>14         }<br>15         else if(“pepperoni”.equals(item)){<br>16             pizza = new NYStylePepperoniPizza();<br>17         }<br>18<br>19         return pizza;<br>20     }<br>ChicagoPizzaStore.java</p>
+<p> 1 public class ChicagoPizzaStore extends PizzaStore {<br> 2     Pizza createPizza(String type) {<br> 3         Pizza pizza = null;<br> 4         if(“cheese”.equals(type)){<br> 5             pizza = new ChicagoStyleCheesePizza();<br> 6         }<br> 7         else if(“clam”.equals(type)){<br> 8             pizza = new ChicagoStyleClamPizza();<br> 9         }<br>10         else if(“pepperoni”.equals(type)) {<br>11             pizza = new ChicagoStylePepperoniPizza();<br>12         }<br>13         else if(“veggie”.equals(type)){<br>14             pizza = new ChicagoStyleVeggiePizza();<br>15         }<br>16         return pizza;<br>17     }<br>18<br>19 }<br>做了这么多，应该可以吃披萨了吧。Ethan要一份纽约口味的披萨，Joel需要芝加哥口味的披萨。</p>
+<p>PizzaTestDrive.java</p>
+<p> 1 public class PizzaTestDrive {<br> 2     public static void main(String[] args) {<br> 3         System.out.println(“———Joel 需要的芝加哥的深盘披萨———“);<br> 4         ChicagoPizzaStore chicagoPizzaStore = new ChicagoPizzaStore();       //建立芝加哥的披萨店<br> 5         Pizza joelPizza =chicagoPizzaStore.orderPizza(“cheese”);             //下订单<br> 6         System.out.println(“Joel ordered a “ + joelPizza.getName() + “\n”);<br> 7<br> 8         System.out.println(“———Ethan 需要的纽约风味的披萨———“);<br> 9         NYPizzaStore nyPizzaStore = new NYPizzaStore();<br>10         Pizza ethanPizza = nyPizzaStore.orderPizza(“cheese”);<br>11         System.out.println(“Ethan ordered a “ + ethanPizza.getName() + “\n”);<br>12<br>13     }<br>14 }<br>运行结果。</p>
+<p>六、工厂方法模式的优缺点<br>优点<br>1、  在工厂方法中，用户只需要知道所要产品的具体工厂，无须关系具体的创建过程，甚至不需要具体产品类的类名。<br>2、  在系统增加新的产品时，我们只需要添加一个具体产品类和对应的实现工厂，无需对原工厂进行任何修改，很好地符合了“开闭原则”。<br>缺点<br>1、  每次增加一个产品时，都需要增加一个具体类和对象实现工厂，是的系统中类的个数成倍增加，在一定程度上增加了系统的复杂度，同时也增加了系统具体类的依赖。这并不是什么好事。<br>七、工厂方法适用场景<br>1、一个类不知道它所需要的对象的类。在工厂方法模式中，我们不需要具体产品的类名，我们只需要知道创建它的具体工厂即可。<br>2、一个类通过其子类来指定创建那个对象。在工厂方法模式中，对于抽象工厂类只需要提供一个创建产品的接口，而由其子类来确定具体要创建的对象，在程序运行时，子类对象将覆盖父类对象，从而使得系统更容易扩展。<br>3、将创建对象的任务委托给多个工厂子类中的某一个，客户端在使用时可以无须关心是哪一个工厂子类创建产品子类，需要时再动态指定。<br>八、总结<br>1、工厂方法模式完全符合“开闭原则”。<br>2、工厂方法模式使用继承，将对象的创建委托给子类，通过子类实现工厂方法来创建对象。<br>3、工厂方法允许类将实例化延伸到子类进行。<br>4、工厂方法让子类决定要实例化的类时哪一个。在这里我们要明白这并不是工厂来决定生成哪种产品，而是在编写创建者类时，不需要知道实际创建的产品是哪个，选择了使用哪个子类，就已经决定了实际创建的产品时哪个了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/简单工厂模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/28/简单工厂模式/" itemprop="url">简单工厂模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:40:37+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/28/简单工厂模式/" class="leancloud_visitors" data-flag-title="简单工厂模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88858312" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88858312</a></p>
+<p>在设计原则中有这样一句话“我们应该针对接口编程，而不是正对实现编程”。但是我们还是在一直使用new关键字来创建一个对象，这不就是在针对实现编程么？</p>
+<p>针对接口编程，可以隔离掉以后系统可能发生的一大堆改变。入股代码是针对接口而写，那么可以通过多态，它可以与任何新类实现该接口。但是，当代码使用一大堆的具体类时，等于是自找麻烦，因为一旦加入新的具体类，就必须要改变代码。在这里我们希望能够调用一个简单的方法，我传递一个参数过去，就可以返回给我一个相应的具体对象，这个时候我们就可以使用简单工厂模式。</p>
+<p>一、基本定义<br>简单工厂模式又称之为静态工厂方法，属于创建型模式。在简单工厂模式中，可以根据传递的参数不同，返回不同类的实例。简单工厂模式定义了一个类，这个类专门用于创建其他类的实例，这些被创建的类都有一个共同的父类。</p>
+<p>二、模式结构<br>模式结构图如下：</p>
+<p>模式分析：</p>
+<p>Factory：工厂角色。专门用于创建实例类的工厂，提供一个方法，该方法根据传递的参数不同返回不同类的具体实例。<br>Product：抽象产品角色。为所有产品的父类。<br>ConcreteProduct：具体的产品角色。<br>简单工厂模式将对象的创建和对象本身业务处理分离了，可以降低系统的耦合度，使得两者修改起来都相对容易些。当以后实现改变时，只需要修改工厂类即可。</p>
+<p>三、简单工厂模式实现<br>模式场景：在一个披萨店中，要根据不同客户的口味，生产不同的披萨，如素食披萨、希腊披萨等披萨。</p>
+<p>该例的UML结构图如下:</p>
+<p>代码实现</p>
+<p>Pizza制造工厂：SimplyPizzaFactory.java</p>
+<p> 1 /*<em><br> 2  </em> 专门用于创建披萨的工厂类<br> 3  */<br> 4 public class SimplePizzaFactory {<br> 5     public Pizza createPizza(String type){<br> 6         Pizza pizza = null;<br> 7<br> 8         if(type.equals(“cheese”)){<br> 9             pizza = new CheesePizza();<br>10         }<br>11         else if(type.equals(“clam”)){<br>12             pizza = new ClamPizza();<br>13         }<br>14         else if(type.equals(“pepperoni”)){<br>15             pizza = new PepperoniPizza();<br>16         }<br>17         else if(type.equals(“veggie”)){<br>18             pizza = new VeggiePizze();<br>19         }<br>20<br>21         return pizza;<br>22     }<br>23 }<br>抽象披萨：Pizza.java</p>
+<p> 1 /*<em><br> 2  </em> 抽象pizza类<br> 3  */<br> 4 public abstract class Pizza {<br> 5     public abstract void prepare();<br> 6<br> 7     public abstract void bake();<br> 8<br> 9     public abstract void cut();<br>10<br>11     public abstract void box();<br>12 }<br>具体披萨：CheesePizza.java</p>
+<p> 1 public class CheesePizza extends Pizza{<br> 2<br> 3     @Override<br> 4     public void bake() {<br> 5         System.out.println(“bake CheesePizza …”);<br> 6     }<br> 7<br> 8     @Override<br> 9     public void box() {<br>10         System.out.println(“box CheesePizza …”);<br>11     }<br>12<br>13     @Override<br>14     public void cut() {<br>15         System.out.println(“cut CheesePizza …”);<br>16     }<br>17<br>18     @Override<br>19     public void prepare() {<br>20         System.out.println(“prepare CheesePizza …”);<br>21     }<br>22<br>23 }<br>PizzaStore.java</p>
+<p> 1 public class PizzaStore {<br> 2     SimplePizzaFactory factory;      //SimplePizzaFactory的引用<br> 3     public PizzaStore(SimplePizzaFactory factory){<br> 4         this.factory = factory;<br> 5     }<br> 6<br> 7     public Pizza orderPizza(String type){<br> 8         Pizza pizza;<br> 9         pizza = factory.createPizza(type);       //使用工厂对象的创建方法，而不是直接new。这里不再使用具体实例化<br>10<br>11         pizza.prepare();<br>12         pizza.bake();<br>13         pizza.cut();<br>14         pizza.box();<br>15<br>16         return pizza;<br>17     }<br>18 }<br>四、简单工厂模式的优缺点<br>优点<br>1、简单工厂模式实现了对责任的分割，提供了专门的工厂类用于创建对象。<br>2、客户端无须知道所创建的具体产品类的类名，只需要知道具体产品类所对应的参数即可，对于一些复杂的类名，通过简单工厂模式可以减少使用者的记忆量。<br>3、通过引入配置文件，可以在不修改任何客户端代码的情况下更换和增加新的具体产品类，在一定程度上提高了系统的灵活性。<br>缺点<br>1、由于工厂类集中了所有产品创建逻辑，一旦不能正常工作，整个系统都要受到影响。<br>2、使用简单工厂模式将会增加系统中类的个数，在一定程序上增加了系统的复杂度和理解难度。<br>3、系统扩展困难，一旦添加新产品就不得不修改工厂逻辑，在产品类型较多时，有可能造成工厂逻辑过于复杂，不利于系统的扩展和维护。<br>4、简单工厂模式由于使用了静态工厂方法，造成工厂角色无法形成基于继承的等级结构。<br>五、简单工厂模式的使用场景<br>1、  工厂类负责创建的对象比较少。<br>2、  客户端只知道传入工厂类的参数，对于如何创建对象不关心。<br>六、总结<br>1、  简单工厂模式的要点就在于当你需要什么，只需要传入一个正确的参数，就可以获取你所需要的对象，而无须知道其创建细节。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/Spring-Bean-生命周期/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/28/Spring-Bean-生命周期/" itemprop="url">Spring Bean 生命周期</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:39:14+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/28/Spring-Bean-生命周期/" class="leancloud_visitors" data-flag-title="Spring Bean 生命周期">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  912
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88829053" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88829053</a><br>前言<br>Spring Bean 的生命周期在整个 Spring 中占有很重要的位置，掌握这些可以加深对 Spring 的理解。</p>
+<p>首先看下生命周期图：</p>
+<p>再谈生命周期之前有一点需要先明确：</p>
+<p>Spring 只帮我们管理单例模式 Bean 的完整生命周期，对于 prototype （原型模式：多例） 的 bean ，Spring 在创建好交给使用者之后则不会再管理后续的生命周期。</p>
+<p>注解方式<br>在 bean 初始化时会经历几个阶段，首先可以使用注解 @PostConstruct, @PreDestroy 来在 bean 的创建和销毁阶段进行调用:</p>
+<p>@Component<br>public class AnnotationBean {<br>    private final static Logger LOGGER = LoggerFactory.getLogger(AnnotationBean.class);</p>
+<pre><code>@PostConstruct
+public void start(){
+    LOGGER.info(&quot;AnnotationBean start&quot;);
+}
+
+@PreDestroy
+public void destroy(){
+    LOGGER.info(&quot;AnnotationBean destroy&quot;);
+}
+</code></pre><p>}<br>InitializingBean, DisposableBean 接口<br>还可以实现 InitializingBean,DisposableBean 这两个接口，也是在初始化以及销毁阶段调用：</p>
+<p>@Service<br>public class SpringLifeCycleService implements InitializingBean,DisposableBean{<br>    private final static Logger LOGGER = LoggerFactory.getLogger(SpringLifeCycleService.class);<br>    @Override<br>    public void afterPropertiesSet() throws Exception {<br>        LOGGER.info(“SpringLifeCycleService start”);<br>    }</p>
+<pre><code>@Override
+public void destroy() throws Exception {
+    LOGGER.info(&quot;SpringLifeCycleService destroy&quot;);
+}
+</code></pre><p>}<br>自定义初始化和销毁方法<br>也可以自定义方法用于在初始化、销毁阶段调用:</p>
+<p>@Configuration<br>public class LifeCycleConfig {</p>
+<pre><code>@Bean(initMethod = &quot;start&quot;, destroyMethod = &quot;destroy&quot;)
+public SpringLifeCycle create(){
+    SpringLifeCycle springLifeCycle = new SpringLifeCycle() ;
+
+    return springLifeCycle ;
+}
+</code></pre><p>}</p>
+<p>public class SpringLifeCycle{</p>
+<pre><code>private final static Logger LOGGER = LoggerFactory.getLogger(SpringLifeCycle.class);
+public void start(){
+    LOGGER.info(&quot;SpringLifeCycle start&quot;);
+}
+
+
+public void destroy(){
+    LOGGER.info(&quot;SpringLifeCycle destroy&quot;);
+}
+</code></pre><p>}<br>以上是在 SpringBoot 中可以这样配置，如果是原始的基于 XML 也是可以使用:</p>
+<p><bean class="com.crossoverjie.spring.SpringLifeCycle" init-method="start" destroy-method="destroy"><br></bean><br>来达到同样的效果。</p>
+<p>实现 <em>Aware 接口
+</em>Aware 接口可以用于在初始化 bean 时获得 Spring 中的一些对象，如获取 Spring 上下文等。</p>
+<p>@Component<br>public class SpringLifeCycleAware implements ApplicationContextAware {<br>    private final static Logger LOGGER = LoggerFactory.getLogger(SpringLifeCycleAware.class);</p>
+<pre><code>private ApplicationContext applicationContext ;
+
+@Override
+public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    this.applicationContext = applicationContext ;
+    LOGGER.info(&quot;SpringLifeCycleAware start&quot;);
+}
+</code></pre><p>}<br>这样在 springLifeCycleAware 这个 bean 初始化会就会调用 setApplicationContext 方法，并可以获得 applicationContext 对象。</p>
+<p>BeanPostProcessor 增强处理器<br>实现 BeanPostProcessor 接口，Spring 中所有 bean 在做初始化时都会调用该接口中的两个方法，可以用于对一些特殊的 bean 进行处理：</p>
+<p>@Component<br>public class SpringLifeCycleProcessor implements BeanPostProcessor {<br>    private final static Logger LOGGER = LoggerFactory.getLogger(SpringLifeCycleProcessor.class);</p>
+<pre><code>/**
+ * 预初始化 初始化之前调用
+ * @param bean
+ * @param beanName
+ * @return
+ * @throws BeansException
+ */
+@Override
+public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+    if (&quot;annotationBean&quot;.equals(beanName)){
+        LOGGER.info(&quot;SpringLifeCycleProcessor start beanName={}&quot;,beanName);
+    }
+    return bean;
+}
+
+/**
+ * 后初始化  bean 初始化完成调用
+ * @param bean
+ * @param beanName
+ * @return
+ * @throws BeansException
+ */
+@Override
+public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    if (&quot;annotationBean&quot;.equals(beanName)){
+        LOGGER.info(&quot;SpringLifeCycleProcessor end beanName={}&quot;,beanName);
+    }
+    return bean;
+}
+</code></pre><p>}<br>执行之后观察结果：</p>
+<p>018-03-21 00:40:24.856 [restartedMain] INFO  c.c.s.p.SpringLifeCycleProcessor - SpringLifeCycleProcessor start beanName=annotationBean<br>2018-03-21 00:40:24.860 [restartedMain] INFO  c.c.spring.annotation.AnnotationBean - AnnotationBean start<br>2018-03-21 00:40:24.861 [restartedMain] INFO  c.c.s.p.SpringLifeCycleProcessor - SpringLifeCycleProcessor end beanName=annotationBean<br>2018-03-21 00:40:24.864 [restartedMain] INFO  c.c.s.aware.SpringLifeCycleAware - SpringLifeCycleAware start<br>2018-03-21 00:40:24.867 [restartedMain] INFO  c.c.s.service.SpringLifeCycleService - SpringLifeCycleService start<br>2018-03-21 00:40:24.887 [restartedMain] INFO  c.c.spring.SpringLifeCycle - SpringLifeCycle start<br>2018-03-21 00:40:25.062 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729<br>2018-03-21 00:40:25.122 [restartedMain] INFO  o.s.j.e.a.AnnotationMBeanExporter - Registering beans for JMX exposure on startup<br>2018-03-21 00:40:25.140 [restartedMain] INFO  com.crossoverjie.Application - Started Application in 2.309 seconds (JVM running for 3.681)<br>2018-03-21 00:40:25.143 [restartedMain] INFO  com.crossoverjie.Application - start ok!<br>2018-03-21 00:40:25.153 [Thread-8] INFO  o.s.c.a.AnnotationConfigApplicationContext - Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@3913adad: startup date [Wed Mar 21 00:40:23 CST 2018]; root of context hierarchy<br>2018-03-21 00:40:25.155 [Thread-8] INFO  o.s.j.e.a.AnnotationMBeanExporter - Unregistering JMX-exposed beans on shutdown<br>2018-03-21 00:40:25.156 [Thread-8] INFO  c.c.spring.SpringLifeCycle - SpringLifeCycle destroy<br>2018-03-21 00:40:25.156 [Thread-8] INFO  c.c.s.service.SpringLifeCycleService - SpringLifeCycleService destroy<br>2018-03-21 00:40:25.156 [Thread-8] INFO  c.c.spring.annotation.AnnotationBean - AnnotationBean destroy</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/Java垃圾回收（GC）机制详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2122,1048 +3163,11 @@ return null;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/设计一个秒杀系统/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/22/设计一个秒杀系统/" itemprop="url">设计一个秒杀系统</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T15:20:53+08:00">
-                2019-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/22/设计一个秒杀系统/" class="leancloud_visitors" data-flag-title="设计一个秒杀系统">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  460
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>具体实现参考 秒杀架构实践</p>
-<p>主要做到以下两点:</p>
-<p>尽量将请求过滤在上游。<br>尽可能的利用缓存(大多数场景下都是查多于写)。<br>常用的系统分层结构:</p>
-<p><img src="/images/pasted-14.png" alt="upload successful"></p>
-<p>针对于浏览器端，可以使用 JS 进行请求过滤，比如五秒钟之类只能点一次抢购按钮，五秒钟只能允许请求一次后端服务。(APP 同理)</p>
-<p>这样其实就可以过滤掉大部分普通用户。</p>
-<p>但是防不住直接抓包循环调用。这种情况可以最简单的处理:在Web层通过限制一个 UID 五秒之类的请求服务层的次数(可利用 Redis 实现)。</p>
-<p>但如果是真的有 10W 个不同的 UID 来请求，比如黑客抓肉鸡的方式。</p>
-<p>这种情况可以在服务层 针对于写请求使用请求队列，再通过限流算法(限流算法)每秒钟放一部分请求到队列。</p>
-<p>对于读请求则尽量使用缓存，可以提前将数据准备好，不管是 Redis 还是其他缓存中间件效率都是非常高的。</p>
-<p>ps : 刷新缓存情况，比如库存扣除成功这种情况不用马上刷新缓存，如果库存扣到了 0 再刷新缓存。因为大多数用户都只关心是否有货，并不关心现在还剩余多少。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果流量巨大，导致各个层的压力都很大可以适当的加机器横向扩容。如果加不了机器那就只有放弃流量直接返回失败。快速失败非常重要，至少可以保证系统的可用性。<br>业务分批执行：对于下单、付款等操作可以异步执行提高吞吐率。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/Centos7-运维常用命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/22/Centos7-运维常用命令/" itemprop="url">Centos7 运维常用命令</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T15:08:54+08:00">
-                2019-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/22/Centos7-运维常用命令/" class="leancloud_visitors" data-flag-title="Centos7 运维常用命令">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  66
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="查看java运行所有程序"><a href="#查看java运行所有程序" class="headerlink" title="查看java运行所有程序"></a>查看java运行所有程序</h2><pre><code>ps -ef | grep java | grep -v grep | awk &apos;{print $2}&apos; 
-#kill 所以java程序
-ps -ef | grep java | grep -v grep | awk &apos;{print $2}&apos; | xargs kill -9
-</code></pre><h2 id="查看内存占用最高的程序"><a href="#查看内存占用最高的程序" class="headerlink" title="查看内存占用最高的程序"></a>查看内存占用最高的程序</h2><pre><code>ps -aux | sort -k4nr | head -20
-</code></pre><h2 id="端口占用"><a href="#端口占用" class="headerlink" title="端口占用"></a>端口占用</h2><pre><code>netstat -lnp|grep 8080
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/非阻塞同步算法与CAS-Compare-and-Swap-无锁算法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/22/非阻塞同步算法与CAS-Compare-and-Swap-无锁算法/" itemprop="url">非阻塞同步算法与CAS(Compare and Swap)无锁算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T11:41:33+08:00">
-                2019-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/22/非阻塞同步算法与CAS-Compare-and-Swap-无锁算法/" class="leancloud_visitors" data-flag-title="非阻塞同步算法与CAS(Compare and Swap)无锁算法">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  4.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  16
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="锁（lock）的代价"><a href="#锁（lock）的代价" class="headerlink" title="锁（lock）的代价"></a>锁（lock）的代价</h2><p>锁是用来做并发最简单的方式，当然其代价也是最高的。内核态的锁的时候需要操作系统进行一次上下文切换，加锁、释放锁会导致比较多的上下文切换和调度延时，等待锁的线程会被挂起直至锁释放。在上下文切换的时候，cpu之前缓存的指令和数据都将失效，对性能有很大的损失。操作系统对多线程的锁进行判断就像两姐妹在为一个玩具在争吵，然后操作系统就是能决定他们谁能拿到玩具的父母，这是很慢的。用户态的锁虽然避免了这些问题，但是其实它们只是在没有真实的竞争时才有效。</p>
-<p>Java在JDK1.5之前都是靠synchronized关键字保证同步的，这种通过使用一致的锁定协议来协调对共享状态的访问，可以确保无论哪个线程持有守护变量的锁，都采用独占的方式来访问这些变量，如果出现多个线程同时访问锁，那第一些线线程将被挂起，当线程恢复执行时，必须等待其它线程执行完他们的时间片以后才能被调度执行，在挂起和恢复执行过程中存在着很大的开销。锁还存在着其它一些缺点，当一个线程正在等待锁时，它不能做任何事。如果一个线程在持有锁的情况下被延迟执行，那么所有需要这个锁的线程都无法执行下去。如果被阻塞的线程优先级高，而持有锁的线程优先级低，将会导致优先级反转(Priority Inversion)。</p>
-<h2 id="乐观锁与悲观锁"><a href="#乐观锁与悲观锁" class="headerlink" title="乐观锁与悲观锁"></a>乐观锁与悲观锁</h2><p>独占锁是一种悲观锁，synchronized就是一种独占锁，它假设最坏的情况，并且只有在确保其它线程不会造成干扰的情况下执行，会导致其它所有需要锁的线程挂起，等待持有锁的线程释放锁。而另一个更加有效的锁就是乐观锁。所谓乐观锁就是，每次不加锁而是假设没有冲突而去完成某项操作，如果因为冲突失败就重试，直到成功为止。</p>
-<h2 id="volatile的问题"><a href="#volatile的问题" class="headerlink" title="volatile的问题"></a>volatile的问题</h2><p>与锁相比，volatile变量是一和更轻量级的同步机制，因为在使用这些变量时不会发生上下文切换和线程调度等操作，但是volatile变量也存在一些局限：不能用于构建原子的复合操作，因此当一个变量依赖旧值时就不能使用volatile变量。（参考：谈谈volatiile）</p>
-<p>volatile只能保证变量对各个线程的可见性，但不能保证原子性。为什么？见我的另外一篇文章：《为什么volatile不能保证原子性而Atomic可以？》</p>
-<h2 id="Java中的原子操作-atomic-operations"><a href="#Java中的原子操作-atomic-operations" class="headerlink" title="Java中的原子操作( atomic operations)"></a>Java中的原子操作( atomic operations)</h2><p>原子操作指的是在一步之内就完成而且不能被中断。原子操作在多线程环境中是线程安全的，无需考虑同步的问题。在java中，下列操作是原子操作：</p>
-<p>all assignments of primitive types except for long and double<br>all assignments of references<br>all operations of java.concurrent.Atomic* classes<br>all assignments to volatile longs and doubles<br>问题来了，为什么long型赋值不是原子操作呢？例如：</p>
-<p>long foo = 65465498L;</p>
-<p>实时上java会分两步写入这个long变量，先写32位，再写后32位。这样就线程不安全了。如果改成下面的就线程安全了：</p>
-<p>private volatile long foo;</p>
-<p>因为volatile内部已经做了synchronized.</p>
-<h2 id="CAS无锁算法"><a href="#CAS无锁算法" class="headerlink" title="CAS无锁算法"></a>CAS无锁算法</h2><p>要实现无锁（lock-free）的非阻塞算法有多种实现方法，其中CAS（比较与交换，Compare and swap）是一种有名的无锁算法。CAS, CPU指令，在大多数处理器架构，包括IA32、Space中采用的都是CAS指令，CAS的语义是“我认为V的值应该为A，如果是，那么将V的值更新为B，否则不修改并告诉V的值实际为多少”，CAS是项乐观锁技术，当多个线程尝试使用CAS同时更新同一个变量时，只有其中一个线程能更新变量的值，而其它线程都失败，失败的线程并不会被挂起，而是被告知这次竞争中失败，并可以再次尝试。CAS有3个操作数，内存值V，旧的预期值A，要修改的新值B。当且仅当预期值A和内存值V相同时，将内存值V修改为B，否则什么都不做。CAS无锁算法的C实现如下</p>
-<pre><code>int compare_and_swap (int* reg, int oldval, int newval) 
-{
-  ATOMIC();
-  int old_reg_val = *reg;
-  if (old_reg_val == oldval) 
-     *reg = newval;
-  END_ATOMIC();
-  return old_reg_val;
-}
-</code></pre><h2 id="CAS（乐观锁算法）的基本假设前提"><a href="#CAS（乐观锁算法）的基本假设前提" class="headerlink" title="CAS（乐观锁算法）的基本假设前提"></a>CAS（乐观锁算法）的基本假设前提</h2><p>CAS比较与交换的伪代码可以表示为：</p>
-<p>do{<br>       备份旧数据；<br>       基于旧数据构造新数据；<br>}while(!CAS( 内存地址，备份的旧数据，新数据 ))  </p>
-<p><img src="/images/pasted-10.png" alt="upload successful"></p>
-<p>（上图的解释：CPU去更新一个值，但如果想改的值不再是原来的值，操作就失败，因为很明显，有其它操作先改变了这个值。）</p>
-<p>就是指当两者进行比较时，如果相等，则证明共享数据没有被修改，替换成新值，然后继续往下运行；如果不相等，说明共享数据已经被修改，放弃已经所做的操作，然后重新执行刚才的操作。容易看出 CAS 操作是基于共享数据不会被修改的假设，采用了类似于数据库的 commit-retry 的模式。当同步冲突出现的机会很少时，这种假设能带来较大的性能提升。</p>
-<h2 id="CAS的开销（CPU-Cache-Miss-problem）"><a href="#CAS的开销（CPU-Cache-Miss-problem）" class="headerlink" title="CAS的开销（CPU Cache Miss problem）"></a>CAS的开销（CPU Cache Miss problem）</h2><p>前面说过了，CAS（比较并交换）是CPU指令级的操作，只有一步原子操作，所以非常快。而且CAS避免了请求操作系统来裁定锁的问题，不用麻烦操作系统，直接在CPU内部就搞定了。但CAS就没有开销了吗？不！有cache miss的情况。这个问题比较复杂，首先需要了解CPU的硬件体系结构：</p>
-<p><img src="/images/pasted-11.png" alt="upload successful"><br>上图可以看到一个8核CPU计算机系统，每个CPU有cache（CPU内部的高速缓存，寄存器），管芯内还带有一个互联模块，使管芯内的两个核可以互相通信。在图中央的系统互联模块可以让四个管芯相互通信，并且将管芯与主存连接起来。数据以“缓存线”为单位在系统中传输，“缓存线”对应于内存中一个 2 的幂大小的字节块，大小通常为 32 到 256 字节之间。当 CPU 从内存中读取一个变量到它的寄存器中时，必须首先将包含了该变量的缓存线读取到 CPU 高速缓存。同样地，CPU 将寄存器中的一个值存储到内存时，不仅必须将包含了该值的缓存线读到 CPU 高速缓存，还必须确保没有其他 CPU 拥有该缓存线的拷贝。</p>
-<p>比如，如果 CPU0 在对一个变量执行“比较并交换”（CAS）操作，而该变量所在的缓存线在 CPU7 的高速缓存中，就会发生以下经过简化的事件序列：</p>
-<p>CPU0 检查本地高速缓存，没有找到缓存线。<br>请求被转发到 CPU0 和 CPU1 的互联模块，检查 CPU1 的本地高速缓存，没有找到缓存线。<br>请求被转发到系统互联模块，检查其他三个管芯，得知缓存线被 CPU6和 CPU7 所在的管芯持有。<br>请求被转发到 CPU6 和 CPU7 的互联模块，检查这两个 CPU 的高速缓存，在 CPU7 的高速缓存中找到缓存线。<br>CPU7 将缓存线发送给所属的互联模块，并且刷新自己高速缓存中的缓存线。<br>CPU6 和 CPU7 的互联模块将缓存线发送给系统互联模块。<br>系统互联模块将缓存线发送给 CPU0 和 CPU1 的互联模块。<br>CPU0 和 CPU1 的互联模块将缓存线发送给 CPU0 的高速缓存。<br>CPU0 现在可以对高速缓存中的变量执行 CAS 操作了<br>以上是刷新不同CPU缓存的开销。最好情况下的 CAS 操作消耗大概 40 纳秒，超过 60 个时钟周期。这里的“最好情况”是指对某一个变量执行 CAS 操作的 CPU 正好是最后一个操作该变量的CPU，所以对应的缓存线已经在 CPU 的高速缓存中了，类似地，最好情况下的锁操作（一个“round trip 对”包括获取锁和随后的释放锁）消耗超过 60 纳秒，超过 100 个时钟周期。这里的“最好情况”意味着用于表示锁的数据结构已经在获取和释放锁的 CPU 所属的高速缓存中了。锁操作比 CAS 操作更加耗时，是因深入理解并行编程<br>为锁操作的数据结构中需要两个原子操作。缓存未命中消耗大概 140 纳秒，超过 200 个时钟周期。需要在存储新值时查询变量的旧值的 CAS 操作，消耗大概 300 纳秒，超过 500 个时钟周期。想想这个，在执行一次 CAS 操作的时间里，CPU 可以执行 500 条普通指令。这表明了细粒度锁的局限性。</p>
-<p>以下是cache miss cas 和lock的性能对比：</p>
-<p><img src="/images/pasted-12.png" alt="upload successful"></p>
-<h2 id="JVM对CAS的支持：AtomicInt-AtomicLong-incrementAndGet"><a href="#JVM对CAS的支持：AtomicInt-AtomicLong-incrementAndGet" class="headerlink" title="JVM对CAS的支持：AtomicInt, AtomicLong.incrementAndGet()"></a>JVM对CAS的支持：AtomicInt, AtomicLong.incrementAndGet()</h2><p>在JDK1.5之前，如果不编写明确的代码就无法执行CAS操作，在JDK1.5中引入了底层的支持，在int、long和对象的引用等类型上都公开了CAS的操作，并且JVM把它们编译为底层硬件提供的最有效的方法，在运行CAS的平台上，运行时把它们编译为相应的机器指令，如果处理器/CPU不支持CAS指令，那么JVM将使用自旋锁。因此，值得注意的是，CAS解决方案与平台/编译器紧密相关（比如x86架构下其对应的汇编指令是lock cmpxchg，如果想要64Bit的交换，则应使用lock cmpxchg8b。在.NET中我们可以使用Interlocked.CompareExchange函数）。</p>
-<p>在原子类变量中，如java.util.concurrent.atomic中的AtomicXXX，都使用了这些底层的JVM支持为数字类型的引用类型提供一种高效的CAS操作，而在java.util.concurrent中的大多数类在实现时都直接或间接的使用了这些原子变量类。</p>
-<p>Java 1.6中AtomicLong.incrementAndGet()的实现源码为：</p>
-<p>由此可见，AtomicLong.incrementAndGet的实现用了乐观锁技术，调用了sun.misc.Unsafe类库里面的 CAS算法，用CPU指令来实现无锁自增。所以，AtomicLong.incrementAndGet的自增比用synchronized的锁效率倍增。</p>
-<pre><code>public final int getAndIncrement() {  
-        for (;;) {  
-            int current = get();  
-            int next = current + 1;  
-            if (compareAndSet(current, next))  
-                return current;  
-        }  
-}  
-
-public final boolean compareAndSet(int expect, int update) {  
-    return unsafe.compareAndSwapInt(this, valueOffset, expect, update);  
-}
-</code></pre><p>下面是测试代码：可以看到用AtomicLong.incrementAndGet的性能比用synchronized高出几倍。</p>
-<p><img src="/images/pasted-13.png" alt="upload successful"></p>
-<h2 id="CAS的例子：非阻塞堆栈"><a href="#CAS的例子：非阻塞堆栈" class="headerlink" title="CAS的例子：非阻塞堆栈"></a>CAS的例子：非阻塞堆栈</h2><p>下面是比非阻塞自增稍微复杂一点的CAS的例子：非阻塞堆栈/ConcurrentStack 。ConcurrentStack 中的 push() 和 pop() 操作在结构上与NonblockingCounter 上相似，只是做的工作有些冒险，希望在 “提交” 工作的时候，底层假设没有失效。push() 方法观察当前最顶的节点，构建一个新节点放在堆栈上，然后，如果最顶端的节点在初始观察之后没有变化，那么就安装新节点。如果 CAS 失败，意味着另一个线程已经修改了堆栈，那么过程就会重新开始。</p>
-<pre><code>public class ConcurrentStack&lt;E&gt; {
-    AtomicReference&lt;Node&lt;E&gt;&gt; head = new AtomicReference&lt;Node&lt;E&gt;&gt;();
-    public void push(E item) {
-        Node&lt;E&gt; newHead = new Node&lt;E&gt;(item);
-        Node&lt;E&gt; oldHead;
-        do {
-            oldHead = head.get();
-            newHead.next = oldHead;
-        } while (!head.compareAndSet(oldHead, newHead));
-    }
-    public E pop() {
-        Node&lt;E&gt; oldHead;
-        Node&lt;E&gt; newHead;
-        do {
-            oldHead = head.get();
-            if (oldHead == null) 
-                return null;
-            newHead = oldHead.next;
-        } while (!head.compareAndSet(oldHead,newHead));
-        return oldHead.item;
-    }
-    static class Node&lt;E&gt; {
-        final E item;
-        Node&lt;E&gt; next;
-        public Node(E item) { this.item = item; }
-    }
-}
-</code></pre><p>在轻度到中度的争用情况下，非阻塞算法的性能会超越阻塞算法，因为 CAS 的多数时间都在第一次尝试时就成功，而发生争用时的开销也不涉及线程挂起和上下文切换，只多了几个循环迭代。没有争用的 CAS 要比没有争用的锁便宜得多（这句话肯定是真的，因为没有争用的锁涉及 CAS 加上额外的处理），而争用的 CAS 比争用的锁获取涉及更短的延迟。</p>
-<p>在高度争用的情况下（即有多个线程不断争用一个内存位置的时候），基于锁的算法开始提供比非阻塞算法更好的吞吐率，因为当线程阻塞时，它就会停止争用，耐心地等候轮到自己，从而避免了进一步争用。但是，这么高的争用程度并不常见，因为多数时候，线程会把线程本地的计算与争用共享数据的操作分开，从而给其他线程使用共享数据的机会。</p>
-<h2 id="CAS的例子3：非阻塞链表"><a href="#CAS的例子3：非阻塞链表" class="headerlink" title="CAS的例子3：非阻塞链表"></a>CAS的例子3：非阻塞链表</h2><p>以上的示例（自增计数器和堆栈）都是非常简单的非阻塞算法，一旦掌握了在循环中使用 CAS，就可以容易地模仿它们。对于更复杂的数据结构，非阻塞算法要比这些简单示例复杂得多，因为修改链表、树或哈希表可能涉及对多个指针的更新。CAS 支持对单一指针的原子性条件更新，但是不支持两个以上的指针。所以，要构建一个非阻塞的链表、树或哈希表，需要找到一种方式，可以用 CAS 更新多个指针，同时不会让数据结构处于不一致的状态。</p>
-<p>在链表的尾部插入元素，通常涉及对两个指针的更新：“尾” 指针总是指向列表中的最后一个元素，“下一个” 指针从过去的最后一个元素指向新插入的元素。因为需要更新两个指针，所以需要两个 CAS。在独立的 CAS 中更新两个指针带来了两个需要考虑的潜在问题：如果第一个 CAS 成功，而第二个 CAS 失败，会发生什么？如果其他线程在第一个和第二个 CAS 之间企图访问链表，会发生什么？</p>
-<p>对于非复杂数据结构，构建非阻塞算法的 “技巧” 是确保数据结构总处于一致的状态（甚至包括在线程开始修改数据结构和它完成修改之间），还要确保其他线程不仅能够判断出第一个线程已经完成了更新还是处在更新的中途，还能够判断出如果第一个线程走向 AWOL，完成更新还需要什么操作。如果线程发现了处在更新中途的数据结构，它就可以 “帮助” 正在执行更新的线程完成更新，然后再进行自己的操作。当第一个线程回来试图完成自己的更新时，会发现不再需要了，返回即可，因为 CAS 会检测到帮助线程的干预（在这种情况下，是建设性的干预）。</p>
-<p>这种 “帮助邻居” 的要求，对于让数据结构免受单个线程失败的影响，是必需的。如果线程发现数据结构正处在被其他线程更新的中途，然后就等候其他线程完成更新，那么如果其他线程在操作中途失败，这个线程就可能永远等候下去。即使不出现故障，这种方式也会提供糟糕的性能，因为新到达的线程必须放弃处理器，导致上下文切换，或者等到自己的时间片过期（而这更糟）。</p>
-<pre><code>public class LinkedQueue &lt;E&gt; {
-    private static class Node &lt;E&gt; {
-        final E item;
-        final AtomicReference&lt;Node&lt;E&gt;&gt; next;
-        Node(E item, Node&lt;E&gt; next) {
-            this.item = item;
-            this.next = new AtomicReference&lt;Node&lt;E&gt;&gt;(next);
-        }
-    }
-    private AtomicReference&lt;Node&lt;E&gt;&gt; head
-        = new AtomicReference&lt;Node&lt;E&gt;&gt;(new Node&lt;E&gt;(null, null));
-    private AtomicReference&lt;Node&lt;E&gt;&gt; tail = head;
-    public boolean put(E item) {
-        Node&lt;E&gt; newNode = new Node&lt;E&gt;(item, null);
-        while (true) {
-            Node&lt;E&gt; curTail = tail.get();
-            Node&lt;E&gt; residue = curTail.next.get();
-            if (curTail == tail.get()) {
-                if (residue == null) /* A */ {
-                    if (curTail.next.compareAndSet(null, newNode)) /* C */ {
-                        tail.compareAndSet(curTail, newNode) /* D */ ;
-                        return true;
-                    }
-                } else {
-                    tail.compareAndSet(curTail, residue) /* B */;
-                }
-            }
-        }
-    }
-}
-</code></pre><p>具体算法相见IBM Developerworks      </p>
-<h2 id="深入JVM的OS的无锁非阻塞算法"><a href="#深入JVM的OS的无锁非阻塞算法" class="headerlink" title="深入JVM的OS的无锁非阻塞算法"></a>深入JVM的OS的无锁非阻塞算法</h2><p>如果深入 JVM 和操作系统，会发现非阻塞算法无处不在。垃圾收集器使用非阻塞算法加快并发和平行的垃圾搜集；调度器使用非阻塞算法有效地调度线程和进程，实现内在锁。在 Mustang（Java 6.0）中，基于锁的 SynchronousQueue 算法被新的非阻塞版本代替。很少有开发人员会直接使用 SynchronousQueue，但是通过 Executors.newCachedThreadPool() 工厂构建的线程池用它作为工作队列。比较缓存线程池性能的对比测试显示，新的非阻塞同步队列实现提供了几乎是当前实现 3 倍的速度。在 Mustang 的后续版本（代码名称为 Dolphin）中，已经规划了进一步的改进。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/Centos7安装rabbitmq/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/22/Centos7安装rabbitmq/" itemprop="url">Centos7安装rabbitmq</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T11:38:24+08:00">
-                2019-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/22/Centos7安装rabbitmq/" class="leancloud_visitors" data-flag-title="Centos7安装rabbitmq">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  539
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>首先需要安装erlang，参考：<a href="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse" target="_blank" rel="noopener">http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</a></p>
-<pre><code>rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
-yum install erlang
-</code></pre><p>安装过程中会有提示，一路输入“y”即可。</p>
-<p>完成后安装RabbitMQ：</p>
-<p>先下载rpm：</p>
-<pre><code>wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm
-</code></pre><p>下载完成后安装：<br>        yum install rabbitmq-server-3.6.6-1.el7.noarch.rpm<br>完成后启动服务：</p>
-<pre><code>service rabbitmq-server start
-</code></pre><p>可以查看服务状态：</p>
-<pre><code>service rabbitmq-server status
-</code></pre><p><img src="/images/pasted-8.png" alt="upload successful"></p>
-<p>这里可以看到log文件的位置，转到文件位置，打开文件：</p>
-<p><img src="/images/pasted-9.png" alt="upload successful"></p>
-<p>这里显示的是没有找到配置文件，我们可以自己创建这个文件</p>
-<pre><code>cd /etc/rabbitmq/
-vi rabbitmq.config
-</code></pre><p>编辑内容如下：</p>
-<pre><code>[{rabbit, [{loopback_users, []}]}].
-</code></pre><p>这里的意思是开放使用，rabbitmq默认创建的用户guest，密码也是guest，这个用户默认只能是本机访问，localhost或者127.0.0.1，从外部访问需要添加上面的配置。</p>
-<p>保存配置后重启服务：</p>
-<pre><code>service rabbitmq-server stop
-service rabbitmq-server start
-</code></pre><p>此时就可以从外部访问了，但此时再看log文件，发现内容还是原来的，还是显示没有找到配置文件，可以手动删除这个文件再重启服务，不过这不影响使用</p>
-<pre><code>rm rabbit\@mythsky.log 
-service rabbitmq-server stop
-service rabbitmq-server start
-</code></pre><p>开放5672端口</p>
-<pre><code>firewall-cmd --zone=public --add-port=5672/tcp --permanent
-firewall-cmd --reload 
-</code></pre><p>开启管理UI：</p>
-<pre><code>rabbitmq-plugins enable rabbitmq_management
-firewall-cmd --zone=public --add-port=15672/tcp --permanent
-firewall-cmd --reload
-</code></pre><p>centos出现“FirewallD is not running”怎么办</p>
-<p>执行firewall-cmd –permanent –zone=public –add-port=3306/tcp，提示FirewallD is not running，如下图所示。</p>
-<p>通过systemctl status firewalld查看firewalld状态，发现当前是dead状态，即防火墙未开启。</p>
-<p>通过systemctl start firewalld开启防火墙，没有任何提示即开启成功。</p>
-<p>修改RabbitMQ配置<br>socket连接数过多时或mq无法启动时，可修改连接配置限制</p>
-<p>在CentOS7中，如果是以systemd方式管理rabbitmq服务，则需要修改rabbitmq的service文件。</p>
-<pre><code>vi /usr/lib/systemd/system/rabbitmq-server.service
-</code></pre><p>添加如下参数，其值请根据实际情况进行调整：</p>
-<pre><code>[Service]
-LimitNOFILE=16384
-重启rabbitmq即可
-
-systemctl daemon-reload
-
-systemctl restart rabbitmq-server
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/centos7-使用crontab-，tomcat-日志分割脚本/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/22/centos7-使用crontab-，tomcat-日志分割脚本/" itemprop="url">centos7 使用crontab ，tomcat 日志分割脚本</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-22T11:21:42+08:00">
-                2019-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/22/centos7-使用crontab-，tomcat-日志分割脚本/" class="leancloud_visitors" data-flag-title="centos7 使用crontab ，tomcat 日志分割脚本">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  324
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>yum install vixie-cron
-yum install vixie-cron
-</code></pre><h2 id="添加作业"><a href="#添加作业" class="headerlink" title="添加作业"></a>添加作业</h2><pre><code>crontab -e //编辑某个用户的cron服务
-0 * * * * /data/shell/split_catalina.sh //每小时执行
-</code></pre><h2 id="开机启动"><a href="#开机启动" class="headerlink" title="开机启动"></a>开机启动</h2><pre><code>vim /etc/rc.d/rc.local
-/sbin/service crond start
-</code></pre><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><pre><code>    　　crontab -u //设定某个用户的cron服务，一般root用户在执行这个命令的时候需要此参数
-
-    　　crontab -l //列出某个用户cron服务的详细内容
-
-    　　crontab -r //删除没个用户的cron服务
-
-    　　crontab -e //编辑某个用户的cron服务
-
-    　　比如说root查看自己的cron设置:crontab -u root -l
-
-    　　再例如，root想删除fred的cron设置:crontab -u fred -r
-
-    　　在编辑cron服务时，编辑的内容有一些格式和约定，输入:crontab -u root -e    
-</code></pre><h2 id="tomcat日志分割脚本"><a href="#tomcat日志分割脚本" class="headerlink" title="tomcat日志分割脚本"></a>tomcat日志分割脚本</h2><pre><code>#!/bin/sh
-function publish(){
-    cd $1
-    y=`date &quot;+%Y&quot;`
-    m=`date &quot;+%m&quot;`
-    d=`date &quot;+%d&quot;`
-    H=`date &quot;+%H&quot;`
-    dataStr=$y-$m-$d
-    echo $dataStr
-    if [ ! -d $dataStr ];then
-        echo &quot;创建文件夹&quot;$dataStr
-        mkdir $dataStr
-        else
-    echo &quot;文件夹已经存在&quot;
-    fi
-    cd $dataStr
-    if [ ! -d $H ];then
-        mkdir $H
-        cd $H
-        echo &quot;创建文件夹&quot;$H
-        cp ../../catalina.out catalina.out.$y-$m-$d-$H
-        touch &gt; ../../catalina.out
-        else
-        echo &quot;文件夹已经存在&quot;
-    fi
-    #cd .
-    #cp catalina.out catalina.out.$y$m$d
-    #echo &gt; catalina.out
-    #exit
-}
-publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所在位置
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -3211,7 +3215,7 @@ publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所�
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -3233,7 +3237,7 @@ publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -3348,7 +3352,7 @@ publish &quot;/data/tomcat/tomcat-8080/logs&quot;//修改tomcat日志文件所�
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">43.9k</span>
+    <span title="Site words total count">52.2k</span>
   
 </div>
 

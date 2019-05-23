@@ -302,6 +302,1093 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/23/Windows-双网卡路由配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/23/Windows-双网卡路由配置/" itemprop="url">Windows 双网卡路由配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-23T16:42:37+08:00">
+                2019-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/23/Windows-双网卡路由配置/" class="leancloud_visitors" data-flag-title="Windows 双网卡路由配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  181
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#删除默认路由</span><br><span class="line">route delete 0.0.0.0 </span><br><span class="line">##添加外网路由</span><br><span class="line">route add 0.0.0.0 mask 0.0.0.0 192.168.0.1 metric 4 -p</span><br><span class="line">##添加内网路由</span><br><span class="line">route add 194.168.13.0 mask 255.255.255.0 194.168.13.1 -p</span><br><span class="line">##添加内网其他地址映射</span><br><span class="line">route add 172.18.16.0 mask 255.255.255.0 194.168.13.1 -p</span><br><span class="line"></span><br><span class="line">route add 172.18.13.0 mask 255.255.255.0 194.168.13.1 -p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http://172.18.16.11:5050/tcjg/api/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">route delete 194.168.13.0</span><br><span class="line">route delete 172.18.16.0</span><br><span class="line">route delete 172.18.13.0</span><br><span class="line"></span><br><span class="line">##查看路由配置</span><br><span class="line">route print -4</span><br><span class="line"></span><br><span class="line">##查看网关接口</span><br><span class="line">arp -a</span><br><span class="line">##指定路由接口</span><br><span class="line">route add 172.18.16.0 mask 255.255.255.0 194.168.13.1 IF 0x10 -p</span><br><span class="line"></span><br><span class="line">route add 172.18.13.0 mask 255.255.255.0 194.168.13.1 IF 0x10 -p</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/07/04、执行意图：大脑服从「自动程序」，对抗拖延症/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/07/04、执行意图：大脑服从「自动程序」，对抗拖延症/" itemprop="url">04、执行意图：大脑服从「自动程序」，对抗拖延症</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-07T18:29:00+08:00">
+                2019-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/07/04、执行意图：大脑服从「自动程序」，对抗拖延症/" class="leancloud_visitors" data-flag-title="04、执行意图：大脑服从「自动程序」，对抗拖延症">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>每个人都可以雄心壮志，只有赢家才能付诸实行。</p>
+<p>不过只是上传音频、修全文稿、联络不同老师等等的庶务…我都常常犯拖延症，无限接近ddl才开工。</p>
+<p>但邓亚萍面对的任务，是穿着20斤的沙衣、戴着5斤的负重带，每天持续挥拍上千下；从26个字母都认不全，到成为剑桥博士学霸。</p>
+<p>今天想问她：面对让人烦躁的琐事，世界冠军怎么坚持做下去？</p>
+<p><img src="/images/pasted-71.png" alt="upload successful"></p>
+<p>早上好，我是邓亚萍，你的冠军心态教练。今天，你准备好成为更不拖延的自己了吗？</p>
+<p>接下来这节课，我要先跟你说一说我的经验。</p>
+<p>我要告诉你，我是如何在退役以后，从26个字母都认不全，到后来英文程度好到，可以让我拿到剑桥大学的博士。</p>
+<p>更重要的，我会帮你从我的经验中，提炼出一个专业心理学的小技巧，让你能像控制电脑程序一样，控制你自己，自动自发去做一件事。</p>
+<p>啥意思？简单来说，就是让你在不想读书学习的时候，还能自动自发去读书学习，让你在不想工作的时候呢，也能够自动自发去工作。</p>
+<p>这个效果，听上去是不是很神奇？其实啊，大多数的运动员，尤其是顶尖运动员，都有这个能力。</p>
+<p>你肯定看过一种报导，说咱们运动员，尤其是最顶尖的运动员哈，训练都特别刻苦。这话呢说得没错。</p>
+<p>但是呢，这种报导通常也会说，运动员有多热爱各种训练，这个话呢，就不完全对了。</p>
+<p>就我所知，很多优秀的运动员，训练都很勤快，但你问起他，你喜欢训练吗？他也会说：「训练有时候也挺烦的」。</p>
+<p>这是不是跟你想象的不一样？我说的更直接一点，基本上，顶尖运动员都掌握了一种小方法，就算我们并不特别喜欢做一件事，觉得这件事枯燥乏味，我们还是能坚持去做。</p>
+<p>我举我的故事给你听哈！当然，我说我自己不喜欢训练，你肯定不信。所以我今天，是要跟你讲讲我学英文的故事。</p>
+<p>我24岁退役后，被当时的奥运委员会主席，萨马兰奇先生任命为国际奥委会的委员，但问题来了，奥委会委员，是要说英文的啊！这代表我必须要去学英文啊！</p>
+<p>可是我打了一辈子的乒乓球，根本没啥时间学习，英文当然是不好。你知道我的程度多差吗？我就连26个英文字母，都认不全！</p>
+<p>在这种状况下，我要把英文学好，真的要下很大的苦功夫。</p>
+<p>我给自己定了计划，一切从头开始，从第一个字母、第一个单词背起，一天保证14个小时的学习时间，每天早上5点准时起床，读音标、背单词、练听力，晚上呢？就整理讲义，温习功课，直到深夜12点。</p>
+<p>很吓人，对吧？一开始，我还能靠打鸡血强行支撑，但我很快就发现，人的意志力是有限的，我也会有倦怠，甚至想拖延的时候。</p>
+<p>比如说我有时候学习得太晚，睡得不好，我也会想要赖床，打开书本后，我偶儿也会觉得不想学习，不想背单字，想去做其他事。</p>
+<p>我很诚实地说，跟你一样，我当然也不喜欢背单字、我当然也觉得每天做同样的事很枯燥。</p>
+<p>但是，我还是坚持了我的读书计划，每天学习英文14个小时，持续了三年。</p>
+<p>我是怎么办到的？简单说，我是把「背单字」这个事，想象成我在训练场练球。</p>
+<p>说的更具体一点，我是清楚地告诉自己：<strong><em> 就像到了训练场，就马上要练正手击球500球，我一坐到书桌前，就是要先背20个单字！</em></strong></p>
+<p>就这么简单！</p>
+<p>一但我不断的告诉自己，到书桌前，不管怎样就是要背20个单字，并且一次又一次实践，到了后来，如果我到了书桌前却不背单字，我还觉得难受。</p>
+<p>就凭我这种「条件式反应」，三年后，我在清华的毕业典礼上，可是用全英文跟老师致辞的呢！</p>
+<p>学英文的人那么多，但我能成功，是因为什么？我说给你听。</p>
+<p>一般人呢，在做计划的时候，都不会考虑到各种临时的状况，也通常都会高估自己的意志力。</p>
+<p>就比如学英文，很多人的目标都是每天背100个单字，但大部分的人，到了最后，也会去找各式各样、五花八门的理由，说服自己今天可以自己放一天假，不用那么辛苦。</p>
+<p>拖延了一次，就会继续拖延第二次…</p>
+<p>但是，为啥顶尖运动员，通常没有这种问题呢？为啥我们即使不喜欢训练，我们还是可以坚持持续训练好几年呢？</p>
+<p>这是因为，这些运动员已经锻炼好自己的大脑。面对枯燥的训练，我们是用「条件反射」去督促自己去锻炼。</p>
+<p>就拿我为例，以前我每天去晨练，都要练习辉拍几千下。但我的教练会反复跟我说，我自己也会反复跟自己说：邓亚萍，如果到了球馆，你就是要马上打500个正手拍！</p>
+<p>久而久之，我的大脑，就好像被写入了一个程式，看到球馆，就算身体很累，心情上也不想练习，但我还会很自然地拿起球拍，挥个500下，不挥都不行。</p>
+<p>后来，我才知道，这是一个心理学上的专有名词，叫做「执行意图」，英文叫做Implementation Intention。</p>
+<p>它的意思是什么呢？用一句话来描述，意思就是：大脑不喜欢你给他问题，大脑喜欢你给他答案。</p>
+<p>什么叫大脑不喜欢你给他问题？你理性上想好好学英文，但感性上却又觉得背单字很烦，这对大脑来说，就是一个问题。大脑不喜欢解决问题，最后就是掷色子，有时候理性赢，有时候感性赢。</p>
+<p>但如果，在问题发生以前，你曾经给自己，明确设定过一个答案呢？那你的大脑就会很乐意，依照你下过的指令去做。</p>
+<p>这种指令，是不需要经过思考，在潜意识中完成的，也就是说，就算你的心理很纠结，你的身体也会自动自发去做的。</p>
+<p>你不相信吗？我告诉你，这个心理效应，就是顶尖运动员的秘密。顶尖运动员也是人，重复同样的事情，心里也同样会倦怠的，但顶尖赢家跟普通人的差别是什么呢？赢家靠着「执行意图」，Implementation Intention，还是能坚持下来。</p>
+<p>解释完原理，我来跟你说说，具体该怎么做。</p>
+<p>简单来说，就是把你要做的事，和一个具体的场景，连结在一起，用一个非常明确的条件句，告诉你的大脑：一但我到了Ｘ场景，我就要做Ｙ事。</p>
+<p>比如说，我说过的，一到书桌前，就背20个单字啦，或是：一到公司、坐上工位，就马上和3个客户沟通，甚至是，一起床，就听一则《奥运冠军的心力训练法》，这也可以。</p>
+<p>哈哈！聪明的你，肯定能够举一反三，以此类推的。</p>
+<p>只是，我要提醒你，「执行意识」这个技巧，也有两个注意事项。</p>
+<p>第一个注意事项，这个条件句，不管是场景还是要做的事，都是越明确越好。不管是从我的经验，还是从专业的运动心理学来说，越是明确的场景和明确的待办事项，越是能发挥好效果。</p>
+<p>第二个注意事项，「执行意识」这个方法，需要你通过不断的实践，来加强条件反射的程度。尤其在刚开始使用个技巧的时候，要更注意，尽量不要破坏，你自己给自己定的规则，有了Ｘ场景，就一定要做Ｙ事，坐到书桌前，就一定要背20个单词，这样才会加强你下意识的条件反射。</p>
+<p>最后，我来总结一下今天的课程。</p>
+<p>第一，大脑不喜欢僵局，大脑喜欢你给它具体的指示。</p>
+<p>第二，要给大脑指示，可以是如果我到X场景，我就必须做Y事</p>
+<p>我是邓亚萍，我们下次见！</p>
+<p>今天也不出思考题给你，请你分享一下，你有什么厉害的大目标，需要靠执行意识来解决呢？回答走心的评论人，就有可能和我互动，我亲自来回答你，怎么解决你的问题呦！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/07/Markdown基本语法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/07/Markdown基本语法/" itemprop="url">Markdown基本语法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-07T08:57:00+08:00">
+                2019-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/07/Markdown基本语法/" class="leancloud_visitors" data-flag-title="Markdown基本语法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><h3 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h3><p>Markdown支持6种级别的标题，对应html标签 h1 ~ h6</p>
+<h1 id="h1"><a href="#h1" class="headerlink" title="h1"></a>h1</h1><h2 id="h2"><a href="#h2" class="headerlink" title="h2"></a>h2</h2><h3 id="h3"><a href="#h3" class="headerlink" title="h3"></a>h3</h3><h4 id="h4"><a href="#h4" class="headerlink" title="h4"></a>h4</h4><h5 id="h5"><a href="#h5" class="headerlink" title="h5"></a>h5</h5><h6 id="h6"><a href="#h6" class="headerlink" title="h6"></a>h6</h6><p>以上标记效果如下：<br>h1<br>h2<br>h3<br>h4<br>h5<br>h6<br>除此之外，Markdown还支持另外一种形式的标题展示形式，其类似于 Setext 标记语言的表现形式，使用下划线进行文本大小的控制</p>
+<h1 id="这是一级标题"><a href="#这是一级标题" class="headerlink" title="这是一级标题"></a>这是一级标题</h1><h2 id="这是二级标题"><a href="#这是二级标题" class="headerlink" title="这是二级标题"></a>这是二级标题</h2><p>这种处理方式在Github的一些开源工程上面比较常见，显而易见的缺点是：文字大小控制级别有限。</p>
+<h2 id="段落及区块引用"><a href="#段落及区块引用" class="headerlink" title="段落及区块引用"></a>段落及区块引用</h2><p>需要记住的是，Markdown其实就是一种易于编写的普通文本，只不过加入了部分渲染文本的标签而已。其最终依然会转换为html标签，因此使用Markdown分段非常简单，前后至少保留一个空行即可。<br>而另外一个比较常见的需求就是，我们可能希望对某段文字进行强调处理。Markdown提供了一个特殊符号&gt;用于段首进行强调，被强调的文字部分将会高亮显示</p>
+<blockquote>
+<p>这段文字将被高亮显示…</p>
+</blockquote>
+<h3 id="插入链接或图片"><a href="#插入链接或图片" class="headerlink" title="插入链接或图片"></a>插入链接或图片</h3><p>Markdown针对链接和图片的处理也比较简单，可以使用下面的语法进行标记</p>
+<p><a href="http://www.baidu.com" target="_blank" rel="noopener">http://www.baidu.com</a></p>
+<p><a href="http://www.baidu.com" target="_blank" rel="noopener">点击跳转至百度</a><br><img src="https://upload-images.jianshu.io/upload_images/703764-605e3cc2ecb664f6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片"></p>
+<p>注： 引用图片和链接的唯一区别就是在最前方添加一个感叹号。<br>列表</p>
+<h3 id="Markdown支持有序列表和无序列表两种形式："><a href="#Markdown支持有序列表和无序列表两种形式：" class="headerlink" title="Markdown支持有序列表和无序列表两种形式："></a>Markdown支持有序列表和无序列表两种形式：</h3><p>无序列表使用*或+或-标识<br>有序列表使用数字加.标识，例如：</p>
+<ul>
+<li>黄瓜</li>
+<li>玉米</li>
+<li>茄子</li>
+</ul>
+<ul>
+<li>黄瓜</li>
+<li>玉米</li>
+<li>茄子</li>
+</ul>
+<ul>
+<li>黄瓜</li>
+<li>玉米</li>
+<li>茄子</li>
+</ul>
+<ol>
+<li>黄瓜</li>
+<li>玉米</li>
+<li>茄子</li>
+</ol>
+<p>注：这里比较有趣的地方是，对于有序列表，Markdown将只关注你的第一个项目的数字编号。例如：如果第一个项目编号是3，以此类推，第二个项目应该是4，最终将显示为3、4、5。而如果你指定了第一个编号，后面的编号指定错误也没有关系，Markdown将只在乎你的第一个项目编号。<br>使用列表的一些注意事项<br>如果在单一列表项中包含了多个段落，为了保证渲染正常，*与段落首字母之间必须保留四个空格</p>
+<ul>
+<li><p>段落一</p>
+<p>小段一</p>
+</li>
+<li><p>段落二</p>
+<p>小段二</p>
+</li>
+</ul>
+<p>另外，如果在列表中加入了区块引用，区域引用标记符也需要缩进4个空格</p>
+<ul>
+<li>段落一<blockquote>
+<p>区块标记一</p>
+</blockquote>
+</li>
+<li>段落二<blockquote>
+<p>区块标记二</p>
+</blockquote>
+</li>
+</ul>
+<p>注：记住一个原则，如果在和列表配合使用的时候出现了问题，就缩进一次，四个空格或者一个制表符代表一次缩进。如果一次缩进没有解决问题，那就两次。</p>
+<h3 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h3><p>有时候，为了排版漂亮，可能会加入分隔线。Markdown加入分隔线非常简单，使用下面任意一种形式都可以</p>
+<hr>
+<hr>
+<p>产生分隔线的语法要求比较松，符号之间添加空格也可以。<br>强调<br>有时候，我们希望对某一部分文字进行强调，使用*或_包裹即可。使用单一符号标记的效果是斜体，使用两个符号标记的效果是加粗</p>
+<p><em>这里是斜体</em></p>
+<p><em>这里是斜体</em></p>
+<p><strong>这里是加粗</strong></p>
+<p><strong>这里是加粗</strong></p>
+<h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><h3 id="插入代码块"><a href="#插入代码块" class="headerlink" title="插入代码块"></a>插入代码块</h3><p>Markdown在IT圈子里面比较流行的一个重要原因是，它能够轻松漂亮地插入代码。<br>方法是，使用反引号 进行包裹即可。如果是行内代码引用，使用单个反引号进行包裹<br>这是一段var x = 3行内代码<br>如果插入一整段代码，需要至少使用两个以上反引号进行包裹， 看效果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fun (x: Int, y: Int): Int &#123;</span><br><span class="line">  return x + y</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注：很多人不知道怎么输入反引号。在英文模式下，找到键盘最左侧esc键下面的第一个键点击即可。</p>
+<h3 id="插入表格"><a href="#插入表格" class="headerlink" title="插入表格"></a>插入表格</h3><p>表格是Markdown语法中比较复杂的一个，其语法如下：</p>
+<p>表头|条目一|条目二</p>
+<p>:—:|:—:|:—:</p>
+<p>项目|项目一|项目二</p>
+<p>以上标记显示效果如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Left Aligned</th>
+<th style="text-align:center">Center Aligned</th>
+<th style="text-align:right">Right Aligned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">col 3 is</td>
+<td style="text-align:center">some wordy text</td>
+<td style="text-align:right">$1600</td>
+</tr>
+<tr>
+<td style="text-align:left">col 2 is</td>
+<td style="text-align:center">centered</td>
+<td style="text-align:right">$12</td>
+</tr>
+<tr>
+<td style="text-align:left">zebra stripes</td>
+<td style="text-align:center">are neat</td>
+<td style="text-align:right">$1</td>
+</tr>
+</tbody>
+</table>
+<p>注：三个短斜杠左右的冒号用于控制对齐方式，只放置左边冒号表示文字居左，只放置右边冒号表示文字居右，如果两边都放置冒号表示文字居中。<br>其它</p>
+<h2 id="特殊符号处理"><a href="#特殊符号处理" class="headerlink" title="特殊符号处理"></a>特殊符号处理</h2><p>Markdown使用反斜杠\插入语法中用到的特殊符号。在Markdown中，主要有以下几种特殊符号需要处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">\   反斜线</span><br><span class="line">`   反引号</span><br><span class="line">*   星号</span><br><span class="line">_   底线</span><br><span class="line">&#123;&#125;  花括号</span><br><span class="line">[]  方括号</span><br><span class="line">()  括弧</span><br><span class="line">#   井字号</span><br><span class="line">+   加号</span><br><span class="line">-   减号</span><br><span class="line">.   英文句点</span><br><span class="line">!   惊叹号</span><br></pre></td></tr></table></figure></p>
+<p>例如，如果你需要插入反斜杠，就连续输入两个反斜杠即可：\ =&gt; \ 。<br>注：在内容中输入以上特殊符号的时候一定要注意转义，否则将导致内容显示不全，甚至排版混乱。<br>如何给文字上色<br>使用Markdown的同学最郁闷的地方恐怕就是不能给文字添加颜色了。事实上，Markdown的最初目标就是为纯写作而生的。因此，它并没有考虑文字颜色这一点。所以，单纯使用Markdown设置文字颜色已经做不到了。但你可以这样做：</p>
+<h2 id="Macdown"><a href="#Macdown" class="headerlink" title="Macdown"></a>Macdown</h2><p>如果你愿意花钱的话，一些收费产品其实更好。例如：Byword，Ulysses，Typora等等都很不错。<br>日常使用，我就用Macdown。写书，我就用Ulysses。<br>简单总结<br>Markdown是一门比html更简单的标记语言，其主要用于日常写作。最终通过相应的编辑器或者脚本转换成html用于页面渲染。如果你是一个作家，或者是一个程序员，Markdown对你来说是一门必备的技能。掌握Markdown真的很简单，如你所见，这篇文章使用了这么短的篇幅就已经将Markdown的语法全部介绍完了。<br>不过，由于Markdown基础语法的限制，出现了一些针对Markdown语法的加强版本。它支持的语法特性更多，但这不是我们这篇文章的讨论范围。如果你希望快速掌握Markdown，很简单，动起来吧！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/07/05、例外控制：如何既保证休息，又保证高效/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/07/05、例外控制：如何既保证休息，又保证高效/" itemprop="url">05、例外控制：如何既保证休息，又保证高效</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-07T08:40:00+08:00">
+                2019-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/07/05、例外控制：如何既保证休息，又保证高效/" class="leancloud_visitors" data-flag-title="05、例外控制：如何既保证休息，又保证高效">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>印象中的邓亚萍，是个「铁人」。为了训练，可以永远不用休息。这也是中国媒体，对顶尖运动员常用的报道方法。</p>
+<p>不把他们当人，而把他们当神。</p>
+<p>但第一次和邓亚萍聊天，她就出口反对：「真正有效率的人，都懂得休息、放松」。</p>
+<p>所以，我今天想问她的是：世界冠军是如何确保休息和放松，又能同时保持高效率的呢？</p>
+<p><img src="/images/pasted-65.png" alt="upload successful"></p>
+<p>今天这八分钟，我想分享的内容，和我的「人设」不太符合。</p>
+<p>因为我要来教你，放松和休息的技巧。聊聊我们该怎么做，才能够在保证休息质量的情况下，避免进一步的拖延症。</p>
+<p>听到这，一些比较积极的同学，肯定就不乐意了：「亚萍姐！你不是上次才教过我们，怎么像机器人一样，对抗偷懒吗？」</p>
+<p>没错，执行力的最高境界，是跟机器人一样，做了计划就能执行。</p>
+<p>但就算是机器人，也需要定期检查维修。咱们终究是普通人，有些特别的「例外状况」，适当的放松也是必须的。</p>
+<p><img src="/images/pasted-66.png" alt="upload successful"></p>
+<p>我自己学英语的经验，也是如此。</p>
+<p>因为我每天都学习超过12小时，有的时候，实在是太累了，这时候硬要爬起来，也是迷迷糊糊，不仅单词背不进去，书读了也记不住。索性还不如多睡半小时，等精神更好一点，才能事半功倍。</p>
+<p>读书如此，运动员也是一样。现代的运动科学，会及时的监控运动员的身体，如果肌肉过于疲劳了，教练肯定也会叫停训练，让你休息调整一下再来。</p>
+<p>所以咱们今天说的第一件事：千万不要逼着自己一直工作、一直学习。</p>
+<p>比偷懒更可怕的，是时间耗费在自我责备中，同时还一事无成。</p>
+<p>但是，给自己放松的最大问题，是最怕「开小差变真偷懒」。</p>
+<p>原本只是想眯个十分钟，结果最后就睡了一小时。或是睡醒后，就想多玩两下手机。</p>
+<p>这种偷懒的状况，是不是你也有经历过？</p>
+<p>这种情况，在运动员身上，其实同样常见。我把它叫做「开小差变真偷懒」。</p>
+<p>很多人都知道，运动员最害怕的是伤病。</p>
+<p>但是，一方面是现在医学有很大进步，可以控制伤病。另一方面，很多时候，身体的状态也不绝对影响表现。</p>
+<p>现在NBA雷霆队的保罗乔治 Paul George，也是在伤病后打出生涯最佳的成绩；而我自己呢，更是在伤病缠身的状况下，还拿到1996年的奥运金牌。</p>
+<p><img src="/images/pasted-67.png" alt="upload successful"></p>
+<p>所以很多时候，伤病最可怕的，不是伤病本身，而是它会消磨人的意志，让人的精神脱离高强度的竞争状态。</p>
+<p>伤病的时候，运动员会突然拥有大量的休息时间。在这个时间里面，啥都不能干。一下子松懈下来，一些人身材就开始走样了，也有一些人，心态就松弛了。</p>
+<p>总之，这些人就算伤病痊愈了，也基本废掉了。</p>
+<p>换句话说，伤病不可怕，这种「伤病变偷懒」的心态，才是最可怕的。</p>
+<p>无论是开小差变真偷懒，还是伤病变偷懒，背后的问题是一样的。</p>
+<p>所以重点是，比起那些心态松弛的运动员，为啥有些运动员，能从伤病中振作？</p>
+<p>差别在于一个小技巧，这个技巧，叫做「例外控制」。</p>
+<p><img src="/images/pasted-68.png" alt="upload successful"></p>
+<p>面对突如其来的休整，松弛下来的球员，真的会像放假一样，原本要用来训练的时间，就用来打游戏、或做与训练无关的事。</p>
+<p>但能够从伤病中走出来的球员，都有一个特色，即使是什么都不能干的状态，这些球员，还是会制定严格的「训练日程」。</p>
+<p>你打开这个计划，你会看到，上面会有对比赛视频的复盘、会有适当的康复训练。甚至连休息、吃饭甚至睡觉的时间，都规定得一清二楚。</p>
+<p>这两种运动员的行动，究竟差在哪？</p>
+<p>其实，跟意志力没多大关系。</p>
+<p>从心理学上的观点来说，人一但想要开小差，想要休息一下，这种时候，感性的一面，通常就会接管大脑，而一旦感性的一面接管，那理性大脑就没啥事了。</p>
+<p>这也就是为什么，那些让感性大脑接管的运动员，会整个垮掉；这也是为什么，明明只是想打盹五分钟，最后就会拖延犯懒，一个小时都给耗没了。</p>
+<p>反过来说，为什么厉害的运动员，能够在伤病中，还能有好表现？就是因为，虽然是休整阶段，但我们还是能用理性大脑、甚至是靠潜意识去控制我们自己。</p>
+<p><img src="/images/pasted-69.png" alt="upload successful"></p>
+<p>图注：姚明在受伤后，仍然能坚持训练。</p>
+<p>这是怎么做到的？</p>
+<p>其实方法很简单，就像上一堂课《执行意图》里说的一样：<strong>大脑喜欢事先设定的答案，如果你早就已经设定过「该怎么应对例外状况」，那大脑就更有可能乖乖听话。</strong></p>
+<p>厉害的运动员，是用详细的计划，控制自己在休整的时间不被偷懒的情绪接管。这就是一种「例外控制」的做法。</p>
+<p><img src="/images/pasted-70.png" alt="upload successful"></p>
+<p>所以，你在日常生活中，又可以怎样使用这个技巧呢？</p>
+<p>简单来说，就是提前设定一个条件句：<strong>「如果发生Ｘ例外情况，那么就应该做Ｙ事。」</strong></p>
+<p>这里的Y事，就是根据你的状况，可以被接受的休息计划。</p>
+<p>同样以早起背单词为例，你可以提前就跟自己设定：</p>
+<p>如果早上真的起不来，那可以允许自己多睡半小时；</p>
+<p>如果还是困，那么先起床刷个牙，不用背单词，出去跑步。</p>
+<p>如果中间单词背不下来，那么可以听听音乐、打打鸡血。</p>
+<p>虽然多睡半小时，或是出去跑步，看起来都是放松，但是比起让感性大脑彻底接管，睡掉一个早上，这已经是相对有效率的方式了。</p>
+<p>有了这些设定，就可以控制自己，在遇到例外状况，想要放松的时候，不会一放松就松懈、一放松就崩溃。</p>
+<p>因为遇到这些例外状况，首先启动的是你的理性大脑，你马上就能找到事先做好的预案。而不是手足无措，立刻被感性大脑接管。</p>
+<p>当然，设定例外状况，也有注意事项。</p>
+<p>第一，对应不同的例外状况，采取的行动一定要明确。</p>
+<p>比如说，你可以说：早上起不来，那就多睡半小时；但你不能说，早上起不来，就睡到饱为止。</p>
+<p>第二，就算有例外状况，整体的目标，也不能有大的变动。</p>
+<p>比如说，今天预计要背100个单词，却因为起晚了，只能背80个。那少背的单词呢，就要平摊到接下来三天里，每天多背一些单词。不能让例外状况，干扰到整体进度。</p>
+<p>好啦，我为你总结一下今天的课程。</p>
+<p>第一，不要逼迫自己一直在工作，主动放松才能更好进步。</p>
+<p>第二，休息的时候，「感性大脑」很容易就会接管大脑，让人控制不了惰性。</p>
+<p>第三，可以设定一个「如果发生Ｘ例外情况，那么就可以做Ｙ事」的条件句，拒绝感性大脑接管。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/07/06、自我激励：学会30度原则，才能时刻保持耐心/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/07/06、自我激励：学会30度原则，才能时刻保持耐心/" itemprop="url">06、自我激励：学会30度原则，才能时刻保持耐心</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-07T08:34:54+08:00">
+                2019-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/07/06、自我激励：学会30度原则，才能时刻保持耐心/" class="leancloud_visitors" data-flag-title="06、自我激励：学会30度原则，才能时刻保持耐心">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>看过一个心理学实验，说学者发现鼓励小孩，不要说「你真聪明」，要说「你真用功」。</p>
+<p>因为只有这样，小孩才会更加努力。</p>
+<p>但成年的一个标志，就是不再奢望别人的称赞。</p>
+<p>因此，怎样做好自我鼓励，是今天「心力训练法」的主题。</p>
+<p><img src="/images/pasted-58.png" alt="upload successful"></p>
+<p><img src="/images/pasted-59.png" alt="upload successful"><br>早上好，我是邓亚萍。你的冠军心态教练。今天我要跟你一起锻炼的，是给自己打气的技巧，我要教你怎样给自己打鸡血、怎样自我鼓励，才会发挥最好的效果。</p>
+<p>生活中，需要给自己打鸡血的状况，实在太多了！尤其你回想一下，你最近有没有碰到一些重要的事，但你却没有百分百的把握？</p>
+<p>比如说，明天就要考试了，但还有一些地方没有读熟；</p>
+<p>或着要去面试，却也不确定自己是不是符合对方的需求；</p>
+<p>甚至是要跟领导做个汇报，怎么准备都还是觉得准备不够。</p>
+<p>这种时候，你就需要给自己打打气，鼓励自己。但你也要小心哦！有的时候，鸡血打得不好，反而会有反效果，让你越来越紧张。</p>
+<p><img src="/images/pasted-60.png" alt="upload successful"><br>我从五岁开始打乒乓球，到十六岁第一次拿到世界冠军之前，也有几次超重要的比赛，比如说，一场定生死，决定我能不能进国家队的比赛，我也是紧张得不得了，觉都没睡好。</p>
+<p>现在回想起来，我会这么紧张，其中一个原因，就是我给自己打鸡血的方式不对。</p>
+<p>我当时，是怎么给自己打气的呢？</p>
+<p>跟很多人一样，我不断地跟自己说：「邓亚萍！你是最棒的！你一定能赢！」</p>
+<p>这样给自己打鸡血，当下确实很激动、很有效果。</p>
+<p>但问题是什么呢？这种话说多了，我自己也不信呀！</p>
+<p><img src="/images/pasted-61.png" alt="upload successful"><br>比如说，在当时，我集中练习正手拍，这是我的优势之处，但毕竟年纪还小，被针对性对付，欺负我反手拍不行的时候，我还是很难受的。在这样的状况下，「我最棒」这种话，真的很像纯粹的心灵鸡汤，根本很难激励到我。</p>
+<p>尤其在我发挥不好的时候，如果想起来我对自己打的鸡血：「邓亚萍！你是最棒的！你一定能赢！」</p>
+<p>我反而会反过来问自己：「邓亚萍，你凭什么是最棒的？你凭什么一定能赢？」。</p>
+<p>没错，我越是跟自己打气：我最棒，我一定能赢，这反而让我，更不相信自己一定能赢。</p>
+<p>甚至有几次，在正式比赛中，我越是跟自己说，你最棒！你一定能赢！，我反而更在意自己上一球的失误，因为好像我自己辜负了自己，我的表现配不上「我一定能赢」的自我打气。</p>
+<p>就是这种自我质疑的心情，让我在好几次的比赛，都没办法发挥最棒的状态。</p>
+<p>幸好，我打球的过程中，我从来不是单打独斗，我一直有很棒的教练陪着我，不然，可能我一辈子都不会知道，该怎样正确地给自己打气。</p>
+<p><img src="/images/pasted-62.png" alt="upload successful"><br>尤其在乒乓球这项运动，教练跟运动员的关系特别紧密，我特别紧张的时候，他们其实都看得出来，也都会主动来关心我，安抚我的情绪。</p>
+<p>他们是怎么说的？</p>
+<p>他们不是哄我，说我是最棒的；也不是骂我，说想那么多干嘛？专心打球！；甚至连说「冷静点，别紧张」都没有。</p>
+<p>我的教练，他们只用一种，特别云淡风轻的方式说：「跟训练时一样打就好」</p>
+<p>我长大一点后才了解到，这句话，真的比我之前的自我激励，要好上太多了。因为这句话的关键，在引导我少想赢的结果一点，多想赢的过程一些。</p>
+<p>什么意思？</p>
+<p>教练的指示，是要我「跟训练时一样打就好」。他的言下之意，就是要我用训练时的心态，去看待比赛。</p>
+<p>问题来了，训练的时候，跟正式比赛的时候，心态有什么不同？</p>
+<p>比赛更在乎结果，而训练更在意打好每一颗球。</p>
+<p>比赛的时候，失误一分，可能就会决定胜败，一不小心，就会对每颗球斤斤计较；但训练的时候，上一球失误了，没事，这球再补回来就好。</p>
+<p>在训练时，我对自己打气的话也会变成：邓亚萍！打好这一球！</p>
+<p>如果真的打好了，我更是会大喊「漂亮！」来庆祝、来激励自己。比激情，一点都不比「我最棒」来得差。</p>
+<p>那如果打不好、失误了，怎么办？没事，那就打好下一球呗！</p>
+<p>在这个过程中，我都不去想，我到底会不会赢，赢了又如何，而是想，我该如何把这一球打好？</p>
+<p>而当我把这种心态套用到正式比赛，给自己打鸡血的话，变成「邓亚萍！你的准备很充足！你可以打好这一球！」我发现，我更冷静、更专注，甚至也更兴奋了。</p>
+<p><img src="/images/pasted-63.png" alt="upload successful"></p>
+<p>后来，我学习了运动心理学之后，才知道这其中的道理，真的特别简单。</p>
+<p>用一句话总结，叫做「要骗过自己的大脑，没那么容易」。</p>
+<p>什么意思？</p>
+<p>赢不赢，那不是我能控制的。至少在我小的时候，我客观上，未必是最强的那个。如果真是客观上最强，我又需要自我激励干嘛？对于结果，我就是没有把握、不能确定，才要给自己打鸡血，不是吗？</p>
+<p>明明没把握，结果我还是说「我是最棒的！我一定能赢！」这种做法，就好像要大脑马上180度转向，那肯定做不到嘛！大脑当然会反弹，反过来质疑「凭什么」呀！</p>
+<p>说得更直接一点，如果自我暗示那么容易，那减肥可容易了！你再也不用天天吃沙拉、天天健身，你只要每天早上起来告诉自己，「我最瘦」，不就够了？很明显不是这样嘛！</p>
+<p>所以怎么办呢？没办法把大脑转180度，那就先转30度吧！</p>
+<p>当我说「我要打好这颗球」，我的脑海里，就是浮现该如何打好这颗球的经验和练习。这些经验和练习，是可控的，是我能确定、有把握的。</p>
+<p>换句话说，我的大脑，会更愿意相信我有能力做到「打好这一球」。</p>
+<p>而你猜怎么着？当我有信心，打好这一颗球，脑袋就往自信的那边转30度，下一球，再转30度。久而久之，因为我对每一颗球都有信心，我对比赛的结果也会更有信心，相信自己一定能赢。</p>
+<p>注意。这时候，为什么我会相信自己一定能赢？不是因为我打鸡血，说自己是最棒的，而是因为我说服了自己，我能打好每一分球。</p>
+<p>换句话说，一个人，尤其是运动员，应不应该相信「自己是最好的」？他应该相信。</p>
+<p>但他要不要一直给自己打鸡血，说自己是最棒的？他不应该这样做。</p>
+<p>越是想赢、越是想要有自信，就越不应该太在意结果，应该多在意「打好每一分球」。</p>
+<p><img src="/images/pasted-64.png" alt="upload successful"></p>
+<p>所以，你在生活中，到底该怎么给自己打鸡血？</p>
+<p>核心的原则，就是针对过程打气，不要给结果打气。</p>
+<p>要大考，有个地方觉得还念不熟，你可以这样跟自己说：虽然有地方没读熟，但基本的概念我都掌握了，只要我细心地回答，我可以把基本分都拿到！</p>
+<p>要面试，不知道主考官要问什么，你可以这样跟自己打气：至少我把自己的优势，了解的很清楚！主考官问起为什么要收我，我能很好的问答。</p>
+<p>其他的状况，你以此类推就好。</p>
+<p>只是，我要再一次提醒你，用正确的方法打鸡血，可以激发你的情绪，把准备好的东西，完美的表现出来。但是，如果你不愿意锻炼专业技能，那你不管用什么方式自我激励，也都是白搭的。</p>
+<p>是时候，来总结一下啦。</p>
+<p>第一，想要自我激励，不要想一步到位。你的大脑不会180度转向，相信你一定能赢。</p>
+<p>第二，正确地方法，是关注过程，激励自己把一件件小事做好。一次转30度。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/Java-11-新特性/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -333,7 +1420,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:48:16+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:48:00+08:00">
                 2019-04-28
               </time>
             
@@ -656,7 +1743,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:47:36+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:47:00+08:00">
                 2019-04-28
               </time>
             
@@ -774,199 +1861,6 @@
 <p>可以预计，JDK8 在未来的一段时间仍将是主流，我们已经注意到 Amazon、Alibaba、Redhat、AdoptOpenJDK 等等厂商或社区，纷纷发布了自己的 JDK8 等产品，开始竞赛长期支持版本 JDK 的主导权，笔者认为这是非常好的迹象，反映了主流厂商对于 Java 的投资力度增大。</p>
 <p>是否会带来 Java/JVM 的碎片化呢？多少会发生一些，但从目前的合作模式来看，OpenJDK 仍然是合作的中心，主导这 Java 历史版本维护和未来的演进路线。</p>
 <p>一些小鲜肉语言嘲笑 Java，实现类似功能，Java 代码要多写近一倍，程序要笨重一个数量级，有些也许是言过其实，但语法的表达能力和 JVM 的庞大，确实逐渐成为 Java 发展的短板，JDK10～12 发布的不间断成功，让我们看到了 Java/JVM 大踏步前进的曙光！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/桥接模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/28/桥接模式/" itemprop="url">桥接模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:46:57+08:00">
-                2019-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/28/桥接模式/" class="leancloud_visitors" data-flag-title="桥接模式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  1k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/89046766" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/89046766</a></p>
-<p>桥接模式<br>桥接（Bridge）是用于把抽象化与实现化解耦，使得二者可以独立变化。这种类型的设计模式属于结构型模式，它通过提供抽象化和实现化之间的桥接结构，来实现二者的解耦。</p>
-<p>这种模式涉及到一个作为桥接的接口，使得实体类的功能独立于接口实现类。这两种类型的类可被结构化改变而互不影响。</p>
-<p>我们通过下面的实例来演示桥接模式（Bridge Pattern）的用法。其中，可以使用相同的抽象类方法但是不同的桥接实现类，来画出不同颜色的圆。</p>
-<p>介绍<br>意图：将抽象部分与实现部分分离，使它们都可以独立的变化。</p>
-<p>主要解决：在有多种可能会变化的情况下，用继承会造成类爆炸问题，扩展起来不灵活。</p>
-<p>何时使用：实现系统可能有多个角度分类，每一种角度都可能变化。</p>
-<p>如何解决：把这种多角度分类分离出来，让它们独立变化，减少它们之间耦合。</p>
-<p>关键代码：抽象类依赖实现类。</p>
-<p>应用实例： 1、猪八戒从天蓬元帅转世投胎到猪，转世投胎的机制将尘世划分为两个等级，即：灵魂和肉体，前者相当于抽象化，后者相当于实现化。生灵通过功能的委派，调用肉体对象的功能，使得生灵可以动态地选择。 2、墙上的开关，可以看到的开关是抽象的，不用管里面具体怎么实现的。</p>
-<p>优点： 1、抽象和实现的分离。 2、优秀的扩展能力。 3、实现细节对客户透明。</p>
-<p>缺点：桥接模式的引入会增加系统的理解与设计难度，由于聚合关联关系建立在抽象层，要求开发者针对抽象进行设计与编程。</p>
-<p>使用场景： 1、如果一个系统需要在构件的抽象化角色和具体化角色之间增加更多的灵活性，避免在两个层次之间建立静态的继承联系，通过桥接模式可以使它们在抽象层建立一个关联关系。 2、对于那些不希望使用继承或因为多层次继承导致系统类的个数急剧增加的系统，桥接模式尤为适用。 3、一个类存在两个独立变化的维度，且这两个维度都需要进行扩展。</p>
-<p>注意事项：对于两个独立变化的维度，使用桥接模式再适合不过了。</p>
-<p>实现<br>我们有一个作为桥接实现的 DrawAPI 接口和实现了 DrawAPI 接口的实体类 RedCircle、GreenCircle。Shape 是一个抽象类，将使用 DrawAPI 的对象。BridgePatternDemo，我们的演示类使用 Shape 类来画出不同颜色的圆。</p>
-<p>步骤 1<br>创建桥接实现接口。</p>
-<p>DrawAPI.java<br>public interface DrawAPI {<br>   public void drawCircle(int radius, int x, int y);<br>}<br>步骤 2<br>创建实现了 DrawAPI 接口的实体桥接实现类。</p>
-<p>RedCircle.java<br>public class RedCircle implements DrawAPI {<br>   @Override<br>   public void drawCircle(int radius, int x, int y) {<br>      System.out.println(“Drawing Circle[ color: red, radius: “</p>
-<pre><code>+ radius +&quot;, x: &quot; +x+&quot;, &quot;+ y +&quot;]&quot;);
-</code></pre><p>   }<br>}<br>GreenCircle.java</p>
-<p>public class GreenCircle implements DrawAPI {<br>   @Override<br>   public void drawCircle(int radius, int x, int y) {<br>      System.out.println(“Drawing Circle[ color: green, radius: “</p>
-<pre><code>+ radius +&quot;, x: &quot; +x+&quot;, &quot;+ y +&quot;]&quot;);
-</code></pre><p>   }<br>}<br>步骤 3<br>使用 DrawAPI 接口创建抽象类 Shape。</p>
-<p>Shape.java<br>public abstract class Shape {<br>   protected DrawAPI drawAPI;<br>   protected Shape(DrawAPI drawAPI){<br>      this.drawAPI = drawAPI;<br>   }<br>   public abstract void draw();<br>}<br>步骤 4<br>创建实现了 Shape 接口的实体类。</p>
-<p>Circle.java<br>public class Circle extends Shape {<br>   private int x, y, radius;</p>
-<p>   public Circle(int x, int y, int radius, DrawAPI drawAPI) {<br>      super(drawAPI);<br>      this.x = x;<br>      this.y = y;<br>      this.radius = radius;<br>   }</p>
-<p>   public void draw() {<br>      drawAPI.drawCircle(radius,x,y);<br>   }<br>}<br>步骤 5<br>使用 Shape 和 DrawAPI 类画出不同颜色的圆。</p>
-<p>BridgePatternDemo.java<br>public class BridgePatternDemo {<br>   public static void main(String[] args) {<br>      Shape redCircle = new Circle(100,100, 10, new RedCircle());<br>      Shape greenCircle = new Circle(100,100, 10, new GreenCircle());</p>
-<pre><code>redCircle.draw();
-greenCircle.draw();
-</code></pre><p>   }<br>}<br>步骤 6<br>执行程序，输出结果：</p>
-<p>Drawing Circle[ color: red, radius: 10, x: 100, 100]<br>Drawing Circle[  color: green, radius: 10, x: 100, 100]</p>
 
           
         
@@ -1269,6 +2163,199 @@ public Request build(){
 </ul>
 <p>public class Client {<br>    public void testBuilderPattern() {<br>        ConcreteBuilder1 b1 = new ConcreteBuilder1();//建造者<br>        Director director = new Director(b1);//监工<br>        director.construct();//建造实例(监工负责监督，建造者实际建造)<br>        String result = b1.getResult();//获取最终生成结果<br>        System.out.printf(“the result is :%n%s”, result);<br>    }<br>}</p>
 <p> 建造者角色：定义生成实例所需要的所有方法；<br> 具体的建造者角色：实现生成实例所需要的所有方法，并且定义获取最终生成实例的方法；<br> 监工角色：定义使用建造者角色中的方法来生成实例的方法；<br> 使用者：使用建造者模式。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/桥接模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HybridTheory">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HybridTheory">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/28/桥接模式/" itemprop="url">桥接模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:46:00+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/28/桥接模式/" class="leancloud_visitors" data-flag-title="桥接模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/89046766" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/89046766</a></p>
+<p>桥接模式<br>桥接（Bridge）是用于把抽象化与实现化解耦，使得二者可以独立变化。这种类型的设计模式属于结构型模式，它通过提供抽象化和实现化之间的桥接结构，来实现二者的解耦。</p>
+<p>这种模式涉及到一个作为桥接的接口，使得实体类的功能独立于接口实现类。这两种类型的类可被结构化改变而互不影响。</p>
+<p>我们通过下面的实例来演示桥接模式（Bridge Pattern）的用法。其中，可以使用相同的抽象类方法但是不同的桥接实现类，来画出不同颜色的圆。</p>
+<p>介绍<br>意图：将抽象部分与实现部分分离，使它们都可以独立的变化。</p>
+<p>主要解决：在有多种可能会变化的情况下，用继承会造成类爆炸问题，扩展起来不灵活。</p>
+<p>何时使用：实现系统可能有多个角度分类，每一种角度都可能变化。</p>
+<p>如何解决：把这种多角度分类分离出来，让它们独立变化，减少它们之间耦合。</p>
+<p>关键代码：抽象类依赖实现类。</p>
+<p>应用实例： 1、猪八戒从天蓬元帅转世投胎到猪，转世投胎的机制将尘世划分为两个等级，即：灵魂和肉体，前者相当于抽象化，后者相当于实现化。生灵通过功能的委派，调用肉体对象的功能，使得生灵可以动态地选择。 2、墙上的开关，可以看到的开关是抽象的，不用管里面具体怎么实现的。</p>
+<p>优点： 1、抽象和实现的分离。 2、优秀的扩展能力。 3、实现细节对客户透明。</p>
+<p>缺点：桥接模式的引入会增加系统的理解与设计难度，由于聚合关联关系建立在抽象层，要求开发者针对抽象进行设计与编程。</p>
+<p>使用场景： 1、如果一个系统需要在构件的抽象化角色和具体化角色之间增加更多的灵活性，避免在两个层次之间建立静态的继承联系，通过桥接模式可以使它们在抽象层建立一个关联关系。 2、对于那些不希望使用继承或因为多层次继承导致系统类的个数急剧增加的系统，桥接模式尤为适用。 3、一个类存在两个独立变化的维度，且这两个维度都需要进行扩展。</p>
+<p>注意事项：对于两个独立变化的维度，使用桥接模式再适合不过了。</p>
+<p>实现<br>我们有一个作为桥接实现的 DrawAPI 接口和实现了 DrawAPI 接口的实体类 RedCircle、GreenCircle。Shape 是一个抽象类，将使用 DrawAPI 的对象。BridgePatternDemo，我们的演示类使用 Shape 类来画出不同颜色的圆。</p>
+<p>步骤 1<br>创建桥接实现接口。</p>
+<p>DrawAPI.java<br>public interface DrawAPI {<br>   public void drawCircle(int radius, int x, int y);<br>}<br>步骤 2<br>创建实现了 DrawAPI 接口的实体桥接实现类。</p>
+<p>RedCircle.java<br>public class RedCircle implements DrawAPI {<br>   @Override<br>   public void drawCircle(int radius, int x, int y) {<br>      System.out.println(“Drawing Circle[ color: red, radius: “</p>
+<pre><code>+ radius +&quot;, x: &quot; +x+&quot;, &quot;+ y +&quot;]&quot;);
+</code></pre><p>   }<br>}<br>GreenCircle.java</p>
+<p>public class GreenCircle implements DrawAPI {<br>   @Override<br>   public void drawCircle(int radius, int x, int y) {<br>      System.out.println(“Drawing Circle[ color: green, radius: “</p>
+<pre><code>+ radius +&quot;, x: &quot; +x+&quot;, &quot;+ y +&quot;]&quot;);
+</code></pre><p>   }<br>}<br>步骤 3<br>使用 DrawAPI 接口创建抽象类 Shape。</p>
+<p>Shape.java<br>public abstract class Shape {<br>   protected DrawAPI drawAPI;<br>   protected Shape(DrawAPI drawAPI){<br>      this.drawAPI = drawAPI;<br>   }<br>   public abstract void draw();<br>}<br>步骤 4<br>创建实现了 Shape 接口的实体类。</p>
+<p>Circle.java<br>public class Circle extends Shape {<br>   private int x, y, radius;</p>
+<p>   public Circle(int x, int y, int radius, DrawAPI drawAPI) {<br>      super(drawAPI);<br>      this.x = x;<br>      this.y = y;<br>      this.radius = radius;<br>   }</p>
+<p>   public void draw() {<br>      drawAPI.drawCircle(radius,x,y);<br>   }<br>}<br>步骤 5<br>使用 Shape 和 DrawAPI 类画出不同颜色的圆。</p>
+<p>BridgePatternDemo.java<br>public class BridgePatternDemo {<br>   public static void main(String[] args) {<br>      Shape redCircle = new Circle(100,100, 10, new RedCircle());<br>      Shape greenCircle = new Circle(100,100, 10, new GreenCircle());</p>
+<pre><code>redCircle.draw();
+greenCircle.draw();
+</code></pre><p>   }<br>}<br>步骤 6<br>执行程序，输出结果：</p>
+<p>Drawing Circle[ color: red, radius: 10, x: 100, 100]<br>Drawing Circle[  color: green, radius: 10, x: 100, 100]</p>
 
           
         
@@ -1621,1052 +2708,11 @@ public static Object getProxy(Object target) {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/单例模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/28/单例模式/" itemprop="url">单例模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:44:28+08:00">
-                2019-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/28/单例模式/" class="leancloud_visitors" data-flag-title="单例模式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  2.2k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  8
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88933605" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88933605</a></p>
-<p>单例模式（Singleton Pattern）是 Java 中最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
-<p>注意：</p>
-<p>1、单例类只能有一个实例。<br>2、单例类必须自己创建自己的唯一实例。<br>3、单例类必须给所有其他对象提供这一实例。</p>
-<p>介绍<br>意图：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
-<p>主要解决：一个全局使用的类频繁地创建与销毁。</p>
-<p>何时使用：当您想控制实例数目，节省系统资源的时候。</p>
-<p>如何解决：判断系统是否已经有这个单例，如果有则返回，如果没有则创建。</p>
-<p>关键代码：构造函数是私有的。</p>
-<p>应用实例：</p>
-<p>1、一个班级只有一个班主任。<br>2、Windows 是多进程多线程的，在操作一个文件的时候，就不可避免地出现多个进程或线程同时操作一个文件的现象，所以所有文件的处理必须通过唯一的实例来进行。<br>3、一些设备管理器常常设计为单例模式，比如一个电脑有两台打印机，在输出的时候就要处理不能两台打印机打印同一个文件。<br>优点：</p>
-<p>1、在内存里只有一个实例，减少了内存的开销，尤其是频繁的创建和销毁实例（比如管理学院首页页面缓存）。<br>2、避免对资源的多重占用（比如写文件操作）。<br>缺点：没有接口，不能继承，与单一职责原则冲突，一个类应该只关心内部逻辑，而不关心外面怎么样来实例化。</p>
-<p>使用场景：</p>
-<p>1、要求生产唯一序列号。<br>2、WEB 中的计数器，不用每次刷新都在数据库里加一次，用单例先缓存起来。<br>3、创建的一个对象需要消耗的资源过多，比如 I/O 与数据库的连接等。<br>注意事项：getInstance() 方法中需要使用同步锁 synchronized (Singleton.class) 防止多线程同时进入造成 instance 被多次实例化。</p>
-<p>实现<br>我们将创建一个 SingleObject 类。SingleObject 类有它的私有构造函数和本身的一个静态实例。</p>
-<p>SingleObject 类提供了一个静态方法，供外界获取它的静态实例。SingletonPatternDemo，我们的演示类使用 SingleObject 类来获取 SingleObject 对象。</p>
-<p>步骤 1<br>创建一个 Singleton 类。</p>
-<p>SingleObject.java<br>public class SingleObject { //创建 SingleObject 的一个对象 private static SingleObject instance = new SingleObject(); //让构造函数为 private，这样该类就不会被实例化 private SingleObject(){} //获取唯一可用的对象 public static SingleObject getInstance(){ return instance; } public void showMessage(){ System.out.println(“Hello World!”); } }</p>
-<p>步骤 2<br>从 singleton 类获取唯一的对象。</p>
-<p>SingletonPatternDemo.java<br>public class SingletonPatternDemo { public static void main(String[] args) { //不合法的构造函数 //编译时错误：构造函数 SingleObject() 是不可见的 //SingleObject object = new SingleObject(); //获取唯一可用的对象 SingleObject object = SingleObject.getInstance(); //显示消息 object.showMessage(); } }</p>
-<p>步骤 3<br>执行程序，输出结果：</p>
-<p>Hello World!<br>单例模式的几种实现方式<br>单例模式的实现有多种方式，如下所示：</p>
-<p>1、懒汉式，线程不安全<br>是否 Lazy 初始化：是</p>
-<p>是否多线程安全：否</p>
-<p>实现难度：易</p>
-<p>描述：这种方式是最基本的实现方式，这种实现最大的问题就是不支持多线程。因为没有加锁 synchronized，所以严格意义上它并不算单例模式。<br>这种方式 lazy loading 很明显，不要求线程安全，在多线程不能正常工作。</p>
-<p>实例<br>public class Singleton { private static Singleton instance; private Singleton (){} public static Singleton getInstance() { if (instance == null) { instance = new Singleton(); } return instance; } }</p>
-<p>接下来介绍的几种实现方式都支持多线程，但是在性能上有所差异。</p>
-<p>2、懒汉式，线程安全<br>是否 Lazy 初始化：是</p>
-<p>是否多线程安全：是</p>
-<p>实现难度：易</p>
-<p>描述：这种方式具备很好的 lazy loading，能够在多线程中很好的工作，但是，效率很低，99% 情况下不需要同步。<br>优点：第一次调用才初始化，避免内存浪费。<br>缺点：必须加锁 synchronized 才能保证单例，但加锁会影响效率。<br>getInstance() 的性能对应用程序不是很关键（该方法使用不太频繁）。</p>
-<p>实例<br>public class Singleton { private static Singleton instance; private Singleton (){} public static synchronized Singleton getInstance() { if (instance == null) { instance = new Singleton(); } return instance; } }</p>
-<p>3、饿汉式<br>是否 Lazy 初始化：否</p>
-<p>是否多线程安全：是</p>
-<p>实现难度：易</p>
-<p>描述：这种方式比较常用，但容易产生垃圾对象。<br>优点：没有加锁，执行效率会提高。<br>缺点：类加载时就初始化，浪费内存。<br>它基于 classloader 机制避免了多线程的同步问题，不过，instance 在类装载时就实例化，虽然导致类装载的原因有很多种，在单例模式中大多数都是调用 getInstance 方法， 但是也不能确定有其他的方式（或者其他的静态方法）导致类装载，这时候初始化 instance 显然没有达到 lazy loading 的效果。</p>
-<p>实例<br>public class Singleton { private static Singleton instance = new Singleton(); private Singleton (){} public static Singleton getInstance() { return instance; } }</p>
-<p>4、双检锁/双重校验锁（DCL，即 double-checked locking）<br>JDK 版本：JDK1.5 起</p>
-<p>是否 Lazy 初始化：是</p>
-<p>是否多线程安全：是</p>
-<p>实现难度：较复杂</p>
-<p>描述：这种方式采用双锁机制，安全且在多线程情况下能保持高性能。<br>getInstance() 的性能对应用程序很关键。</p>
-<p>实例<br>public class Singleton { private volatile static Singleton singleton; private Singleton (){} public static Singleton getSingleton() { if (singleton == null) { synchronized (Singleton.class) { if (singleton == null) { singleton = new Singleton(); } } } return singleton; } }</p>
-<p>5、登记式/静态内部类<br>是否 Lazy 初始化：是</p>
-<p>是否多线程安全：是</p>
-<p>实现难度：一般</p>
-<p>描述：这种方式能达到双检锁方式一样的功效，但实现更简单。对静态域使用延迟初始化，应使用这种方式而不是双检锁方式。这种方式只适用于静态域的情况，双检锁方式可在实例域需要延迟初始化时使用。<br>这种方式同样利用了 classloader 机制来保证初始化 instance 时只有一个线程，它跟第 3 种方式不同的是：第 3 种方式只要 Singleton 类被装载了，那么 instance 就会被实例化（没有达到 lazy loading 效果），而这种方式是 Singleton 类被装载了，instance 不一定被初始化。因为 SingletonHolder 类没有被主动使用，只有通过显式调用 getInstance 方法时，才会显式装载 SingletonHolder 类，从而实例化 instance。想象一下，如果实例化 instance 很消耗资源，所以想让它延迟加载，另外一方面，又不希望在 Singleton 类加载时就实例化，因为不能确保 Singleton 类还可能在其他的地方被主动使用从而被加载，那么这个时候实例化 instance 显然是不合适的。这个时候，这种方式相比第 3 种方式就显得很合理。</p>
-<p>实例<br>public class Singleton { private static class SingletonHolder { private static final Singleton INSTANCE = new Singleton(); } private Singleton (){} public static final Singleton getInstance() { return SingletonHolder.INSTANCE; } }</p>
-<p>6、枚举<br>JDK 版本：JDK1.5 起</p>
-<p>是否 Lazy 初始化：否</p>
-<p>是否多线程安全：是</p>
-<p>实现难度：易</p>
-<p>描述：这种实现方式还没有被广泛采用，但这是实现单例模式的最佳方法。它更简洁，自动支持序列化机制，绝对防止多次实例化。<br>这种方式是 Effective Java 作者 Josh Bloch 提倡的方式，它不仅能避免多线程同步问题，而且还自动支持序列化机制，防止反序列化重新创建新的对象，绝对防止多次实例化。不过，由于 JDK1.5 之后才加入 enum 特性，用这种方式写不免让人感觉生疏，在实际工作中，也很少用。<br>不能通过 reflection attack 来调用私有构造方法。</p>
-<p>实例<br>public enum Singleton { INSTANCE; public void whateverMethod() { } }</p>
-<p>经验之谈：一般情况下，不建议使用第 1 种和第 2 种懒汉方式，建议使用第 3 种饿汉方式。只有在要明确实现 lazy loading 效果时，才会使用第 5 种登记方式。如果涉及到反序列化创建对象时，可以尝试使用第 6 种枚举方式。如果有其他特殊的需求，可以考虑使用第 4 种双检锁方式。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/抽象工厂模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/28/抽象工厂模式/" itemprop="url">抽象工厂模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:42:30+08:00">
-                2019-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/28/抽象工厂模式/" class="leancloud_visitors" data-flag-title="抽象工厂模式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  2k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88933360" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88933360</a></p>
-<p>抽象工厂模式（Abstract Factory Pattern）是围绕一个超级工厂创建其他工厂。该超级工厂又称为其他工厂的工厂。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>在抽象工厂模式中，接口是负责创建一个相关对象的工厂，不需要显式指定它们的类。每个生成的工厂都能按照工厂模式提供对象。</p>
-<p>介绍<br>意图：提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类。</p>
-<p>主要解决：主要解决接口选择的问题。</p>
-<p>何时使用：系统的产品有多于一个的产品族，而系统只消费其中某一族的产品。</p>
-<p>如何解决：在一个产品族里面，定义多个产品。</p>
-<p>关键代码：在一个工厂里聚合多个同类产品。</p>
-<p>应用实例：工作了，为了参加一些聚会，肯定有两套或多套衣服吧，比如说有商务装（成套，一系列具体产品）、时尚装（成套，一系列具体产品），甚至对于一个家庭来说，可能有商务女装、商务男装、时尚女装、时尚男装，这些也都是成套的，即一系列具体产品。假设一种情况（现实中是不存在的，要不然，没法进入共产主义了，但有利于说明抽象工厂模式），在您的家中，某一个衣柜（具体工厂）只能存放某一种这样的衣服（成套，一系列具体产品），每次拿这种成套的衣服时也自然要从这个衣柜中取出了。用 OO 的思想去理解，所有的衣柜（具体工厂）都是衣柜类的（抽象工厂）某一个，而每一件成套的衣服又包括具体的上衣（某一具体产品），裤子（某一具体产品），这些具体的上衣其实也都是上衣（抽象产品），具体的裤子也都是裤子（另一个抽象产品）。</p>
-<p>优点：当一个产品族中的多个对象被设计成一起工作时，它能保证客户端始终只使用同一个产品族中的对象。</p>
-<p>缺点：产品族扩展非常困难，要增加一个系列的某一产品，既要在抽象的 Creator 里加代码，又要在具体的里面加代码。</p>
-<p>使用场景： 1、QQ 换皮肤，一整套一起换。 2、生成不同操作系统的程序。</p>
-<p>注意事项：产品族难扩展，产品等级易扩展。</p>
-<p>实现<br>我们将创建 Shape 和 Color 接口和实现这些接口的实体类。下一步是创建抽象工厂类 AbstractFactory。接着定义工厂类 ShapeFactory 和 ColorFactory，这两个工厂类都是扩展了 AbstractFactory。然后创建一个工厂创造器/生成器类 FactoryProducer。</p>
-<p>AbstractFactoryPatternDemo，我们的演示类使用 FactoryProducer 来获取 AbstractFactory 对象。它将向 AbstractFactory 传递形状信息 Shape（CIRCLE / RECTANGLE / SQUARE），以便获取它所需对象的类型。同时它还向 AbstractFactory 传递颜色信息 Color（RED / GREEN / BLUE），以便获取它所需对象的类型。</p>
-<p>步骤 1<br>为形状创建一个接口。</p>
-<p>Shape.java<br>public interface Shape { void draw(); }</p>
-<p>步骤 2<br>创建实现接口的实体类。</p>
-<p>Rectangle.java</p>
-<p>Rectangle.java<br>public class Rectangle implements Shape { @Override public void draw() { System.out.println(“Inside Rectangle::draw() method.”); } }</p>
-<p>Square.java<br>public class Square implements Shape { @Override public void draw() { System.out.println(“Inside Square::draw() method.”); } }</p>
-<p>Circle.java<br>public class Circle implements Shape { @Override public void draw() { System.out.println(“Inside Circle::draw() method.”); } }</p>
-<p>步骤 3<br>为颜色创建一个接口。</p>
-<p>Color.java<br>public interface Color { void fill(); }</p>
-<p>步骤4<br>创建实现接口的实体类。</p>
-<p>Red.java<br>public class Red implements Color { @Override public void fill() { System.out.println(“Inside Red::fill() method.”); } }</p>
-<p>Green.java<br>public class Green implements Color { @Override public void fill() { System.out.println(“Inside Green::fill() method.”); } }</p>
-<p>Blue.java<br>public class Blue implements Color { @Override public void fill() { System.out.println(“Inside Blue::fill() method.”); } }</p>
-<p>步骤 5<br>为 Color 和 Shape 对象创建抽象类来获取工厂。</p>
-<p>AbstractFactory.java<br>public abstract class AbstractFactory { public abstract Color getColor(String color); public abstract Shape getShape(String shape) ; }</p>
-<p>步骤 6<br>创建扩展了 AbstractFactory 的工厂类，基于给定的信息生成实体类的对象。</p>
-<p>ShapeFactory.java<br>public class ShapeFactory extends AbstractFactory { @Override public Shape getShape(String shapeType){ if(shapeType == null){ return null; } if(shapeType.equalsIgnoreCase(“CIRCLE”)){ return new Circle(); } else if(shapeType.equalsIgnoreCase(“RECTANGLE”)){ return new Rectangle(); } else if(shapeType.equalsIgnoreCase(“SQUARE”)){ return new Square(); } return null; } @Override public Color getColor(String color) { return null; } }</p>
-<p>ColorFactory.java<br>public class ColorFactory extends AbstractFactory { @Override public Shape getShape(String shapeType){ return null; } @Override public Color getColor(String color) { if(color == null){ return null; } if(color.equalsIgnoreCase(“RED”)){ return new Red(); } else if(color.equalsIgnoreCase(“GREEN”)){ return new Green(); } else if(color.equalsIgnoreCase(“BLUE”)){ return new Blue(); } return null; } }</p>
-<p>步骤 7<br>创建一个工厂创造器/生成器类，通过传递形状或颜色信息来获取工厂。</p>
-<p>FactoryProducer.java<br>public class FactoryProducer { public static AbstractFactory getFactory(String choice){ if(choice.equalsIgnoreCase(“SHAPE”)){ return new ShapeFactory(); } else if(choice.equalsIgnoreCase(“COLOR”)){ return new ColorFactory(); } return null; } }</p>
-<p>步骤 8<br>使用 FactoryProducer 来获取 AbstractFactory，通过传递类型信息来获取实体类的对象。</p>
-<p>AbstractFactoryPatternDemo.java<br>public class AbstractFactoryPatternDemo { public static void main(String[] args) { //获取形状工厂 AbstractFactory shapeFactory = FactoryProducer.getFactory(“SHAPE”); //获取形状为 Circle 的对象 Shape shape1 = shapeFactory.getShape(“CIRCLE”); //调用 Circle 的 draw 方法 shape1.draw(); //获取形状为 Rectangle 的对象 Shape shape2 = shapeFactory.getShape(“RECTANGLE”); //调用 Rectangle 的 draw 方法 shape2.draw(); //获取形状为 Square 的对象 Shape shape3 = shapeFactory.getShape(“SQUARE”); //调用 Square 的 draw 方法 shape3.draw(); //获取颜色工厂 AbstractFactory colorFactory = FactoryProducer.getFactory(“COLOR”); //获取颜色为 Red 的对象 Color color1 = colorFactory.getColor(“RED”); //调用 Red 的 fill 方法 color1.fill(); //获取颜色为 Green 的对象 Color color2 = colorFactory.getColor(“Green”); //调用 Green 的 fill 方法 color2.fill(); //获取颜色为 Blue 的对象 Color color3 = colorFactory.getColor(“BLUE”); //调用 Blue 的 fill 方法 color3.fill(); } }</p>
-<p>步骤 9<br>执行程序，输出结果：</p>
-<p>Inside Circle::draw() method.<br>Inside Rectangle::draw() method.<br>Inside Square::draw() method.<br>Inside Red::fill() method.<br>Inside Green::fill() method.<br>Inside Blue::fill() method.<br> 工厂模式</p>
-<p>单例模式 </p>
-<p>1 篇笔记 写笔记</p>
-<p>   涛</p>
-<p>  <a href="mailto:307***9849@qq.com" target="_blank" rel="noopener">307***9849@qq.com</a></p>
-<p>   参考地址</p>
-<p>下面例子中鼠标，键盘，耳麦为产品，惠普，戴尔为工厂。</p>
-<p>简单工厂模式<br>简单工厂模式不是 23 种里的一种，简而言之，就是有一个专门生产某个产品的类。</p>
-<p>比如下图中的鼠标工厂，专业生产鼠标，给参数 0，生产戴尔鼠标，给参数 1，生产惠普鼠标。</p>
-<p>工厂模式<br>工厂模式也就是鼠标工厂是个父类，有生产鼠标这个接口。</p>
-<p>戴尔鼠标工厂，惠普鼠标工厂继承它，可以分别生产戴尔鼠标，惠普鼠标。</p>
-<p>生产哪种鼠标不再由参数决定，而是创建鼠标工厂时，由戴尔鼠标工厂创建。</p>
-<p>后续直接调用鼠标工厂.生产鼠标()即可</p>
-<p>抽象工厂模式<br>抽象工厂模式也就是不仅生产鼠标，同时生产键盘。</p>
-<p>也就是 PC 厂商是个父类，有生产鼠标，生产键盘两个接口。</p>
-<p>戴尔工厂，惠普工厂继承它，可以分别生产戴尔鼠标+戴尔键盘，和惠普鼠标+惠普键盘。</p>
-<p>创建工厂时，由戴尔工厂创建。</p>
-<p>后续工厂.生产鼠标()则生产戴尔鼠标，工厂.生产键盘()则生产戴尔键盘。</p>
-<p>在抽象工厂模式中，假设我们需要增加一个工厂</p>
-<p>假设我们增加华硕工厂，则我们需要增加华硕工厂，和戴尔工厂一样，继承 PC 厂商。</p>
-<p>之后创建华硕鼠标，继承鼠标类。创建华硕键盘，继承键盘类即可。</p>
-<p>在抽象工厂模式中，假设我们需要增加一个产品</p>
-<p>假设我们增加耳麦这个产品，则首先我们需要增加耳麦这个父类，再加上戴尔耳麦，惠普耳麦这两个子类。</p>
-<p>之后在PC厂商这个父类中，增加生产耳麦的接口。最后在戴尔工厂，惠普工厂这两个类中，分别实现生产戴尔耳麦，惠普耳麦的功能。 以上。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/工厂方法模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/28/工厂方法模式/" itemprop="url">工厂方法模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:41:15+08:00">
-                2019-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/28/工厂方法模式/" class="leancloud_visitors" data-flag-title="工厂方法模式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  1.8k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88929956" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88929956</a><br>一、问题<br>在前一章《设计模式读书笔记—–简单工厂模式》中通过披萨的实例介绍了简单工厂模式。在披萨实例中，如果我想根据地域的不同生产出不同口味的披萨，如纽约口味披萨，芝加哥口味披萨。如果利用简单工厂模式，我们需要两个不同的工厂，NYPizzaFactory、ChicagoPizzaFactory。在该地域中有很多的披萨店，他们并不想依照总店的制作流程来生成披萨，而是希望采用他们自己的制作流程。这个时候如果还使用简单工厂模式，因为简单工厂模式是将披萨的制作流程完全承包了。那么怎么办？</p>
-<p>二、解决方案<br>我们可以这样解决：将披萨的制作方法交给各个披萨店完成，但是他们只能提供制作完成的披萨，披萨的订单处理仍然要交给披萨工厂去做。也就是说，我们将createPizza()方法放回到PizzaStore中，其他的部分还是保持不变。</p>
-<p>三、基本定义<br>工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法模式让实例化推迟到子类。</p>
-<p>四、模式结构<br>工厂方法模式的UML结构图：</p>
-<p>Product：抽象产品。所有的产品必须实现这个共同的接口，这样一来，使用这些产品的类既可以引用这个接口。而不是具体类。<br>ConcreteProduct：具体产品。<br>Creator：抽象工厂。它实现了所有操纵产品的方法，但不实现工厂方法。Creator所有的子类都必须要实现factoryMethod()方法。<br>ConcreteCreator：具体工厂。制造产品的实际工厂。它负责创建一个或者多个具体产品，只有ConcreteCreator类知道如何创建这些产品。<br>工厂方法模式是简单工厂模式的延伸。在工厂方法模式中，核心工厂类不在负责产品的创建，而是将具体的创建工作交给子类去完成。也就是后所这个核心工厂仅仅只是提供创建的接口，具体实现方法交给继承它的子类去完成。当我们的系统需要增加其他新的对象时，我们只需要添加一个具体的产品和它的创建工厂即可，不需要对原工厂进行任何修改，这样很好地符合了“开闭原则”。</p>
-<p>五、工厂方法模式实现<br>针对上面的解决方案，得到如下UML结构图：</p>
-<p>抽象产品类：Pizza.java</p>
-<p> 1 public abstract class Pizza {<br> 2     protected String name;        //名称<br> 3     protected String dough;       //面团<br> 4     protected String sause;       //酱料<br> 5     protected List<string> toppings = new ArrayList<string>();       //佐料<br> 6<br> 7<br> 8     public void prepare() {<br> 9         System.out.println(“Preparing “+name);<br>10         System.out.println(“Tossing dough”);<br>11         System.out.println(“Adding sause”);<br>12         System.out.println(“Adding toppings”);<br>13         for(int i = 0;i &lt; toppings.size();i++){<br>14             System.out.println(“   “+toppings.get(i));<br>15         }<br>16     }<br>17<br>18     public void bake() {<br>19         System.out.println(“Bake for 25 minutes at 350”);<br>20     }<br>21<br>22     public void cut() {<br>23         System.out.println(“Cutting the pizza into diagonal slices”);<br>24     }<br>25<br>26     public void box() {<br>27         System.out.println(“Place pizza in official PizzaStore box”);<br>28     }<br>29<br>30     public String getName(){<br>31         return name;<br>32     }<br>33 }<br>具体产品类：NYStyleCheesePizza.java</string></string></p>
-<p> 1 public class NYStyleCheesePizza extends Pizza{<br> 2     public NYStyleCheesePizza(){<br> 3         name = “Ny Style Sauce and Cheese Pizza”;<br> 4         dough = “Thin Crust Dough”;<br> 5         sause = “Marinara Sauce”;<br> 6<br> 7         toppings.add(“Crated Reggiano Cheese”);<br> 8     }<br> 9<br>10 }<br>ChicagoStyleCheesePizza.java</p>
-<p> 1 public class ChicagoStyleCheesePizza extends Pizza {<br> 2     public ChicagoStyleCheesePizza(){<br> 3         name = “Chicago Style Deep Dish Cheese Pizza”;<br> 4         dough = “Extra Thick Crust Dough”;<br> 5         sause = “Plum Tomato Sauce”;<br> 6<br> 7         toppings.add(“Shredded Mozzarella Cheese”);<br> 8     }<br> 9<br>10     public void cut(){<br>11         System.out.println(“Cutting the Pizza into square slices”);<br>12     }<br>13 }<br>抽象工厂：披萨总店。PizzaStore.java</p>
-<p> 1 public abstract class PizzaStore {<br> 2     public Pizza orderPizza(String type){<br> 3         Pizza pizza;<br> 4         pizza = createPizza(type);<br> 5<br> 6         pizza.prepare();<br> 7         pizza.bake();<br> 8         pizza.cut();<br> 9         pizza.box();<br>10<br>11         return pizza;<br>12     }<br>13<br>14     /<em><br>15      </em> 创建pizza的方法交给子类去实现<br>16      */<br>17     abstract Pizza createPizza(String type);<br>18 }<br>具体工厂。披萨分店。NYPizzaStore.java</p>
-<p> 1 public class NYPizzaStore extends PizzaStore{<br> 2<br> 3     @Override<br> 4     Pizza createPizza(String item) {<br> 5         Pizza pizza = null;<br> 6         if(“cheese”.equals(item)){<br> 7             pizza = new NYStyleCheesePizza();<br> 8         }<br> 9         else if(“veggie”.equals(item)){<br>10             pizza = new NYStyleVeggiePizza();<br>11         }<br>12         else if(“clam”.equals(item)){<br>13             pizza = new NYStyleClamPizza();<br>14         }<br>15         else if(“pepperoni”.equals(item)){<br>16             pizza = new NYStylePepperoniPizza();<br>17         }<br>18<br>19         return pizza;<br>20     }<br>ChicagoPizzaStore.java</p>
-<p> 1 public class ChicagoPizzaStore extends PizzaStore {<br> 2     Pizza createPizza(String type) {<br> 3         Pizza pizza = null;<br> 4         if(“cheese”.equals(type)){<br> 5             pizza = new ChicagoStyleCheesePizza();<br> 6         }<br> 7         else if(“clam”.equals(type)){<br> 8             pizza = new ChicagoStyleClamPizza();<br> 9         }<br>10         else if(“pepperoni”.equals(type)) {<br>11             pizza = new ChicagoStylePepperoniPizza();<br>12         }<br>13         else if(“veggie”.equals(type)){<br>14             pizza = new ChicagoStyleVeggiePizza();<br>15         }<br>16         return pizza;<br>17     }<br>18<br>19 }<br>做了这么多，应该可以吃披萨了吧。Ethan要一份纽约口味的披萨，Joel需要芝加哥口味的披萨。</p>
-<p>PizzaTestDrive.java</p>
-<p> 1 public class PizzaTestDrive {<br> 2     public static void main(String[] args) {<br> 3         System.out.println(“———Joel 需要的芝加哥的深盘披萨———“);<br> 4         ChicagoPizzaStore chicagoPizzaStore = new ChicagoPizzaStore();       //建立芝加哥的披萨店<br> 5         Pizza joelPizza =chicagoPizzaStore.orderPizza(“cheese”);             //下订单<br> 6         System.out.println(“Joel ordered a “ + joelPizza.getName() + “\n”);<br> 7<br> 8         System.out.println(“———Ethan 需要的纽约风味的披萨———“);<br> 9         NYPizzaStore nyPizzaStore = new NYPizzaStore();<br>10         Pizza ethanPizza = nyPizzaStore.orderPizza(“cheese”);<br>11         System.out.println(“Ethan ordered a “ + ethanPizza.getName() + “\n”);<br>12<br>13     }<br>14 }<br>运行结果。</p>
-<p>六、工厂方法模式的优缺点<br>优点<br>1、  在工厂方法中，用户只需要知道所要产品的具体工厂，无须关系具体的创建过程，甚至不需要具体产品类的类名。<br>2、  在系统增加新的产品时，我们只需要添加一个具体产品类和对应的实现工厂，无需对原工厂进行任何修改，很好地符合了“开闭原则”。<br>缺点<br>1、  每次增加一个产品时，都需要增加一个具体类和对象实现工厂，是的系统中类的个数成倍增加，在一定程度上增加了系统的复杂度，同时也增加了系统具体类的依赖。这并不是什么好事。<br>七、工厂方法适用场景<br>1、一个类不知道它所需要的对象的类。在工厂方法模式中，我们不需要具体产品的类名，我们只需要知道创建它的具体工厂即可。<br>2、一个类通过其子类来指定创建那个对象。在工厂方法模式中，对于抽象工厂类只需要提供一个创建产品的接口，而由其子类来确定具体要创建的对象，在程序运行时，子类对象将覆盖父类对象，从而使得系统更容易扩展。<br>3、将创建对象的任务委托给多个工厂子类中的某一个，客户端在使用时可以无须关心是哪一个工厂子类创建产品子类，需要时再动态指定。<br>八、总结<br>1、工厂方法模式完全符合“开闭原则”。<br>2、工厂方法模式使用继承，将对象的创建委托给子类，通过子类实现工厂方法来创建对象。<br>3、工厂方法允许类将实例化延伸到子类进行。<br>4、工厂方法让子类决定要实例化的类时哪一个。在这里我们要明白这并不是工厂来决定生成哪种产品，而是在编写创建者类时，不需要知道实际创建的产品是哪个，选择了使用哪个子类，就已经决定了实际创建的产品时哪个了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/简单工厂模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/28/简单工厂模式/" itemprop="url">简单工厂模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:40:37+08:00">
-                2019-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/28/简单工厂模式/" class="leancloud_visitors" data-flag-title="简单工厂模式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88858312" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88858312</a></p>
-<p>在设计原则中有这样一句话“我们应该针对接口编程，而不是正对实现编程”。但是我们还是在一直使用new关键字来创建一个对象，这不就是在针对实现编程么？</p>
-<p>针对接口编程，可以隔离掉以后系统可能发生的一大堆改变。入股代码是针对接口而写，那么可以通过多态，它可以与任何新类实现该接口。但是，当代码使用一大堆的具体类时，等于是自找麻烦，因为一旦加入新的具体类，就必须要改变代码。在这里我们希望能够调用一个简单的方法，我传递一个参数过去，就可以返回给我一个相应的具体对象，这个时候我们就可以使用简单工厂模式。</p>
-<p>一、基本定义<br>简单工厂模式又称之为静态工厂方法，属于创建型模式。在简单工厂模式中，可以根据传递的参数不同，返回不同类的实例。简单工厂模式定义了一个类，这个类专门用于创建其他类的实例，这些被创建的类都有一个共同的父类。</p>
-<p>二、模式结构<br>模式结构图如下：</p>
-<p>模式分析：</p>
-<p>Factory：工厂角色。专门用于创建实例类的工厂，提供一个方法，该方法根据传递的参数不同返回不同类的具体实例。<br>Product：抽象产品角色。为所有产品的父类。<br>ConcreteProduct：具体的产品角色。<br>简单工厂模式将对象的创建和对象本身业务处理分离了，可以降低系统的耦合度，使得两者修改起来都相对容易些。当以后实现改变时，只需要修改工厂类即可。</p>
-<p>三、简单工厂模式实现<br>模式场景：在一个披萨店中，要根据不同客户的口味，生产不同的披萨，如素食披萨、希腊披萨等披萨。</p>
-<p>该例的UML结构图如下:</p>
-<p>代码实现</p>
-<p>Pizza制造工厂：SimplyPizzaFactory.java</p>
-<p> 1 /*<em><br> 2  </em> 专门用于创建披萨的工厂类<br> 3  */<br> 4 public class SimplePizzaFactory {<br> 5     public Pizza createPizza(String type){<br> 6         Pizza pizza = null;<br> 7<br> 8         if(type.equals(“cheese”)){<br> 9             pizza = new CheesePizza();<br>10         }<br>11         else if(type.equals(“clam”)){<br>12             pizza = new ClamPizza();<br>13         }<br>14         else if(type.equals(“pepperoni”)){<br>15             pizza = new PepperoniPizza();<br>16         }<br>17         else if(type.equals(“veggie”)){<br>18             pizza = new VeggiePizze();<br>19         }<br>20<br>21         return pizza;<br>22     }<br>23 }<br>抽象披萨：Pizza.java</p>
-<p> 1 /*<em><br> 2  </em> 抽象pizza类<br> 3  */<br> 4 public abstract class Pizza {<br> 5     public abstract void prepare();<br> 6<br> 7     public abstract void bake();<br> 8<br> 9     public abstract void cut();<br>10<br>11     public abstract void box();<br>12 }<br>具体披萨：CheesePizza.java</p>
-<p> 1 public class CheesePizza extends Pizza{<br> 2<br> 3     @Override<br> 4     public void bake() {<br> 5         System.out.println(“bake CheesePizza …”);<br> 6     }<br> 7<br> 8     @Override<br> 9     public void box() {<br>10         System.out.println(“box CheesePizza …”);<br>11     }<br>12<br>13     @Override<br>14     public void cut() {<br>15         System.out.println(“cut CheesePizza …”);<br>16     }<br>17<br>18     @Override<br>19     public void prepare() {<br>20         System.out.println(“prepare CheesePizza …”);<br>21     }<br>22<br>23 }<br>PizzaStore.java</p>
-<p> 1 public class PizzaStore {<br> 2     SimplePizzaFactory factory;      //SimplePizzaFactory的引用<br> 3     public PizzaStore(SimplePizzaFactory factory){<br> 4         this.factory = factory;<br> 5     }<br> 6<br> 7     public Pizza orderPizza(String type){<br> 8         Pizza pizza;<br> 9         pizza = factory.createPizza(type);       //使用工厂对象的创建方法，而不是直接new。这里不再使用具体实例化<br>10<br>11         pizza.prepare();<br>12         pizza.bake();<br>13         pizza.cut();<br>14         pizza.box();<br>15<br>16         return pizza;<br>17     }<br>18 }<br>四、简单工厂模式的优缺点<br>优点<br>1、简单工厂模式实现了对责任的分割，提供了专门的工厂类用于创建对象。<br>2、客户端无须知道所创建的具体产品类的类名，只需要知道具体产品类所对应的参数即可，对于一些复杂的类名，通过简单工厂模式可以减少使用者的记忆量。<br>3、通过引入配置文件，可以在不修改任何客户端代码的情况下更换和增加新的具体产品类，在一定程度上提高了系统的灵活性。<br>缺点<br>1、由于工厂类集中了所有产品创建逻辑，一旦不能正常工作，整个系统都要受到影响。<br>2、使用简单工厂模式将会增加系统中类的个数，在一定程序上增加了系统的复杂度和理解难度。<br>3、系统扩展困难，一旦添加新产品就不得不修改工厂逻辑，在产品类型较多时，有可能造成工厂逻辑过于复杂，不利于系统的扩展和维护。<br>4、简单工厂模式由于使用了静态工厂方法，造成工厂角色无法形成基于继承的等级结构。<br>五、简单工厂模式的使用场景<br>1、  工厂类负责创建的对象比较少。<br>2、  客户端只知道传入工厂类的参数，对于如何创建对象不关心。<br>六、总结<br>1、  简单工厂模式的要点就在于当你需要什么，只需要传入一个正确的参数，就可以获取你所需要的对象，而无须知道其创建细节。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/Spring-Bean-生命周期/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="HybridTheory">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HybridTheory">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/28/Spring-Bean-生命周期/" itemprop="url">Spring Bean 生命周期</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T17:39:14+08:00">
-                2019-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/04/28/Spring-Bean-生命周期/" class="leancloud_visitors" data-flag-title="Spring Bean 生命周期">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  912
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://blog.csdn.net/HybridTheory_/article/details/88829053" target="_blank" rel="noopener">https://blog.csdn.net/HybridTheory_/article/details/88829053</a><br>前言<br>Spring Bean 的生命周期在整个 Spring 中占有很重要的位置，掌握这些可以加深对 Spring 的理解。</p>
-<p>首先看下生命周期图：</p>
-<p>再谈生命周期之前有一点需要先明确：</p>
-<p>Spring 只帮我们管理单例模式 Bean 的完整生命周期，对于 prototype （原型模式：多例） 的 bean ，Spring 在创建好交给使用者之后则不会再管理后续的生命周期。</p>
-<p>注解方式<br>在 bean 初始化时会经历几个阶段，首先可以使用注解 @PostConstruct, @PreDestroy 来在 bean 的创建和销毁阶段进行调用:</p>
-<p>@Component<br>public class AnnotationBean {<br>    private final static Logger LOGGER = LoggerFactory.getLogger(AnnotationBean.class);</p>
-<pre><code>@PostConstruct
-public void start(){
-    LOGGER.info(&quot;AnnotationBean start&quot;);
-}
-
-@PreDestroy
-public void destroy(){
-    LOGGER.info(&quot;AnnotationBean destroy&quot;);
-}
-</code></pre><p>}<br>InitializingBean, DisposableBean 接口<br>还可以实现 InitializingBean,DisposableBean 这两个接口，也是在初始化以及销毁阶段调用：</p>
-<p>@Service<br>public class SpringLifeCycleService implements InitializingBean,DisposableBean{<br>    private final static Logger LOGGER = LoggerFactory.getLogger(SpringLifeCycleService.class);<br>    @Override<br>    public void afterPropertiesSet() throws Exception {<br>        LOGGER.info(“SpringLifeCycleService start”);<br>    }</p>
-<pre><code>@Override
-public void destroy() throws Exception {
-    LOGGER.info(&quot;SpringLifeCycleService destroy&quot;);
-}
-</code></pre><p>}<br>自定义初始化和销毁方法<br>也可以自定义方法用于在初始化、销毁阶段调用:</p>
-<p>@Configuration<br>public class LifeCycleConfig {</p>
-<pre><code>@Bean(initMethod = &quot;start&quot;, destroyMethod = &quot;destroy&quot;)
-public SpringLifeCycle create(){
-    SpringLifeCycle springLifeCycle = new SpringLifeCycle() ;
-
-    return springLifeCycle ;
-}
-</code></pre><p>}</p>
-<p>public class SpringLifeCycle{</p>
-<pre><code>private final static Logger LOGGER = LoggerFactory.getLogger(SpringLifeCycle.class);
-public void start(){
-    LOGGER.info(&quot;SpringLifeCycle start&quot;);
-}
-
-
-public void destroy(){
-    LOGGER.info(&quot;SpringLifeCycle destroy&quot;);
-}
-</code></pre><p>}<br>以上是在 SpringBoot 中可以这样配置，如果是原始的基于 XML 也是可以使用:</p>
-<p><bean class="com.crossoverjie.spring.SpringLifeCycle" init-method="start" destroy-method="destroy"><br></bean><br>来达到同样的效果。</p>
-<p>实现 <em>Aware 接口
-</em>Aware 接口可以用于在初始化 bean 时获得 Spring 中的一些对象，如获取 Spring 上下文等。</p>
-<p>@Component<br>public class SpringLifeCycleAware implements ApplicationContextAware {<br>    private final static Logger LOGGER = LoggerFactory.getLogger(SpringLifeCycleAware.class);</p>
-<pre><code>private ApplicationContext applicationContext ;
-
-@Override
-public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-    this.applicationContext = applicationContext ;
-    LOGGER.info(&quot;SpringLifeCycleAware start&quot;);
-}
-</code></pre><p>}<br>这样在 springLifeCycleAware 这个 bean 初始化会就会调用 setApplicationContext 方法，并可以获得 applicationContext 对象。</p>
-<p>BeanPostProcessor 增强处理器<br>实现 BeanPostProcessor 接口，Spring 中所有 bean 在做初始化时都会调用该接口中的两个方法，可以用于对一些特殊的 bean 进行处理：</p>
-<p>@Component<br>public class SpringLifeCycleProcessor implements BeanPostProcessor {<br>    private final static Logger LOGGER = LoggerFactory.getLogger(SpringLifeCycleProcessor.class);</p>
-<pre><code>/**
- * 预初始化 初始化之前调用
- * @param bean
- * @param beanName
- * @return
- * @throws BeansException
- */
-@Override
-public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-    if (&quot;annotationBean&quot;.equals(beanName)){
-        LOGGER.info(&quot;SpringLifeCycleProcessor start beanName={}&quot;,beanName);
-    }
-    return bean;
-}
-
-/**
- * 后初始化  bean 初始化完成调用
- * @param bean
- * @param beanName
- * @return
- * @throws BeansException
- */
-@Override
-public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-    if (&quot;annotationBean&quot;.equals(beanName)){
-        LOGGER.info(&quot;SpringLifeCycleProcessor end beanName={}&quot;,beanName);
-    }
-    return bean;
-}
-</code></pre><p>}<br>执行之后观察结果：</p>
-<p>018-03-21 00:40:24.856 [restartedMain] INFO  c.c.s.p.SpringLifeCycleProcessor - SpringLifeCycleProcessor start beanName=annotationBean<br>2018-03-21 00:40:24.860 [restartedMain] INFO  c.c.spring.annotation.AnnotationBean - AnnotationBean start<br>2018-03-21 00:40:24.861 [restartedMain] INFO  c.c.s.p.SpringLifeCycleProcessor - SpringLifeCycleProcessor end beanName=annotationBean<br>2018-03-21 00:40:24.864 [restartedMain] INFO  c.c.s.aware.SpringLifeCycleAware - SpringLifeCycleAware start<br>2018-03-21 00:40:24.867 [restartedMain] INFO  c.c.s.service.SpringLifeCycleService - SpringLifeCycleService start<br>2018-03-21 00:40:24.887 [restartedMain] INFO  c.c.spring.SpringLifeCycle - SpringLifeCycle start<br>2018-03-21 00:40:25.062 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729<br>2018-03-21 00:40:25.122 [restartedMain] INFO  o.s.j.e.a.AnnotationMBeanExporter - Registering beans for JMX exposure on startup<br>2018-03-21 00:40:25.140 [restartedMain] INFO  com.crossoverjie.Application - Started Application in 2.309 seconds (JVM running for 3.681)<br>2018-03-21 00:40:25.143 [restartedMain] INFO  com.crossoverjie.Application - start ok!<br>2018-03-21 00:40:25.153 [Thread-8] INFO  o.s.c.a.AnnotationConfigApplicationContext - Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@3913adad: startup date [Wed Mar 21 00:40:23 CST 2018]; root of context hierarchy<br>2018-03-21 00:40:25.155 [Thread-8] INFO  o.s.j.e.a.AnnotationMBeanExporter - Unregistering JMX-exposed beans on shutdown<br>2018-03-21 00:40:25.156 [Thread-8] INFO  c.c.spring.SpringLifeCycle - SpringLifeCycle destroy<br>2018-03-21 00:40:25.156 [Thread-8] INFO  c.c.s.service.SpringLifeCycleService - SpringLifeCycleService destroy<br>2018-03-21 00:40:25.156 [Thread-8] INFO  c.c.spring.annotation.AnnotationBean - AnnotationBean destroy</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2714,7 +2760,7 @@ public Object postProcessAfterInitialization(Object bean, String beanName) throw
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2736,7 +2782,7 @@ public Object postProcessAfterInitialization(Object bean, String beanName) throw
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -2851,7 +2897,7 @@ public Object postProcessAfterInitialization(Object bean, String beanName) throw
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">43.9k</span>
+    <span title="Site words total count">52.2k</span>
   
 </div>
 
